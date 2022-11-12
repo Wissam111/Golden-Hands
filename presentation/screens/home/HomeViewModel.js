@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AppointmentRepository from "../../../repository/AppointmentRepository"
 import WorkerRepository from "../../../repository/WorkerRepository"
 
@@ -44,7 +44,10 @@ const HomeViewModel = () => {
         setState((prev) => { return { ...prev, isLoading: false } })
     }
 
-
+    useEffect(() => {
+        getAppointment()
+        getWorkers()
+    }, [])
 
     return { ...state, getWorkers, getAppointment, onRefresh }
 }

@@ -16,10 +16,7 @@ const Home = ({ navigation }) => {
         onRefresh()
     }, [])
 
-    useEffect(() => {
-        getAppointment()
-        getWorkers()
-    }, [])
+    
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: primaryColor }}>
