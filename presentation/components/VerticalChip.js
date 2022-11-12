@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { BASE_URL } from "../../network/apiCall";
+import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { globalStyles } from "../styles/global";
 
 
@@ -12,7 +12,7 @@ const VerticalChip = ({ style, text, imageUrl }) => {
                         width: 120, height: 120, borderRadius: 100, borderWidth: 2,
                         borderColor: '#f9f9f9',
                     }}
-                    source={{ uri: BASE_URL + imageUrl }} />
+                    source={{ uri: IMAGE_BASE_URL + imageUrl }} />
             </View>
             <View style={styles.chip}>
                 <Text style={globalStyles.font}>{text}</Text>

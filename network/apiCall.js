@@ -1,5 +1,6 @@
 
 export const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
+export const IMAGE_BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
 
 const serialize = function (obj) {
     var str = [];
