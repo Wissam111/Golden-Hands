@@ -1,6 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import Home from "./screens/home/Home";
+import BookAppointmentScreen from "./screens/BookAppointmentScreen";
 
 const HomeStack = createNativeStackNavigator();
 
@@ -8,7 +10,7 @@ const HomeNavigation = () => {
     return (
         <HomeStack.Navigator screenOptions={{ headerShown: false }}>
             <HomeStack.Screen name='HomeScreen' component={Home} />
-            <HomeStack.Screen name='BookAppointment' component={BookAppointment} />
+            <HomeStack.Screen name='BookAppointment' component={BookAppointmentScreen} />
         </HomeStack.Navigator>
     )
 }

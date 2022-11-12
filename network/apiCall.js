@@ -1,5 +1,5 @@
 
-const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
+export const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
 
 const serialize = function (obj) {
     var str = [];
@@ -11,7 +11,7 @@ const serialize = function (obj) {
 }
 
 
-const apiCall = async (url, method = 'GET', body, queryParams) => {
+export const apiCall = async (url, method = 'GET', body, queryParams) => {
     const customURL = queryParams ? BASE_URL + url + serialize(queryParams) : BASE_URL + url
 
     const result = await fetch(BASE_URL + url, {
@@ -25,5 +25,3 @@ const apiCall = async (url, method = 'GET', body, queryParams) => {
     const json = await result.json()
     return json
 }
-
-export default apiCall;

@@ -1,4 +1,4 @@
-import apiCall from "../network/apiCall"
+import {apiCall} from "../network/apiCall"
 
 
 

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
+import { BASE_URL } from "../../network/apiCall";
 import { globalStyles } from "../styles/global";
 
-const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
 
 const VerticalChip = ({ style, text, imageUrl }) => {
     return (
