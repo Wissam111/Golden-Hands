@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { globalStyles } from "../styles/global";
 
-
-const HorizontalChip = ({ style }) => {
+const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
+const HorizontalChip = ({ style, text, imageUrl }) => {
     return (
         <View style={{ ...style, ...styles.container }}>
-            <Image style={styles.image} source={require('../../assets/imgs/tarik.jpg')} />
+            <Image style={styles.image} source={{ uri: BASE_URL+imageUrl }} />
             <View style={styles.chip}>
-                <Text style={globalStyles.font}>Tarik Husin</Text>
+                <Text style={globalStyles.font}>{text}</Text>
             </View>
         </View>
     );
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         width: 60,
         height: 60,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#f9f9f9',
         zIndex: 1
     },

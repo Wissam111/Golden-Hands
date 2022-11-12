@@ -13,7 +13,7 @@ const HomeStack = createNativeStackNavigator()
 const HomeNavigation = () => {
     return (
         <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-            <HomeStack.Screen name='Home' component={Home} />
+            <HomeStack.Screen name='HomeScreen' component={Home} />
             <HomeStack.Screen name='BookAppointment' component={BookAppointment} />
         </HomeStack.Navigator>
     )
@@ -25,7 +25,7 @@ const Drawer = createDrawerNavigator()
 const DrawerNavigation = () => {
     return (
         <Drawer.Navigator useLegacyImplementation screenOptions={{ headerShown: false }}>
-            <Drawer.Screen name="HomeNavigation" component={HomeNavigation} />
+            <Drawer.Screen name="Home" component={HomeNavigation} />
         </Drawer.Navigator>
     )
 }
