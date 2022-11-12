@@ -4,7 +4,7 @@ import { globalStyles } from "../styles/global";
 
 const BorderButton = ({ style, text, onPress }) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={{ ...style, ...styles.button }}>
                 <Text style={styles.text}>{text}</Text>
             </View>

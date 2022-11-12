@@ -7,7 +7,7 @@ import VerticalChip from '../../components/VerticalChip'
 import HomeViewModel from "./HomeViewModel";
 
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const { workers, getAppointment, getWorkers } = HomeViewModel()
 
 
@@ -35,7 +35,10 @@ const Home = () => {
                         end={{ x: 1, y: 1 }}>
 
                         <View style={styles.appointmentStatus}>
-                            <BorderButton style={styles.margin} text='Book' />
+                            <BorderButton
+                                style={styles.margin}
+                                text='Book'
+                                onPress={() => { navigation.navigate('BookAppointment') }} />
 
                             <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>You have an appointment</Text>
                             <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>Sunday, November 03 at 11:30</Text>

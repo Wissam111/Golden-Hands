@@ -1,7 +1,8 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useFonts } from 'expo-font'
-import Home from './presentation/screens/home/Home';
+import Navigation from './presentation/Navigation';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -11,7 +12,7 @@ export default function App() {
 
   if (fontsLoaded)
     return (
-      <Home/>
+      <Navigation />
     );
 }
 
