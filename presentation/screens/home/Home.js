@@ -5,25 +5,25 @@ import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
 import HomeViewModel from "./HomeViewModel";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
 
 
 const Home = ({ navigation }) => {
     const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = HomeViewModel()
 
+
+
     const refresh = useCallback(() => {
         onRefresh()
     }, [])
-
-    
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: primaryColor }}>
             <View style={{ ...styles.backLayer }}>
 
-                <View style={{ padding: 8, paddingBottom: 20 }}>
-                    <Text style={{ color: '#fff', ...globalStyles.font }}>Tarik Husin</Text>
+                <View style={{ paddingHorizontal: 16, paddingVertical: 36 }}>
+                    <HorizontalChip style={{justifyContent: 'flex-start'}} text='Tarik Husin' />
                 </View>
 
                 <View

@@ -5,7 +5,7 @@ import { globalStyles } from "../styles/global";
 
 const HorizontalChip = ({ style, text, imageUrl }) => {
   return (
-    <View style={{ ...style, ...styles.container }}>
+    <View style={{ ...styles.container, ...style }}>
       <Image style={styles.image} source={{ uri: IMAGE_BASE_URL + imageUrl }} />
       <View style={styles.chip}>
         <Text style={globalStyles.font}>{text}</Text>
