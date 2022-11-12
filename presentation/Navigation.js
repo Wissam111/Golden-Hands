@@ -1,14 +1,8 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BookAppointment from './screens/book_appointment/BookAppointment';
-import Home from './screens/home/Home';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-
-const HomeStack = createNativeStackNavigator()
-
-
+const HomeStack = createNativeStackNavigator();
 
 const HomeNavigation = () => {
     return (
@@ -33,11 +27,11 @@ const DrawerNavigation = () => {
 
 
 const Navigation = () => {
-    return (
-        <NavigationContainer>
-            <DrawerNavigation />
-        </NavigationContainer>
-    )
-}
+  return (
+    <NavigationContainer>
+      <DrawerNavigation />
+    </NavigationContainer>
+  );
+};
 
 export default Navigation;

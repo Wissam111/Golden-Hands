@@ -15,7 +15,6 @@ const HorizontalChip = ({ style, text, imageUrl }) => {
 
 export default HorizontalChip;
 
-
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
