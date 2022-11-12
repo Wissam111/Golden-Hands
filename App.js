@@ -1,21 +1,22 @@
-import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { useFonts } from 'expo-font'
-import Navigation from './presentation/Navigation';
+import "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import { useFonts } from "expo-font";
+import Navigation from "./presentation/Navigation";
+import { TailwindProvider } from "tailwindcss-react-native";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'poppins-medium': require('./assets/fonts/Poppins-Medium.ttf'),
-    'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
-  })
-
-  if (fontsLoaded)
+    "poppins-medium": require("./assets/fonts/Poppins-Medium.ttf"),
+    "poppins-bold": require("./assets/fonts/Poppins-Bold.ttf"),
+  });
+  if (fontsLoaded) {
     return (
-      <Navigation />
+      <TailwindProvider>
+        <Navigation />
+      </TailwindProvider>
     );
+  }
 }
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
