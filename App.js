@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useFonts } from "expo-font";
 import Navigation from "./presentation/Navigation";
 import { TailwindProvider } from "tailwindcss-react-native";
@@ -13,7 +12,7 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <TailwindProvider>
-        <Navigation />
+        <Navigation/>
       </TailwindProvider>
     );
   }

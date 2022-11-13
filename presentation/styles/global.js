@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 
 export const globalStyles = StyleSheet.create({
     font: {
-        fontFamily: 'poppins-medium'
+        fontFamily: 'poppins-medium',
+        fontSize: 16
     }
 })
 
