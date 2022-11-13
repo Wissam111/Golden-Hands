@@ -22,10 +22,6 @@ const Drawer = createDrawerNavigator()
 const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: '#D09900',
-        itemStyle: { borderRadius: 0, marginVertical: 0, borderBottomWidth: 0.5, borderBottomColor: '#D09900' },
-      }}
       useLegacyImplementation screenOptions={{ headerShown: false }} drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen name="Home" component={HomeNavigation} />
     </Drawer.Navigator>

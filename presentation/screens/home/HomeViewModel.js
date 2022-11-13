@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import AppointmentRepository from "../../../repository/AppointmentRepository"
-import WorkerRepository from "../../../repository/WorkerRepository"
+import WorkerRepository from "../../../repository/workerRepository"
 
 
 const HomeViewModel = () => {
