@@ -2,14 +2,22 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/global";
 
 const HorizontalChipS = (props) => {
-  const { style, worker, handleSelectWorker } = props;
+  const { style, worker, handleSelectWorker, isSelected } = props;
   return (
     <TouchableOpacity
       style={{ ...style, ...styles.container }}
       onPress={() => handleSelectWorker(worker)}
     >
-      <View style={styles.chip}>
-        <Text style={globalStyles.font}>
+      <View
+        style={styles.chip}
+        className={isSelected ? `bg-orange-400` : "bg-[#f5f5f5]"}
+      >
+        <Text
+          style={globalStyles.font}
+          className={`pr-5 pt-1 pb-1 ${
+            isSelected ? "text-white" : "text-black"
+          }`}
+        >
           {worker.firstName + " " + worker.lastName}{" "}
         </Text>
       </View>
@@ -44,14 +52,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   chip: {
-    backgroundColor: "#f5f5f5",
     paddingVertical: 8,
     paddingHorizontal: 10,
     borderRadius: 100,
     position: "relative",
-    start: 11,
+    start: 25,
     paddingStart: 40,
     elevation: 3,
-    // marginLeft: 4,
   },
 });

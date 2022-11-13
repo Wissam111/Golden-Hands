@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import moment from "moment/moment";
 const useHomeData = () => {
   const ApiUrl = "https://saloon-ibra-api.herokuapp.com/api/";
   //   const [state, setState] = useState({
@@ -43,12 +43,42 @@ const useHomeData = () => {
     }
   };
 
+  const getWorkingDates = async (workerId) => {
+    let date = moment(new Date(), "yyyy-MM-DDTHH:mm:ssZZ");
+    let params = {
+      workerId: workerId,
+      fromData: date,
+    };
+    // var url = new URL(ApiUrl + "worker/working-dates");
+    // url.search = new URLSearchParams(params).toString();
+    let query = Object.keys(params)
+      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
+      .join("&");
+    let url = ApiUrl + "worker/working-dates" + query;
+
+    try {
+      let res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        // body: JSON.stringify(workerData),
+        method: "GET",
+      });
+      console.log(res);
+      const dataJ = await res.json();
+      console.log(dataJ);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     getWorkers();
     getAppointments();
   }, []);
 
-  return { workers, appointments };
+  return { workers, appointments, getWorkingDates };
 };
 
 export default useHomeData;
