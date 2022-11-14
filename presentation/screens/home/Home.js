@@ -5,13 +5,24 @@ import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
 import HomeViewModel from "./HomeViewModel";
-import { useCallback } from "react";
-
+import { useCallback, useEffect } from "react";
+import { FlatList } from "react-native-gesture-handler";
+import { useIsFocused } from "@react-navigation/native";
+import 'moment/locale/he';
+import moment from "moment";
+import getString from "../../../localization";
 
 
 const Home = ({ navigation }) => {
+    const isFocused = useIsFocused();
     const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = HomeViewModel()
 
+    useEffect(() => {
+        if (isFocused) {
+            getAppointment()
+            getWorkers()
+        }
+    }, [isFocused])
 
 
     const refresh = useCallback(() => {
@@ -23,7 +34,7 @@ const Home = ({ navigation }) => {
             <View style={{ ...styles.backLayer }}>
 
                 <View style={{ paddingHorizontal: 16, paddingVertical: 36 }}>
-                    <HorizontalChip style={{justifyContent: 'flex-start'}} text='Tarik Husin' />
+                    <HorizontalChip style={{ justifyContent: 'flex-start' }} text='Tarik Husin' />
                 </View>
 
                 <View
@@ -40,29 +51,27 @@ const Home = ({ navigation }) => {
 
                         <LinearGradient
                             style={styles.gradient}
-                            colors={['#FF9502', '#FD7501']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}>
+                            colors={['#FF9502', '#FD7501']} >
 
                             <View style={styles.appointmentStatus}>
                                 <BorderButton
                                     style={styles.margin}
-                                    text='Book'
+                                    text={getString.t('book')}
                                     onPress={() => { navigation.navigate('BookAppointment') }} />
 
                                 {
                                     appointment &&
                                     (
                                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>You have an appointment</Text>
-                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>Sunday, November 03 at 11:30</Text>
+                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('you_have_an_appointment')}</Text>
+                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{moment(appointment.start_time).format('dddd, MMMM DD [at] HH:mm')}</Text>
 
                                             <HorizontalChip
                                                 style={styles.margin}
                                                 text={`${appointment.customer.firstName} ${appointment.customer.lastName}`}
                                                 imageUrl={appointment.customer.image} />
 
-                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>Find Us</Text>
+                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
                                         </View>
                                     )
                                 }
@@ -71,24 +80,29 @@ const Home = ({ navigation }) => {
                         </LinearGradient>
 
                         <View style={{ backgroundColor: backgroundColor }}>
-                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20 }}>
-                                <Text style={{ ...globalStyles.font, ...styles.margin }}>Our Staff</Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                                    {
-                                        workers &&
-                                        workers.map(worker => (
-                                            <VerticalChip key={worker._id} text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
-                                        ))
-                                    }
-                                </View>
-
+                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20, alignItems: 'flex-start' }}>
+                                <Text style={{ ...globalStyles.font, ...styles.margin }}>{getString.t('our_staff')}</Text>
+                                {
+                                    workers && (
+                                        <FlatList
+                                            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+                                            ItemSeparatorComponent={<View style={{ padding: 6 }} />}
+                                            centerContent={true}
+                                            showsHorizontalScrollIndicator={false}
+                                            data={workers}
+                                            horizontal
+                                            keyExtractor={(item) => item._id}
+                                            renderItem={({ item: worker }) => (
+                                                <VerticalChip key={worker._id} text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
+                                            )} />)
+                                }
                             </View>
 
 
-                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20 }}>
-                                <Text style={{ ...globalStyles.font, ...styles.margin }}>About Us</Text>
+                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20, alignItems: 'flex-start' }}>
+                                <Text style={{ ...globalStyles.font, ...styles.margin }}>{getString.t('about_us')}</Text>
 
-                                <Text style={{ ...globalStyles.font, ...styles.margin }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quis perferendis incidunt possimus natus accusamus porro distinctio eligendi, doloremque enim fugit nam ipsam dicta debitis odio, nihil consequatur tempora alias?</Text>
+                                <Text style={{ ...globalStyles.font, ...styles.margin }}>{getString.t('about_us_details')}</Text>
                             </View>
 
                             <View style={{ padding: 20 }} />
@@ -118,7 +132,7 @@ const styles = StyleSheet.create({
         flex: 1,
         minHeight: 500,
         borderTopEndRadius: 20,
-        borderTopStartRadius: 20
+        borderTopStartRadius: 20,
     },
 
     appointmentStatus: {

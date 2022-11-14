@@ -4,17 +4,18 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./screens/home/Home";
 import BookAppointmentScreen from "./screens/BookAppointments/BookAppointmentScreen";
 import CustomDrawer from "./components/CustomDrawer";
+import Login from "./screens/login/Login";
 
 const HomeStack = createNativeStackNavigator();
 
 const HomeNavigation = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="LoginScreen" component={Login} />
       <HomeStack.Screen name="HomeScreen" component={Home} />
       <HomeStack.Screen
         name="BookAppointment"
         component={BookAppointmentScreen}
-        options={{ presentation: "modal", headerShown: false }}
       />
     </HomeStack.Navigator>
   );
