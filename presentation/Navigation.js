@@ -16,6 +16,7 @@ const HomeNavigation = () => {
       <HomeStack.Screen
         name="BookAppointment"
         component={BookAppointmentScreen}
+        options={{ presentation: "modal", headerShown: false }}
       />
     </HomeStack.Navigator>
   );
