@@ -1,12 +1,16 @@
 import { apiCall } from "../network/apiCall";
 
-const BookAppointmentRepository = (appointObj) => {
-  const BookAppointment = async () => {
+const BookAppointmentRepository = () => {
+  const BookAppointment = async (appointObj) => {
     const data = await apiCall("appointments/book", "POST", appointObj);
     return data;
   };
 
-  return { BookAppointment };
+  const unBookAppointment = async (appointObj) => {
+    const data = await apiCall("appointments/unbook", "POST", appointObj);
+    return data;
+  };
+  return { BookAppointment, unBookAppointment };
 };
 
 export default BookAppointmentRepository;

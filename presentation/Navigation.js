@@ -5,7 +5,7 @@ import Home from "./screens/home/Home";
 import BookAppointmentScreen from "./screens/BookAppointments/BookAppointmentScreen";
 import CustomDrawer from "./components/CustomDrawer";
 import Login from "./screens/login/Login";
-
+import BookingLoadingScreen from "./screens/BookingLoadingScreen";
 const HomeStack = createNativeStackNavigator();
 
 const HomeNavigation = () => {
@@ -17,6 +17,12 @@ const HomeNavigation = () => {
         name="BookAppointment"
         component={BookAppointmentScreen}
         options={{ presentation: "modal", headerShown: false }}
+      />
+
+      <HomeStack.Screen
+        name="BookingLoadingScreen"
+        component={BookingLoadingScreen}
+        options={{ presentation: "fullScreenModal", headerShown: false }}
       />
     </HomeStack.Navigator>
   );

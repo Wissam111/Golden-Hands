@@ -1,15 +1,14 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { XCircleIcon } from "react-native-heroicons/solid";
+import moment from "moment";
 const AppointmentConfirmation = (props) => {
-  const { appointment, handleCloseConfirmation, hanldeBook } = props;
-
+  const { appointsByday, handleCloseConfirmation, handleBook } = props;
+  const appointment = appointsByday.find((appoint) => appoint._id == props.id);
   return (
     <View
       className="absolute bottom-0 z-10 bg-[#F9F9F9] items-center p-2 shadow-lg"
       style={{
-        // borderWidth: 2,
-        // borderColor: "red",
         width: "100%",
         height: 340,
         borderRadius: 10,
@@ -31,11 +30,12 @@ const AppointmentConfirmation = (props) => {
         </TouchableOpacity>
       </View>
       <Text className="font-medium text-base mb-10">
-        monday, 03-11-2022 at 11:00, barbar wissam
+        {moment(appointment.start_time).format("MMMM Do YYYY, h:mm a") +
+          ` , ${appointment.worker.firstName} ${appointment.worker.lastName}`}
       </Text>
       <TouchableOpacity
         className="rounded-lg bg-black p-5"
-        onPress={hanldeBook}
+        onPress={handleBook}
       >
         <Text className="text-center text-white text-xl font-bold">
           Confirm and Book

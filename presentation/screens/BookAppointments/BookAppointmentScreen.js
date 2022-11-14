@@ -1,12 +1,12 @@
 import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import HorizontalChipS from "../../components/HorizontalChipS";
-import useHomeData from "../home/useHomeData";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Card from "../../components/Card";
 import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmation from "../../components/AppointmentConfirmation";
+import { CalendarDaysIcon } from "react-native-heroicons/solid";
 const BookAppointmentScreen = () => {
   const {
     workers,
@@ -22,10 +22,8 @@ const BookAppointmentScreen = () => {
     handleSelectService,
     handleSelectHour,
     appointsByday,
-    appointsByService,
-    appointsByHour,
-    handleCloseConfirmation,
     handleBook,
+    handleCloseConfirmation,
   } = BookViewModel();
 
   return (
@@ -39,8 +37,25 @@ const BookAppointmentScreen = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        <View className="m-2 ">
-          <Text className="text-xl  m-2 mb-5 font-light">Select Worker</Text>
+        <View
+          className="mb-4 border-b-2  p-1 flex-row"
+          style={{
+            borderBottomColor: "#D9D9D9",
+            justifyContent: "space-between",
+            // width: 120,
+          }}
+        >
+          <CalendarDaysIcon size={50} color="#1D1B1B" />
+          <Text
+            className="text-xl  m-2 mb-5 font-bold"
+            style={{ color: "#1D1B1B" }}
+          >
+            Book an Appointment
+          </Text>
+        </View>
+
+        <View className="m-1 ">
+          <Text className="text-xl  m-2 mb-5 font-medium">Select Worker</Text>
           <FlatList
             data={workers}
             keyExtractor={(item) => item._id}
@@ -55,10 +70,9 @@ const BookAppointmentScreen = () => {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        {/* key=day:[appoints] in grouped appoints */}
         {selectedWorker && (
           <View className="m-2 p-1">
-            <Text className="text-xl  m-2 mb-5 font-light">Select Day</Text>
+            <Text className="text-xl  m-2 mb-5 font-medium">Select Day</Text>
             <ScrollView
               className="flex-row"
               horizontal
@@ -78,7 +92,9 @@ const BookAppointmentScreen = () => {
         )}
         {selectedDay && (
           <View className="m-2 p-1">
-            <Text className="text-xl  m-2 mb-5 font-light">Select Service</Text>
+            <Text className="text-xl  m-2 mb-5 font-medium">
+              Select Service
+            </Text>
             <FlatList
               data={selectedWorker?.services}
               keyExtractor={(item) => item._id}
@@ -98,10 +114,9 @@ const BookAppointmentScreen = () => {
         )}
         {selectedService && (
           <View className="m-2 p-1">
-            <Text className="text-xl  m-2 mb-5 font-light">
+            <Text className="text-xl  m-2 mb-5 font-medium">
               Select Appointment
             </Text>
-
             <FlatList
               data={appointsByday}
               keyExtractor={(item) => item._id}
@@ -121,7 +136,8 @@ const BookAppointmentScreen = () => {
         )}
         {selectedHour && (
           <AppointmentConfirmation
-            appointment={null}
+            id={selectedHour}
+            appointsByday={appointsByday}
             handleCloseConfirmation={handleCloseConfirmation}
             handleBook={handleBook}
           />

@@ -1,10 +1,11 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Alert } from "react";
 
 import WorkerRepository from "../../../repository/workerRepository";
 import AppointmentsRepository from "../../../repository/AppointmentsRepository";
 import BookAppointmentRepository from "../../../repository/BookAppointmentRepository";
-
+import useAuthContext from "../../../hooks/useAuthContext";
+import { useNavigation } from "@react-navigation/native";
 const BookViewModel = () => {
   const [state, setState] = useState({
     workers: [],
@@ -16,12 +17,12 @@ const BookViewModel = () => {
     workerAppointments: [],
     groupedAppoints: [],
     appointsByday: [],
-    appointsByService: [],
-    appointsByHour: [],
   });
+  const navigation = useNavigation();
   const workerRepository = WorkerRepository();
   const appointmentsRepository = AppointmentsRepository();
   const bookAppointmentRepository = BookAppointmentRepository();
+  const { user } = useAuthContext();
 
   const getWorkers = async () => {
     try {
@@ -54,7 +55,7 @@ const BookViewModel = () => {
         today <= new Date(appoint.start_time) &&
         appoint.worker._id == worker._id
     );
-    const groupedAppoints = appoints.slice(0, 7).reduce((results, appoint) => {
+    const groupedAppoints = appoints.reduce((results, appoint) => {
       let day = new Date(appoint.start_time).getDay() + 1;
       (results[day] = results[day] || []).push(appoint);
       return results;
@@ -63,7 +64,6 @@ const BookViewModel = () => {
     setState((prev) => {
       return {
         ...prev,
-        // workerAppointments: appoints.slice(0, 7),
         groupedAppoints: groupedAppoints,
       };
     });
@@ -103,7 +103,6 @@ const BookViewModel = () => {
         selectedHour: null,
       };
     });
-    // console.log(serv.title);
   };
   const handleSelectHour = (id) => {
     setState((prev) => {
@@ -115,14 +114,18 @@ const BookViewModel = () => {
   };
   const handleBook = async () => {
     const appointObj = {
-      appointmentId: selectedHour,
-      userId: selectedWorker,
-      service: selectedService,
+      appointmentId: state.selectedHour,
+      userId: user._id,
+      service: state.selectedService,
     };
 
     try {
       const data = await bookAppointmentRepository.BookAppointment(appointObj);
-      console.log(data);
+      console.log(data.message);
+      navigation.navigate({
+        name: "BookingLoadingScreen",
+        params: { message: data.message },
+      });
     } catch (e) {
       console.log(e);
     }
