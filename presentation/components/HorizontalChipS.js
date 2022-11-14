@@ -10,7 +10,7 @@ const HorizontalChipS = (props) => {
     >
       <View
         style={styles.chip}
-        className={isSelected ? `bg-orange-400` : "bg-[#f5f5f5]"}
+        className={isSelected ? `bg-[#FF9B02]` : "bg-[#f5f5f5]"}
       >
         <Text
           style={globalStyles.font}
@@ -18,7 +18,7 @@ const HorizontalChipS = (props) => {
             isSelected ? "text-white" : "text-black"
           }`}
         >
-          {worker.firstName + " " + worker.lastName}{" "}
+          {worker.firstName + " " + worker.lastName}
         </Text>
       </View>
       <Image

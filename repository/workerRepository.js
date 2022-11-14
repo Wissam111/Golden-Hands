@@ -1,14 +1,12 @@
-import { apiCall } from "../network/apiCall"
-
+import { apiCall } from "../network/apiCall";
 
 const WorkerRepository = () => {
+  const getWorkers = async () => {
+    const data = await apiCall("workers");
+    return data;
+  };
 
-    const getWorkers = async () => {
-        const data = await apiCall('workers')
-        return data
-    }
-
-    return { getWorkers }
-}
+  return { getWorkers };
+};
 
 export default WorkerRepository;
