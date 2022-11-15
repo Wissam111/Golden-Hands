@@ -40,12 +40,12 @@ const getAuthData = async (dispatch) => {
 
 
 export const AuthContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, {
-        user: null,
-        token: null,
-        refreshToken: null,
-        expireDate: null
-    })
+  const [state, dispatch] = useReducer(authReducer, {
+    user: null,
+    token: null,
+    refreshToken: null,
+    expireDate: null,
+  });
 
     useEffect(() => {
         getAuthData(dispatch)

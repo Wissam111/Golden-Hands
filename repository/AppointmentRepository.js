@@ -1,17 +1,12 @@
-import {apiCall} from "../network/apiCall"
-
-
-
+import { apiCall } from "../network/apiCall";
 
 const AppointmentRepository = () => {
+  const getAppointment = async () => {
+    const data = await apiCall("appointments/user-appointment");
+    return data;
+  };
 
-    const getAppointment = async () => {
-        const data = await apiCall('appointments/user-appointment')
-        return data
-    }
-
-
-    return { getAppointment }
-}
+  return { getAppointment };
+};
 
 export default AppointmentRepository;
