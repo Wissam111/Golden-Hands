@@ -15,23 +15,11 @@ import BookingLoadingScreen from "./screens/BookingLoadingScreen";
 const HomeStack = createNativeStackNavigator();
 
 
-const SignupNavigation = () => {
-  return (
-    <SignupStack.Navigator screenOptions={{ headerShown: false }}>
-
-      <SignupStack.Screen name='HomeNavigation' component={HomeNavigation} />
-    </SignupStack.Navigator>
-  )
-}
-
-
 
 const HomeNavigation = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name='HomeScreen' component={Home} />
-      <HomeStack.Screen name='BookAppointment' component={BookAppointmentScreen} />
-
       <HomeStack.Screen name='LoginScreen' component={Login} />
 
       <HomeStack.Group>
@@ -41,8 +29,6 @@ const HomeNavigation = () => {
       </HomeStack.Group>
 
 
-      <HomeStack.Screen name="LoginScreen" component={Login} />
-      <HomeStack.Screen name="HomeScreen" component={Home} />
       <HomeStack.Screen
         name="BookAppointment"
         component={BookAppointmentScreen}
