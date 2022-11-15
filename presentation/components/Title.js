@@ -16,7 +16,6 @@ export default Title;
 
 const styles = StyleSheet.create({
     text: {
-        borderBottomWidth: 2,
         borderColor: '#000',
         ...globalStyles.font,
         fontSize: 24
@@ -24,6 +23,7 @@ const styles = StyleSheet.create({
     container: {
         borderBottomWidth: 2,
         borderColor: '#000',
+        padding: 6
 
     }
 })

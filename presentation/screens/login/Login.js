@@ -7,6 +7,10 @@ import DefaultButton from "../../components/DefaultButton";
 import Title from "../../components/Title";
 import getString from "../../../localization";
 import Opt from "../../components/Opt";
+import { I18nManager } from 'react-native';
+import BackButton from "../../components/BackButton";
+import Spacer from "../../components/Spacer";
+
 
 const Login = ({ navigation }) => {
   const { navigateToHome, hideCode, showCode, phone, onPhoneChanged, sendAuthVerification, loginAndVerify } = LoginViewModel()
@@ -15,7 +19,7 @@ const Login = ({ navigation }) => {
     if (navigateToHome) {
       navigation.reset({
         index: 0,
-        routes: [{name: 'HomeScreen'}],
+        routes: [{ name: 'HomeScreen' }],
       });
     }
   }, [navigateToHome])
@@ -24,7 +28,12 @@ const Login = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, padding: 8, backgroundColor: backgroundColor }}>
-          <Title text={getString.t('login')} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <BackButton onPress={navigation.goBack} />
+            <Spacer space={6} />
+            <Title text={getString.t('login')} />
+          </View>
+
 
           <View style={styles.container}>
             <View style={styles.topText}>
@@ -38,7 +47,7 @@ const Login = ({ navigation }) => {
                   <TextInput
                     onChangeText={onPhoneChanged}
                     value={phone}
-                    placeholder="Phone"
+                    placeholder={getString.t('phone')}
                     keyboardType="numeric"
                     style={styles.input} />
 
@@ -46,7 +55,7 @@ const Login = ({ navigation }) => {
 
                   <View style={styles.create}>
                     <Text style={{ marginEnd: 6 }}>{getString.t('dont_have_an_account')}</Text>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Signup') }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('SignupScreen') }}>
                       <Text style={{ ...globalStyles.font, color: blue }}>{getString.t('create_account')}</Text>
                     </TouchableOpacity>
                   </View>
@@ -96,5 +105,6 @@ const styles = StyleSheet.create({
     marginTop: 22,
     justifyConent: 'flex-start',
     ...globalStyles.font,
+    textAlign: I18nManager.isRTL ? 'right' : 'left'
   }
 })

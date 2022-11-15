@@ -37,7 +37,7 @@ const Opt = ({ number, callback, goBack, sendAgain, style }) => {
         const ref = useRef()
         refs.push(ref)
         inputs.push(
-            <View key={i} style={{ flexDirection: 'row' }}>
+            <View key={i} style={{ flexDirection: 'row' , direction: 'ltr' }}>
                 <TextInput
                     style={styles.input}
                     maxLength={1}

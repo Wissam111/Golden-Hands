@@ -5,15 +5,41 @@ import Home from "./screens/home/Home";
 import BookAppointmentScreen from "./screens/BookAppointmentScreen";
 import CustomDrawer from "./components/CustomDrawer";
 import Login from "./screens/login/Login";
+import Signup from "./screens/sign_up/Signup";
+import SignupPhone from "./screens/sign_up/SignupPhone";
+import SignupWelcome from "./screens/sign_up/SignupWelcome";
 
+
+const SignupStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
+
+
+const SignupNavigation = () => {
+  return (
+    <SignupStack.Navigator screenOptions={{ headerShown: false }}>
+
+      <SignupStack.Screen name='HomeNavigation' component={HomeNavigation} />
+    </SignupStack.Navigator>
+  )
+}
+
+
 
 const HomeNavigation = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name='LoginScreen' component={Login} />
       <HomeStack.Screen name='HomeScreen' component={Home} />
       <HomeStack.Screen name='BookAppointment' component={BookAppointmentScreen} />
+
+      <HomeStack.Screen name='LoginScreen' component={Login} />
+
+      <HomeStack.Group>
+        <HomeStack.Screen name='SignupScreen' component={Signup} />
+        <HomeStack.Screen name='SignupPhone' component={SignupPhone} />
+        <HomeStack.Screen name='SignupWelcome' component={SignupWelcome} />
+      </HomeStack.Group>
+
+
     </HomeStack.Navigator>
   )
 }
