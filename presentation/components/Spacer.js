@@ -1,9 +1,9 @@
 import { View } from "react-native";
 
 
-const Spacer = ({ space }) => {
+const Spacer = ({ space , style}) => {
     return (
-        <View style={{ padding: space }}></View>
+        <View style={{ padding: space , ...style }}></View>
     );
 }
 

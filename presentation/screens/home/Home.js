@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { backgroundColor, globalStyles, primaryColor, surfaceColor } from "../../styles/global";
+import { backgroundColor, globalStyles, primaryColor, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
@@ -11,10 +11,50 @@ import { useIsFocused } from "@react-navigation/native";
 import 'moment/locale/he';
 import moment from "moment";
 import getString from "../../../localization";
+import useAuthContext from "../../../hooks/useAuthContext";
+import Spacer from "../../components/Spacer";
+
+
+const GeustHeader = () => {
+    return (
+        <View style={{ marginTop: 16 }}>
+            <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>Hello there, Lets login first</Text>
+        </View>
+    )
+}
+
+
+const LoggedInHeader = ({ appointment }) => {
+    return (
+        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
+            {
+                appointment ?
+                    (
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('you_have_an_appointment')}</Text>
+                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{moment(appointment.start_time).format(`dddd, MMMM DD [${getString.t('at')}] HH:mm`)}</Text>
+
+                            <HorizontalChip
+                                style={styles.margin}
+                                text={`${appointment.customer.firstName} ${appointment.customer.lastName}`}
+                                imageUrl={appointment.customer.image} />
+
+                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
+                        </View>
+                    )
+                    : (
+                        <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>You don't have an appointment , Maybe its time for a new hair cut</Text>
+                    )
+            }
+        </View>
+    );
+}
+
 
 
 const Home = ({ navigation }) => {
     const isFocused = useIsFocused();
+    const { user } = useAuthContext()
     const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = HomeViewModel()
 
     useEffect(() => {
@@ -32,9 +72,10 @@ const Home = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: primaryColor }}>
             <View style={{ ...styles.backLayer }}>
-
                 <View style={{ paddingHorizontal: 16, paddingVertical: 36 }}>
-                    <HorizontalChip style={{ justifyContent: 'flex-start' }} text='Tarik Husin' />
+                    {user &&
+                        <HorizontalChip style={{ justifyContent: 'flex-start' }} imageUrl={user.image} text={`${user.firstName} ${user.lastName}`} />
+                    }
                 </View>
 
                 <View
@@ -56,24 +97,13 @@ const Home = ({ navigation }) => {
                             <View style={styles.appointmentStatus}>
                                 <BorderButton
                                     style={styles.margin}
-                                    text={getString.t('book')}
-                                    onPress={() => { navigation.navigate('BookAppointment') }} />
-
+                                    text={user ? getString.t('book') : 'Login or Signup'}
+                                    onPress={() => { user ? navigation.navigate('BookAppointment') : navigation.navigate('LoginScreen') }} />
                                 {
-                                    appointment &&
-                                    (
-                                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('you_have_an_appointment')}</Text>
-                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{moment(appointment.start_time).format('dddd, MMMM DD [at] HH:mm')}</Text>
-
-                                            <HorizontalChip
-                                                style={styles.margin}
-                                                text={`${appointment.customer.firstName} ${appointment.customer.lastName}`}
-                                                imageUrl={appointment.customer.image} />
-
-                                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
-                                        </View>
-                                    )
+                                    user ?
+                                        <LoggedInHeader appointment={appointment} />
+                                        :
+                                        <GeustHeader />
                                 }
                             </View>
 

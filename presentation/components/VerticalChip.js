@@ -15,7 +15,7 @@ const VerticalChip = ({ style, text, imageUrl }) => {
                     source={{ uri: IMAGE_BASE_URL + imageUrl }} />
             </View>
             <View style={styles.chip}>
-                <Text style={globalStyles.font}>{text}</Text>
+                <Text style={{ ...globalStyles.font, textAlign: 'center' }}>{text}</Text>
             </View>
         </View>
     );
@@ -49,8 +49,9 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 20,
         borderRadius: 100,
-        paddingStart: 40,
         position: 'relative',
-        top: -6
+        top: -6,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

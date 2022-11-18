@@ -24,5 +24,9 @@ export const apiCall = async (url, method = 'GET', body, queryParams) => {
         body: body ? JSON.stringify(body) : null
     })
     const json = await result.json()
+    if (!result.ok) {
+        throw Error(json.message)
+    }
+
     return json
 }

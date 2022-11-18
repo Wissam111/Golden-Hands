@@ -17,7 +17,12 @@ const getString = new I18n({
         create_account:'create an account',
         dont_have_an_account:'don\'t have an account?',
         didnt_receive_code:'didn\'nt receive a code?',
-        send_again: 'send again'
+        send_again: 'send again',
+        phone: 'phone',
+        signup: 'Signup',
+        at: 'at'
+
+
     },
     he: {
         you_have_an_appointment: 'יש לך תור',
@@ -32,7 +37,11 @@ const getString = new I18n({
         create_account:'צור חשבון',
         dont_have_an_account:'אין לך חשבון?',
         didnt_receive_code:'לא קיבלת קוד?',
-        send_again: 'שלח שוב'
+        send_again: 'שלח שוב',
+        phone: 'מספר טלפון',
+        signup: 'הרשמה',
+        at: 'ב'
+
 
     },
 });

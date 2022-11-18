@@ -4,8 +4,8 @@ import { globalStyles, primaryColor } from "../styles/global";
 
 const DefaultButton = ({ style, text, onPress }) => {
     return (
-        <TouchableOpacity onPress={onPress}>
-            <View style={{ ...style, ...styles.button }}>
+        <TouchableOpacity style={{ ...style }} onPress={onPress}>
+            <View style={{ ...styles.button }}>
                 <Text style={styles.text}>{text}</Text>
             </View>
         </TouchableOpacity>
