@@ -7,7 +7,7 @@ import CustomDrawer from "./components/CustomDrawer";
 import Login from "./screens/login/Login";
 import BookingLoadingScreen from "./screens/BookingLoadingScreen";
 const HomeStack = createNativeStackNavigator();
-
+import DashBoardScreen from "./screens/DashBoard/DashBoardScreen";
 const HomeNavigation = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -38,6 +38,7 @@ const DrawerNavigation = () => {
       drawerContent={(props) => <CustomDrawer {...props} />}
     >
       <Drawer.Screen name="Home" component={HomeNavigation} />
+      <Drawer.Screen name="DashBoardScreen" component={DashBoardScreen} />
     </Drawer.Navigator>
   );
 };

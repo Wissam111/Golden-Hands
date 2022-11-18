@@ -62,8 +62,8 @@ const BookAppointmentScreen = () => {
             horizontal
             renderItem={({ item }) => (
               <HorizontalChipS
-                worker={item}
-                handleSelectWorker={handleSelectWorker}
+                user={item}
+                handlePress={handleSelectWorker}
                 isSelected={selectedWorker?._id == item._id}
               />
             )}

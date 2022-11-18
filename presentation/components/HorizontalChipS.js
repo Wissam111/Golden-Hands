@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/global";
 
 const HorizontalChipS = (props) => {
-  const { style, worker, handleSelectWorker, isSelected } = props;
+  const { style, user, handlePress, isSelected } = props;
   return (
     <TouchableOpacity
       style={{ ...style, ...styles.container }}
-      onPress={() => handleSelectWorker(worker)}
+      onPress={() => handlePress(user)}
     >
       <View
         style={styles.chip}
@@ -18,15 +18,15 @@ const HorizontalChipS = (props) => {
             isSelected ? "text-white" : "text-black"
           }`}
         >
-          {worker.firstName + " " + worker.lastName}
+          {user?.firstName + " " + user?.lastName}
         </Text>
       </View>
       <Image
         style={styles.image}
         source={{
           uri:
-            worker?.image != null
-              ? `https://saloon-ibra-api.herokuapp.com/imgs/${worker?.image}`
+            user?.image != null
+              ? `https://saloon-ibra-api.herokuapp.com/imgs/${user?.image}`
               : require("../../assets/imgs/tarik.jpg"),
         }}
       />

@@ -121,7 +121,6 @@ const BookViewModel = () => {
 
     try {
       const data = await bookAppointmentRepository.BookAppointment(appointObj);
-      console.log(data.message);
       navigation.navigate({
         name: "BookingLoadingScreen",
         params: { message: data.message },
