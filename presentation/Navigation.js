@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./screens/home/Home";
 import BookAppointmentScreen from "./screens/BookAppointments/BookAppointmentScreen";
+import DashBoardScreen from "./screens/DashBoard/DashBoardScreen";
 import CustomDrawer from "./components/CustomDrawer";
 import Login from "./screens/login/Login";
 import Signup from "./screens/sign_up/Signup";
 import SignupPhone from "./screens/sign_up/SignupPhone";
 import SignupWelcome from "./screens/sign_up/SignupWelcome";
-
 const SignupStack = createNativeStackNavigator();
 import BookingLoadingScreen from "./screens/BookingLoadingScreen";
 const HomeStack = createNativeStackNavigator();
