@@ -11,7 +11,10 @@ import SignupPhone from "./screens/sign_up/SignupPhone";
 import SignupWelcome from "./screens/sign_up/SignupWelcome";
 const SignupStack = createNativeStackNavigator();
 import BookingLoadingScreen from "./screens/BookingLoadingScreen";
-const HomeStack = createNativeStackNavigator();
+import Signup from "./screens/signup/Signup";
+import SignupPhone from "./screens/signup/SignupPhone";
+import SignupWelcome from "./screens/signup/SignupWelcome";
+import { SignupContextProvider } from "../context/SignupContext";
 
 const HomeNavigation = () => {
   return (

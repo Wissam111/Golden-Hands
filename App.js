@@ -12,6 +12,7 @@ import './localization'
 import { I18nManager } from "react-native"
 import { AndroidSafeAreaStyle } from "./presentation/styles/AndroidSafeArea";
 import { primaryColor } from "./presentation/styles/global";
+import { SignupContextProvider } from "./context/SignupContext";
 
 
 I18nManager.allowRTL(true);
@@ -30,10 +31,12 @@ export default function App() {
           <StatusBar barStyle="light-content" />
           <LoadingContextProvider>
             <AuthContextProvider>
-              <TailwindProvider>
-                <Loader />
-                <Navigation />
-              </TailwindProvider>
+              <SignupContextProvider>
+                <TailwindProvider>
+                  <Loader />
+                  <Navigation />
+                </TailwindProvider>
+              </SignupContextProvider>
             </AuthContextProvider>
           </LoadingContextProvider>
         </SafeAreaView>

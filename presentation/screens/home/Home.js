@@ -74,7 +74,7 @@ const Home = ({ navigation }) => {
             <View style={{ ...styles.backLayer }}>
                 <View style={{ paddingHorizontal: 16, paddingVertical: 36 }}>
                     {user &&
-                        <HorizontalChip style={{ justifyContent: 'flex-start' }} imageUrl={user.image} text={`${user.firstName} ${user.lastName}`} />
+                        <HorizontalChip imageUrl={user.image} text={`${user.firstName} ${user.lastName}`} />
                     }
                 </View>
 

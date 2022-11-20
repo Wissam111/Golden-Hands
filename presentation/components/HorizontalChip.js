@@ -5,7 +5,7 @@ import { globalStyles } from "../styles/global";
 
 const HorizontalChip = ({ style, text, imageUrl }) => {
   return (
-    <View style={{ ...styles.container, ...style }}>
+    <View style={{ ...styles.container , justifyContent:'flex-start' , ...style }}>
       <Image style={styles.image} source={{ uri: IMAGE_BASE_URL + imageUrl }} />
       <View style={styles.chip}>
         <Text style={globalStyles.font}>{text}</Text>
