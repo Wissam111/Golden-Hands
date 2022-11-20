@@ -18,7 +18,7 @@ import Spacer from "../../components/Spacer";
 const GeustHeader = () => {
     return (
         <View style={{ marginTop: 16 }}>
-            <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>Hello there, Lets login first</Text>
+            <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>{getString.t('hello_there_login_first')}</Text>
         </View>
     )
 }
@@ -43,7 +43,7 @@ const LoggedInHeader = ({ appointment }) => {
                         </View>
                     )
                     : (
-                        <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>You don't have an appointment , Maybe its time for a new hair cut</Text>
+                        <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>{getString.t('you_dont_have_appointment')}</Text>
                     )
             }
         </View>
@@ -97,7 +97,7 @@ const Home = ({ navigation }) => {
                             <View style={styles.appointmentStatus}>
                                 <BorderButton
                                     style={styles.margin}
-                                    text={user ? getString.t('book') : 'Login or Signup'}
+                                    text={user ? getString.t('book') : getString.t('login_or_signup')}
                                     onPress={() => { user ? navigation.navigate('BookAppointment') : navigation.navigate('LoginScreen') }} />
                                 {
                                     user ?
