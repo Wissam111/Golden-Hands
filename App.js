@@ -16,7 +16,6 @@ import { SignupContextProvider } from "./context/SignupContext";
 
 
 I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
 moment, locale('he')
 
 export default function App() {
@@ -27,16 +26,14 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <View style={{ backgroundColor: primaryColor, flex: 1 }}>
-        <SafeAreaView style={AndroidSafeAreaStyle}>
+        <SafeAreaView style={{ flex: 1 }}>
           <StatusBar barStyle="light-content" />
           <LoadingContextProvider>
             <AuthContextProvider>
-              <SignupContextProvider>
-                <TailwindProvider>
-                  <Loader />
-                  <Navigation />
-                </TailwindProvider>
-              </SignupContextProvider>
+              <TailwindProvider>
+                <Loader />
+                <Navigation />
+              </TailwindProvider>
             </AuthContextProvider>
           </LoadingContextProvider>
         </SafeAreaView>

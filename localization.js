@@ -23,7 +23,33 @@ const getString = new I18n({
         signup: 'Signup',
         at: 'at',
         hello_there_login_first: 'Hello there, Lets login first',
-        login_or_signup: 'Login or Signup'
+        login_or_signup: 'Login or Signup',
+        birth_date: 'Birth Date',
+        next: 'Next',
+        first_name: 'First Name',
+        last_name: 'Last Name',
+        check_phone: 'Check Phone',
+        cant_be_less_than: 'can\'t be less than',
+        cant_be_longer_than: 'can\'t be longer than',
+        letters: 'letters',
+        cant_be_blank: 'can\'t be blank',
+        must_contain_letters_numbers_only: 'must contain letters and spaces only',
+        is_not_valid: 'is not valid',
+        something_went_wrong: 'something went wrong',
+        user_with_this_number_exists: 'User with this number already exists',
+        error: 'Error',
+        you_have_too_many_tries: 'you have too many login tries , try again after some time',
+        welcome: 'Welcome',
+        to_our_barbershop: 'To Our Barbershop',
+        we_are_ready: 'We Are Ready',
+        done: 'Done',
+        you_are_not_authorized: 'you are not authorized',
+        user_with_this_phone_was_not_found: 'user with this phone number was not found',
+        code_not_match: 'Code not matched',
+        code_expired_try_again: 'Code expired, Try again',
+        code_expired: 'Code expired',
+        go_back: 'Go Back'
+
 
     },
     he: {
@@ -45,7 +71,35 @@ const getString = new I18n({
         signup: 'הרשמה',
         at: 'ב',
         hello_there_login_first: 'שלום אורח , כנס למערכת תחילה',
-        login_or_signup: 'כנס או הרשם'
+        login_or_signup: 'כנס או הרשם',
+        birth_date: 'תאריך לידה',
+        next: 'הבא',
+        first_name: 'שם פרטי',
+        last_name: 'שם משפחה',
+        check_phone: 'בדוק מספר',
+        cant_be_less_than: 'לא יכול להיות פחות מ',
+        letters: 'אותיות',
+        cant_be_blank: 'לא יכול להיות ריק',
+        cant_be_longer_than: 'לא יכול להיות יותר מ',
+        must_contain_letters_numbers_only: 'חייב להכיל אותיות ורווחים בלבד',
+        is_not_valid: 'לא תקין',
+        something_went_wrong: 'משהו השתבש',
+        user_with_this_number_exists: 'User with this number already exists',
+        error: 'שגיאה',
+        you_have_too_many_tries: 'יש לך המון נסיונות , נסה שוב אחרי כמה זמן',
+        welcome: 'ברוכים הבאים',
+        to_our_barbershop: 'למספרה שלנו',
+        we_are_ready: 'אנחנו מוכנים',
+        done: 'סיים',
+        you_are_not_authorized: 'אין לך הרשאה',
+        user_with_this_phone_was_not_found: 'לא נמצא משתמש עם מספר זה',
+        code_not_match: 'קוד לא נכון',
+        code_expired_try_again: 'הקוד פג תוקף, נסה שוב',
+        code_expired: 'הקוד פג תוקף',
+        go_back: 'חזור'
+
+
+
 
 
     },

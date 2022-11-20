@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import getString from '../localization';
+import showAlert from '../presentation/components/ShowAlert';
 
 export const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
 export const IMAGE_BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
@@ -36,9 +38,15 @@ export const apiCall = async (url, method = 'GET', body, queryParams) => {
         body: body ? JSON.stringify(body) : null
     })
     const json = await result.json()
-
     if (!result.ok) {
-        throw Error('Api Call: ' + json.message)
+        if (result.status === 401) {
+            showAlert(getString.t("error"), getString.t('you_are_not_authorized'))
+        }
+
+        throw {
+            status: result.status,
+            ...json
+        }
     }
 
     return json

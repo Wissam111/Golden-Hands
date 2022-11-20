@@ -55,7 +55,7 @@ const Login = ({ navigation }) => {
 
                   <View style={styles.create}>
                     <Text style={{ marginEnd: 6 }}>{getString.t('dont_have_an_account')}</Text>
-                    <TouchableOpacity onPress={() => { navigation.navigate('SignupScreen') }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('SignupNavigation') }}>
                       <Text style={{ ...globalStyles.font, color: blue }}>{getString.t('create_account')}</Text>
                     </TouchableOpacity>
                   </View>
@@ -65,7 +65,8 @@ const Login = ({ navigation }) => {
                   style={{ marginTop: 30 }}
                   number={4}
                   goBack={hideCode}
-                  callback={(code) => { loginAndVerify(code) }} />
+                  callback={(code) => { loginAndVerify(code) }}
+                  sendAgain={sendAuthVerification} />
             }
           </View>
         </View>

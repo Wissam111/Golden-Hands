@@ -1,12 +1,32 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { globalStyles } from "../styles/global";
 
 
 const HorizontalChip = ({ style, text, imageUrl }) => {
+  const [showDefualtImage, setDefaultImage] = useState(false)
+  const [progressBar, setProgressBar] = useState(true)
+
+
   return (
-    <View style={{ ...styles.container , justifyContent:'flex-start' , ...style }}>
-      <Image style={styles.image} source={{ uri: IMAGE_BASE_URL + imageUrl }} />
+    <View style={{ ...styles.container, justifyContent: 'flex-start', ...style }}>
+      <View style={{ zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+          style={styles.image}
+          source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl }}
+          onLoadEnd={() => {
+            setProgressBar(false)
+          }}
+          onError={(e) => {
+            setDefaultImage(true)
+          }}
+        />
+        <View style={{ position: 'absolute', zIndex: 3 }}>
+          {progressBar && <ActivityIndicator />}
+        </View>
+      </View>
+
       <View style={styles.chip}>
         <Text style={globalStyles.font}>{text}</Text>
       </View>
@@ -29,7 +49,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderWidth: 2,
     borderColor: '#f9f9f9',
-    zIndex: 1
+    zIndex: 2
   },
   chip: {
     backgroundColor: '#f5f5f5',

@@ -4,10 +4,8 @@ import { globalStyles } from "../styles/global";
 
 const Title = ({ text }) => {
     return (
-        <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-            <View style={styles.container} >
-                <Text style={styles.text}>{text}</Text>
-            </View>
+        <View style={styles.container} >
+            <Text style={styles.text}>{text}</Text>
         </View>
     );
 }
@@ -18,7 +16,8 @@ const styles = StyleSheet.create({
     text: {
         borderColor: '#000',
         ...globalStyles.font,
-        fontSize: 24
+        fontSize: 24,
+        ...globalStyles.txtDirection
     },
     container: {
         borderBottomWidth: 2,

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, I18nManager } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { backgroundColor, globalStyles, primaryColor, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
@@ -110,29 +110,30 @@ const Home = ({ navigation }) => {
                         </LinearGradient>
 
                         <View style={{ backgroundColor: backgroundColor }}>
-                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20, alignItems: 'flex-start' }}>
-                                <Text style={{ ...globalStyles.font, ...styles.margin }}>{getString.t('our_staff')}</Text>
-                                {
-                                    workers && (
-                                        <FlatList
-                                            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-                                            ItemSeparatorComponent={<View style={{ padding: 6 }} />}
-                                            centerContent={true}
-                                            showsHorizontalScrollIndicator={false}
-                                            data={workers}
-                                            horizontal
-                                            keyExtractor={(item) => item._id}
-                                            renderItem={({ item: worker }) => (
-                                                <VerticalChip key={worker._id} text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
-                                            )} />)
-                                }
-                            </View>
+                            {workers &&
+                                <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20}}>
+                                    <Text style={{ ...globalStyles.font, ...styles.margin ,...globalStyles.txtDirection }}>{getString.t('our_staff')}</Text>
+                                    {
+                                        workers && (
+                                            <FlatList
+                                                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+                                                ItemSeparatorComponent={<View style={{ padding: 6 }} />}
+                                                centerContent={true}
+                                                showsHorizontalScrollIndicator={false}
+                                                data={workers}
+                                                horizontal
+                                                keyExtractor={(item) => item._id}
+                                                renderItem={({ item: worker }) => (
+                                                    <VerticalChip key={worker._id} text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
+                                                )} />)
+                                    }
+                                </View>
+                            }
 
+                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20 }}>
+                                <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us')}</Text>
 
-                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20, alignItems: 'flex-start' }}>
-                                <Text style={{ ...globalStyles.font, ...styles.margin }}>{getString.t('about_us')}</Text>
-
-                                <Text style={{ ...globalStyles.font, ...styles.margin }}>{getString.t('about_us_details')}</Text>
+                                <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us_details')}</Text>
                             </View>
 
                             <View style={{ padding: 20 }} />
