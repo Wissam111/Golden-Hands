@@ -48,7 +48,18 @@ const getString = new I18n({
         code_not_match: 'Code not matched',
         code_expired_try_again: 'Code expired, Try again',
         code_expired: 'Code expired',
-        go_back: 'Go Back'
+        go_back: 'Go Back',
+        profile: 'Profile',
+        home: 'Home',
+        appointments: 'Appointments',
+        worker_page: 'Worker Page',
+        logout: 'Logout',
+        customers: 'Customers',
+        are_you_sure_logout: 'Are you sure you want to logout?',
+        edit_profile: 'Edit Profile',
+        customers:'Customers',
+        users: 'Users'
+
 
 
     },
@@ -60,7 +71,7 @@ const getString = new I18n({
         our_staff: 'הצוות שלנו',
         about_us: 'קצת עלינו',
         about_us_details: 'הסיפור שלנו מתחיל בחדר קטן בבאקה אלגרביה , התחלנו עם מספר מצומצם של לקחות ולאט לאט גדלנו',
-        login: 'כנס',
+        login: 'כניסה',
         lets_start: 'בוא נתיחל',
         the_login_process: 'תהליך הכניסה למערכת',
         create_account: 'צור חשבון',
@@ -96,7 +107,19 @@ const getString = new I18n({
         code_not_match: 'קוד לא נכון',
         code_expired_try_again: 'הקוד פג תוקף, נסה שוב',
         code_expired: 'הקוד פג תוקף',
-        go_back: 'חזור'
+        go_back: 'חזור',
+        profile: 'פרטי',
+        home: 'הבית',
+        appointments: 'תורים',
+        worker_page: 'דף עובד',
+        logout: 'התנתק',
+        customers: 'לקוחות”',
+        are_you_sure_logout: 'אתה בטוח לצאת מהמערכת?',
+        edit_profile: 'עדכן פרטים',
+        customers:'לקוחות',
+        users: 'משתמשים'
+
+
 
 
 

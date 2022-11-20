@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
 import WorkerRepository from "../../../repository/workerRepository";
+import showAlert from "../../components/ShowAlert";
 
 const useHomeViewModel = () => {
   const { isLoading, dispatch } = useLoadingContext();
@@ -29,6 +30,8 @@ const useHomeViewModel = () => {
     });
   };
 
+
+  // get all workers
   const getWorkers = async (isRefreshing) => {
     if (!isRefreshing) dispatch({ isLoading: true });
     try {
@@ -37,11 +40,13 @@ const useHomeViewModel = () => {
         return { ...prev, workers: workers };
       });
     } catch (e) {
-      console.log('getWorkers:', e);
+      showAlert(getString.t('error'), getString.t('something_went_wrong'))
     }
     dispatch({ isLoading: false });
   };
 
+
+  // get the current loggedin user appointment ( if he has one )
   const getAppointment = async (isRefreshing) => {
     if (!token)
       return
@@ -52,7 +57,7 @@ const useHomeViewModel = () => {
         return { ...prev, appointment: appointment };
       });
     } catch (e) {
-      console.log('getAppointment:', e);
+      showAlert(getString.t('error'), getString.t('something_went_wrong'))
     }
     dispatch({ isLoading: false });
   };

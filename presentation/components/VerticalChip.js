@@ -4,19 +4,20 @@ import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { globalStyles } from "../styles/global";
 
 
-const VerticalChip = ({ style, text, imageUrl }) => {
+const VerticalChip = ({ style, text, imageUrl, imageStyle }) => {
     const [showDefualtImage, setDefaultImage] = useState(false)
     const [progressBar, setProgressBar] = useState(true)
 
     return (
         <View style={{ ...style, ...styles.container }}>
-            <View style={styles.image}>
+            <View style={{ ...styles.image, ...imageStyle }}>
                 <Image
                     style={{
                         width: 120, height: 120, borderRadius: 100, borderWidth: 2,
                         borderColor: '#f9f9f9',
+                        ...imageStyle
                     }}
-                    source={{ uri: IMAGE_BASE_URL + imageUrl }}
+                    source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl }}
                     onLoadEnd={() => {
                         setProgressBar(false)
                     }}

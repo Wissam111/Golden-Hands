@@ -12,6 +12,12 @@ import SignupWelcome from "./screens/signup/SignupWelcome";
 import BookingLoadingScreen from "./screens/BookingLoadingScreen";
 import { SignupContextProvider } from "../context/SignupContext";
 import useAuthContext from "../hooks/useAuthContext";
+import UserAppointments from "./screens/user-appointments/UserAppointments";
+import Profile from "./screens/profile/Profile";
+import getString from "../localization";
+import EditProfile from "./screens/profile/EditProfile";
+import UpdatePhoneNumber from "./screens/profile/UpdatePhoneNubmer";
+import UsersList from "./screens/users-list/UsersList";
 
 const SingupStack = createNativeStackNavigator();
 
@@ -26,6 +32,22 @@ const SignupNavigation = () => {
 
       </SingupStack.Navigator>
     </SignupContextProvider>
+  );
+};
+
+
+
+const ProfileStack = createNativeStackNavigator();
+
+const ProfileNavigation = () => {
+  return (
+    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+
+      <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen name="EditProfile" component={EditProfile} />
+      <ProfileStack.Screen name="UpdatePhoneNumber" component={UpdatePhoneNumber} />
+
+    </ProfileStack.Navigator>
   );
 };
 
@@ -71,9 +93,20 @@ const DrawerNavigation = () => {
       screenOptions={{ headerShown: false }}
       drawerContent={(props) => <CustomDrawer {...props} />}
     >
-      <Drawer.Screen name="Home" component={HomeNavigation} />
+      <Drawer.Screen name="Home" component={HomeNavigation} options={{ title: getString.t('home') }} />
+
+      {user &&
+        <Drawer.Group>
+          <Drawer.Screen name="UserAppointments" component={UserAppointments} options={{ title: getString.t('appointments') }} />
+          <Drawer.Screen name="ProfileNavigation" component={ProfileNavigation} options={{ title: getString.t('profile') }} />
+        </Drawer.Group>
+      }
+
       {user && user.role === 'barber' &&
-        <Drawer.Screen name="DashBoardScreen" component={DashBoardScreen} />
+        <Drawer.Group>
+          <Drawer.Screen name="DashBoardScreen" component={DashBoardScreen} options={{ title: getString.t('worker_page') }} />
+          <Drawer.Screen name="UsersList" component={UsersList} options={{ title: getString.t('users') }} />
+        </Drawer.Group>
       }
     </Drawer.Navigator>
   );

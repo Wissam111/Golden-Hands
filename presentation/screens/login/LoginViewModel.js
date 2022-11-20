@@ -31,6 +31,9 @@ const LoginViewModel = () => {
 
   // send auth verification sms message
   const sendAuthVerification = async () => {
+    if (!state.phone || state.phone.trim().length == 0) {
+      return
+    }
     setLoading({ isLoading: true });
     try {
       const data = await authRepository.sendAuthVerification(state.phone, true);

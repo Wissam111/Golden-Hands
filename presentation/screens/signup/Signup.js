@@ -10,6 +10,9 @@ import SignupViewModel from "./SignupViewModel";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState } from "react";
 import moment from 'moment'
+import TextInputIcon from "../../components/TextInputIcon";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 
 const Signup = ({ navigation }) => {
     const { firstName, firstNameError, lastName, lastNameError, birthDate, birthDateError, onInputChanged, navigateToSignupPhone } = SignupViewModel()
@@ -36,36 +39,35 @@ const Signup = ({ navigation }) => {
                 <Spacer space={30} />
 
                 <View>
-                    <TextInput
-                        style={{ ...globalStyles.input, textAlign: I18nManager.isRTL ? 'right' : 'left' }}
+
+
+
+                    <TextInputIcon
+                        iconStart={<MaterialCommunityIcons name="card-account-details-outline" size={24} color="black" />}
                         placeholder={getString.t('first_name')}
                         onChangeText={(s) => { onInputChanged('firstName', s) }}
                         value={firstName}
                     />
-                    <View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <Text style={globalStyles.inputError}>{firstNameError}</Text>
-                    </View>
+                    <Text style={{ ...globalStyles.inputError, ...globalStyles.txtDirection }}>{firstNameError}</Text>
 
                     <Spacer space={6} />
 
-                    <TextInput
-                        style={{ ...globalStyles.input, textAlign: I18nManager.isRTL ? 'right' : 'left' }}
+                    <TextInputIcon
+                        iconStart={<MaterialCommunityIcons name="account-details-outline" size={24} color="black" />}
                         placeholder={getString.t('last_name')}
                         onChangeText={(s) => { onInputChanged('lastName', s) }}
                         value={lastName}
                     />
-                    <View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <Text style={globalStyles.inputError}>{lastNameError}</Text>
-                    </View>
+                    <Text style={{ ...globalStyles.inputError, ...globalStyles.txtDirection }}>{lastNameError}</Text>
                     <Spacer space={6} />
 
                     <TouchableOpacity onPress={() => { setShowDatePicker(true) }}>
-                        <View style={{ ...globalStyles.input, alignItems: 'flex-start' }}>
+                        <View style={{ ...globalStyles.input, alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <Fontisto name="date" size={24} color="black" />
+                            <Spacer space={6} />
                             <Text>{birthDate ? moment(birthDate).format('DD/MM/yyyy') : getString.t('birth_date')}</Text>
                         </View>
-                        <View style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <Text style={globalStyles.inputError}>{birthDateError}</Text>
-                        </View>
+                        <Text style={{ ...globalStyles.inputError, ...globalStyles.txtDirection }}>{birthDateError}</Text>
                     </TouchableOpacity>
 
                     {showDatePicker &&
@@ -76,7 +78,7 @@ const Signup = ({ navigation }) => {
                             is24Hour={true}
                             onChange={onChange}
                             maximumDate={new Date()}
-                            minimumDate={new Date(1950, 0, 1)} 
+                            minimumDate={new Date(1950, 0, 1)}
                         />
                     }
 

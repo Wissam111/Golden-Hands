@@ -6,9 +6,11 @@ import BackButton from "../../components/BackButton";
 import DefaultButton from "../../components/DefaultButton";
 import Opt from "../../components/Opt";
 import Spacer from "../../components/Spacer";
+import TextInputIcon from "../../components/TextInputIcon";
 import Title from "../../components/Title";
 import { globalStyles } from "../../styles/global";
 import SignupViewModel from "./SignupViewModel";
+import { AntDesign } from '@expo/vector-icons';
 
 
 const SignupPhone = ({ navigation }) => {
@@ -41,15 +43,13 @@ const SignupPhone = ({ navigation }) => {
                     </View>
 
                     {!showCode &&
-                        <TextInput
-                            style={{ ...globalStyles.input }}
+                        <TextInputIcon
+                            iconStart={<AntDesign name="phone" size={24} color="black" />}
                             onChangeText={(s) => { onInputChanged('phone', s) }}
                             value={phone}
                             keyboardType='numeric' />
                     }
-                    <View style={{ alignItems: 'flex-start' }}>
-                        <Text style={globalStyles.inputError}>{phoneError}</Text>
-                    </View>
+                    <Text style={{ ...globalStyles.inputError, ...globalStyles.txtDirection }}>{phoneError}</Text>
 
                     {showCode &&
                         <Opt number={4} callback={signup} goBack={hideCode} sendAgain={sendAuthVerification} />

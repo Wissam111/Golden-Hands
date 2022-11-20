@@ -10,6 +10,8 @@ import Opt from "../../components/Opt";
 import { I18nManager } from 'react-native';
 import BackButton from "../../components/BackButton";
 import Spacer from "../../components/Spacer";
+import TextInputIcon from "../../components/TextInputIcon";
+import { AntDesign } from '@expo/vector-icons';
 
 
 const Login = ({ navigation }) => {
@@ -41,16 +43,20 @@ const Login = ({ navigation }) => {
               <Text style={{ ...globalStyles.font, alignItems: 'flex-start', fontSize: 26 }}>{getString.t('the_login_process')}</Text>
             </View>
 
+            <Spacer space={18} />
+
             {
               (!showCode) ?
                 <View>
-                  <TextInput
+                  <TextInputIcon
+                    iconStart={<AntDesign name="phone" size={24} color="black" />}
                     onChangeText={onPhoneChanged}
                     value={phone}
                     placeholder={getString.t('phone')}
-                    keyboardType="numeric"
-                    style={styles.input} />
+                    keyboardType="numeric" />
 
+                  <Spacer space={10} />
+                  
                   <DefaultButton style={styles.button} text={getString.t('login')} onPress={sendAuthVerification} />
 
                   <View style={styles.create}>
@@ -91,21 +97,10 @@ const styles = StyleSheet.create({
     marginTop: 16
   },
 
-  button: {
-    marginTop: 22
-  },
+
 
   topText: {
     justifyConent: 'flex-start',
     alignItems: 'flex-start'
-  },
-  input: {
-    borderWidth: 1,
-    padding: 8,
-    borderRadius: 8,
-    marginTop: 22,
-    justifyConent: 'flex-start',
-    ...globalStyles.font,
-    textAlign: I18nManager.isRTL ? 'right' : 'left'
   }
 })
