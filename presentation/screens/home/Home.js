@@ -4,7 +4,7 @@ import { backgroundColor, globalStyles, primaryColor, surfaceColor, white } from
 import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
-import HomeViewModel from "./HomeViewModel";
+import useHomeViewModel from "./HomeViewModel";
 import { useCallback, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/native";
@@ -55,7 +55,7 @@ const LoggedInHeader = ({ appointment }) => {
 const Home = ({ navigation }) => {
     const isFocused = useIsFocused();
     const { user } = useAuthContext()
-    const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = HomeViewModel()
+    const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = useHomeViewModel()
 
     useEffect(() => {
         if (isFocused) {

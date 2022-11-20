@@ -25,7 +25,8 @@ const LoginViewModel = () => {
   };
   const sendAuthVerification = async () => {
     setLoading({ isLoading: true });
-    const data = await authRepository.sendAuthVerification(state.phone);
+    const data = await authRepository.sendAuthVerification(state.phone , true);
+    console.log('----',data);
     verifyId = data.verifyId;
     console.log(verifyId);
     if (verifyId) {

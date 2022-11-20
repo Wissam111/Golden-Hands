@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
 export const IMAGE_BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
@@ -11,21 +12,33 @@ const serialize = function (obj) {
     return '?' + str.join("&");
 }
 
+const getToken = async () => {
+    try {
+        const jsonValue = await AsyncStorage.getItem('authData')
+        if (jsonValue == null)
+            return null
+        const { token } = JSON.parse(jsonValue)
+        return token
+    } catch (e) {
+        console.log('getToken:', e);
+    }
+}
+
 
 export const apiCall = async (url, method = 'GET', body, queryParams) => {
-    const customURL = queryParams ? BASE_URL + url + serialize(queryParams) : BASE_URL + url
-
+    // const customURL = queryParams ? BASE_URL + url + serialize(queryParams) : BASE_URL + url
     const result = await fetch(BASE_URL + url, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE3YjZkZWQ0MTdlNGNiZmZkZTRkYTUiLCJpYXQiOjE2NjgyODU3NzEsImV4cCI6MTY2ODg5MDU3MX0.TBpzv6zfOigaWjtSfXgv0viZRkca-tnJx7Lkf1idOW4`
+            'Authorization': `Bearer ${await getToken()}`
         },
         method: method,
         body: body ? JSON.stringify(body) : null
     })
     const json = await result.json()
+
     if (!result.ok) {
-        throw Error(json.message)
+        throw Error('Api Call: ' + json.message)
     }
 
     return json
