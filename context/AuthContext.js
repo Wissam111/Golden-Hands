@@ -24,7 +24,7 @@ export const authReducer = (state, action) => {
 }
 
 
-const getAuthData = async (dispatch) => {
+const getAuthDataFromLoaclStorage = async (dispatch) => {
     try {
         const jsonValue = await AsyncStorage.getItem('authData')
         const data = jsonValue != null ? JSON.parse(jsonValue) : null;
@@ -48,7 +48,7 @@ export const AuthContextProvider = ({ children }) => {
   });
 
     useEffect(() => {
-        getAuthData(dispatch)
+        getAuthDataFromLoaclStorage(dispatch)
     }, [])
 
     return (

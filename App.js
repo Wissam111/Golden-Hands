@@ -26,7 +26,7 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <View style={{ backgroundColor: primaryColor, flex: 1 }}>
-        <SafeAreaView style={AndroidSafeAreaStyle}>
+        {/* <SafeAreaView style={AndroidSafeAreaStyle}> */}
           {/* <StatusBar barStyle="light-content" /> */}
           <LoadingContextProvider>
             <AuthContextProvider>
@@ -36,7 +36,7 @@ export default function App() {
               </TailwindProvider>
             </AuthContextProvider>
           </LoadingContextProvider>
-        </SafeAreaView>
+        {/* </SafeAreaView> */}
       </View>
     );
   }

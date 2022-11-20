@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import useAuthContext from "../../../hooks/useAuthContext";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
 import WorkerRepository from "../../../repository/workerRepository";
 
-const HomeViewModel = () => {
+const useHomeViewModel = () => {
   const { isLoading, dispatch } = useLoadingContext();
+  const { token } = useAuthContext()
   const [state, setState] = useState({
     workers: null,
     isLoading: false,
@@ -20,7 +22,8 @@ const HomeViewModel = () => {
       return { ...prev, refreshing: true };
     });
     await getWorkers(true);
-    await getAppointment(true);
+    if (token)
+      await getAppointment(true);
     setState((prev) => {
       return { ...prev, refreshing: false };
     });
@@ -34,12 +37,14 @@ const HomeViewModel = () => {
         return { ...prev, workers: workers };
       });
     } catch (e) {
-      console.log(e);
+      console.log('getWorkers:', e);
     }
     dispatch({ isLoading: false });
   };
 
   const getAppointment = async (isRefreshing) => {
+    if (!token)
+      return
     if (!isRefreshing) dispatch({ isLoading: true });
     try {
       const { appointment } = await appointmentRepository.getAppointment();
@@ -47,7 +52,7 @@ const HomeViewModel = () => {
         return { ...prev, appointment: appointment };
       });
     } catch (e) {
-      console.log(e);
+      console.log('getAppointment:', e);
     }
     dispatch({ isLoading: false });
   };
@@ -55,4 +60,4 @@ const HomeViewModel = () => {
   return { ...state, getWorkers, getAppointment, onRefresh };
 };
 
-export default HomeViewModel;
+export default useHomeViewModel;

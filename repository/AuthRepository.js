@@ -4,10 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthRepository = () => {
 
-    const sendAuthVerification = async (phone) => {
-        console.log(phone);
+    const sendAuthVerification = async (phone , isLogin , isSignup) => {
         try {
-            const data = await apiCall('send-auth-verification', 'POST', { phone })
+            const data = await apiCall('send-auth-verification', 'POST', { phone , isLogin , isSignup })
             return data
         } catch (e) {
             console.log(e);
