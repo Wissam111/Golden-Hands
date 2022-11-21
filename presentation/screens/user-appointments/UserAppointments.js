@@ -20,7 +20,6 @@ const UserAppointments = () => {
 
             <Spacer space={16} />
 
-            {appointments &&
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 8 }}
@@ -36,7 +35,6 @@ const UserAppointments = () => {
                             <Text>{item.end_time}</Text>
                         </View>
                     )} />
-            }
 
         </View>
     );

@@ -24,6 +24,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import Splash from "./screens/Splash";
 
 const SingupStack = createNativeStackNavigator();
 
@@ -104,11 +105,10 @@ const DrawerNavigation = () => {
           backgroundColor: 'transparent'
         },
         drawerActiveTintColor: "#000",
-        drawerLabelStyle: { ...globalStyles.font, fontSize: 18, color: '#000', textAlign: 'left'},
-        drawerItemStyle: {  borderColor: backgroundColor, borderWidth: 1 , borderRadius: 12 }
+        drawerLabelStyle: { ...globalStyles.font, fontSize: 18, color: '#000', textAlign: 'left' },
+        drawerItemStyle: { borderColor: backgroundColor, borderWidth: 1, borderRadius: 12 }
       }}
       drawerContent={(props) => <CustomDrawer {...props} />}
-
     >
       <Drawer.Screen name="Home" component={HomeNavigation}
         options={{
@@ -116,7 +116,6 @@ const DrawerNavigation = () => {
             <AntDesign name="home" size={size} color={focused ? orange1 : '#ccc'} />
           ),
           title: getString.t('home'),
-
         }} />
 
 
@@ -158,10 +157,26 @@ const DrawerNavigation = () => {
   );
 };
 
+
+const SplashStack = createNativeStackNavigator();
+
+
+const SplashNavigation = () => {
+
+  return (
+    <SplashStack.Navigator screenOptions={{ headerShown: false }}>
+      <SplashStack.Screen name="Splash" component={Splash} />
+      <SplashStack.Screen name="DrawerNavigation" component={DrawerNavigation} />
+    </SplashStack.Navigator>
+  );
+};
+
+
+
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <DrawerNavigation />
+      <SplashNavigation />
     </NavigationContainer>
   );
 };
