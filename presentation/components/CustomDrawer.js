@@ -36,6 +36,7 @@ const CustomDrawer = (props) => {
                         }} />
                     </View>}
 
+                <SafeAreaView />
             </View>
         </View>
     );

@@ -1,4 +1,4 @@
-import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, Text, TouchableWithoutFeedback, Keyboard, SafeAreaView } from "react-native";
 import BackButton from "../../components/BackButton";
 import DefaultButton from "../../components/DefaultButton";
 import Opt from "../../components/Opt";
@@ -62,6 +62,7 @@ const UpdatePhoneNumber = ({ navigation }) => {
                 {!showCode &&
                     <DefaultButton text={getString.t('update')} onPress={sendAuthVerification} />
                 }
+                <SafeAreaView />
             </View>
         </TouchableWithoutFeedback>
     );

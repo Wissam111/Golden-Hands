@@ -1,4 +1,4 @@
-import { Keyboard, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Keyboard, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import getString from "../../../localization";
 import BackButton from "../../components/BackButton";
 import Spacer from "../../components/Spacer";
@@ -94,7 +94,7 @@ const EditProfile = ({ navigation }) => {
                 <Spacer style={{ flex: 1 }} />
 
                 <DefaultButton text={getString.t('update')} onPress={() => { update() }} />
-
+                <SafeAreaView />
             </View>
         </TouchableWithoutFeedback>
     );

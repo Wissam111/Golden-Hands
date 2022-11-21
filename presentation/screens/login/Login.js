@@ -27,57 +27,64 @@ const Login = ({ navigation }) => {
   }, [navigateToHome])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1, padding: 8, backgroundColor: backgroundColor }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <BackButton onPress={navigation.goBack} />
-            <Spacer space={6} />
-            <Title text={getString.t('login')} />
-          </View>
-
-
-          <View style={styles.container}>
-            <View style={styles.topText}>
-              <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold', alignItems: 'flex-start', fontSize: 30 }}>{getString.t('lets_start')}</Text>
-              <Text style={{ ...globalStyles.font, alignItems: 'flex-start', fontSize: 26 }}>{getString.t('the_login_process')}</Text>
-            </View>
-
-            <Spacer space={18} />
-
-            {
-              (!showCode) ?
-                <View>
-                  <TextInputIcon
-                    iconStart={<AntDesign name="phone" size={24} color="black" />}
-                    onChangeText={onPhoneChanged}
-                    value={phone}
-                    placeholder={getString.t('phone')}
-                    keyboardType="numeric" />
-
-                  <Spacer space={10} />
-                  
-                  <DefaultButton style={styles.button} text={getString.t('login')} onPress={sendAuthVerification} />
-
-                  <View style={styles.create}>
-                    <Text style={{ marginEnd: 6 }}>{getString.t('dont_have_an_account')}</Text>
-                    <TouchableOpacity onPress={() => { navigation.navigate('SignupNavigation') }}>
-                      <Text style={{ ...globalStyles.font, color: blue }}>{getString.t('create_account')}</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                :
-                < Opt
-                  style={{ marginTop: 30 }}
-                  number={4}
-                  goBack={hideCode}
-                  callback={(code) => { loginAndVerify(code) }}
-                  sendAgain={sendAuthVerification} />
-            }
-          </View>
+    // <SafeAreaView style={{ flex: 1 }}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1, padding: 8, backgroundColor: backgroundColor }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <BackButton onPress={navigation.goBack} />
+          <Spacer space={6} />
+          <Title text={getString.t('login')} />
         </View>
-      </TouchableWithoutFeedback>
-    </SafeAreaView>
+
+        <Spacer style={{ flex: 1 }} />
+
+        <View style={styles.container}>
+          <View style={styles.topText}>
+            <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold', alignItems: 'flex-start', fontSize: 30 }}>{getString.t('lets_start')}</Text>
+            <Text style={{ ...globalStyles.font, alignItems: 'flex-start', fontSize: 26 }}>{getString.t('the_login_process')}</Text>
+          </View>
+
+          <Spacer space={18} />
+
+          {
+            (!showCode) ?
+              <View>
+                <TextInputIcon
+                  iconStart={<AntDesign name="phone" size={24} color="black" />}
+                  onChangeText={onPhoneChanged}
+                  value={phone}
+                  placeholder={getString.t('phone')}
+                  keyboardType="numeric" />
+
+                <Spacer space={10} />
+
+                <DefaultButton style={styles.button} text={getString.t('login')} onPress={sendAuthVerification} />
+
+                <View style={styles.create}>
+                  <Text style={{ marginEnd: 6 }}>{getString.t('dont_have_an_account')}</Text>
+                  <TouchableOpacity onPress={() => { navigation.navigate('SignupNavigation') }}>
+                    <Text style={{ ...globalStyles.font, color: blue }}>{getString.t('create_account')}</Text>
+                  </TouchableOpacity>
+                </View>
+
+              </View>
+              :
+              < Opt
+                style={{ marginTop: 30 }}
+                number={4}
+                goBack={hideCode}
+                callback={(code) => { loginAndVerify(code) }}
+                sendAgain={sendAuthVerification} />
+          }
+        </View>
+
+        <Spacer style={{ flex: 2 }} />
+
+
+        <SafeAreaView />
+      </View>
+    </TouchableWithoutFeedback>
+    // </SafeAreaView>
   );
 };
 
@@ -88,6 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    zIndex: 3
   },
 
   create: {
@@ -96,9 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 16
   },
-
-
-
   topText: {
     justifyConent: 'flex-start',
     alignItems: 'flex-start'

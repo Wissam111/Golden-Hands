@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, I18nManager, Image ,TouchableOpacity} from "react-native";
+import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { backgroundColor, globalStyles, primaryColor, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
@@ -45,7 +45,7 @@ const LoggedInHeader = ({ appointment }) => {
 
                             <Spacer space={20} />
 
-                            <TouchableOpacity onPress={() => { openWaze()}}>
+                            <TouchableOpacity onPress={() => { openWaze() }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Image style={{ width: 30, height: 30 }} source={require('../../../assets/imgs/location.png')} />
                                     <Spacer space={6} />
@@ -70,11 +70,12 @@ const Home = ({ navigation }) => {
     const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = useHomeViewModel()
 
     useEffect(() => {
-        if (isFocused && user) {
-            getAppointment()
+        if (isFocused) {
+            if (user)
+                getAppointment()
             getWorkers()
         }
-    }, [isFocused , user])
+    }, [isFocused, user])
 
 
     const refresh = useCallback(() => {
@@ -82,7 +83,6 @@ const Home = ({ navigation }) => {
     }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: primaryColor }}>
             <View style={{ ...styles.backLayer }}>
                 <View style={{ paddingHorizontal: 16, paddingVertical: 36 }}>
                     {user &&
@@ -148,12 +148,13 @@ const Home = ({ navigation }) => {
                                 <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us_details')}</Text>
                             </View>
 
-                            <View style={{ padding: 20 }} />
+                            <Spacer space={12}/>
+
+                            <SafeAreaView />
                         </View>
                     </ScrollView>
                 </View>
             </View>
-        </SafeAreaView>
     );
 }
 

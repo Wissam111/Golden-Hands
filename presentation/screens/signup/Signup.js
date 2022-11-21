@@ -88,7 +88,7 @@ const Signup = ({ navigation }) => {
                 <Spacer style={{ flex: 1 }} space={30} />
 
                 <DefaultButton text={getString.t('next')} onPress={navigateToSignupPhone} />
-
+                <SafeAreaView />
 
             </View>
         </TouchableWithoutFeedback>

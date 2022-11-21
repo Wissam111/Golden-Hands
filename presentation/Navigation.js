@@ -73,7 +73,6 @@ const HomeNavigation = () => {
 
       <HomeStack.Screen name="SignupNavigation" component={SignupNavigation} />
 
-
       <HomeStack.Screen
         name="BookAppointment"
         component={BookAppointmentScreen}

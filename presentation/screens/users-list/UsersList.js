@@ -15,15 +15,18 @@ const UsersList = () => {
 
 
     return (
-        <View style={{ padding: 8, flex: 1 }}>
-            <Title text='Users List' />
+        <View style={{ flex: 1 }}>
+            <View style={{ padding: 8 }}>
+                <Title text='Users List' />
+
+            </View>
 
             <Text>{users && users.length}</Text>
             <FlatList
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 8 }}
+                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 8 , paddingBottom: 20 ,
+                borderTopEndRadius: 26, borderTopStartRadius: 26 , overflow:'hidden'}}
                 ItemSeparatorComponent={<Spacer space={6} />}
-                style={{ flex: 1, backgroundColor: white, borderTopEndRadius: 26, borderTopStartRadius: 26 }}
                 data={users}
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (

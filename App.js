@@ -26,17 +26,16 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <View style={{ backgroundColor: primaryColor, flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <StatusBar barStyle="light-content" />
-          <LoadingContextProvider>
-            <AuthContextProvider>
-              <TailwindProvider>
-                <Loader />
-                <Navigation />
-              </TailwindProvider>
-            </AuthContextProvider>
-          </LoadingContextProvider>
-        </SafeAreaView>
+        <SafeAreaView />
+        <StatusBar barStyle="light-content" />
+        <LoadingContextProvider>
+          <AuthContextProvider>
+            <TailwindProvider>
+              <Loader />
+              <Navigation />
+            </TailwindProvider>
+          </AuthContextProvider>
+        </LoadingContextProvider>
       </View>
     );
   }

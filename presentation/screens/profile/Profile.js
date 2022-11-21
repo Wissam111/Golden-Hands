@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Title from "../../components/Title";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Spacer from "../../components/Spacer";
@@ -23,7 +23,7 @@ const Profile = ({ navigation }) => {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: backgroundColor }}>
             <View style={{
                 backgroundColor: primaryColor,
                 padding: 8,
@@ -58,7 +58,7 @@ const Profile = ({ navigation }) => {
 
             </View>
 
-            <ScrollView style={{ backgroundColor: backgroundColor }}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: backgroundColor, flex: 1 }}>
 
                 <View style={{ backgroundColor: backgroundColor }}>
                     <Spacer space={16} />
@@ -87,9 +87,11 @@ const Profile = ({ navigation }) => {
                         <Spacer space={6} />
                         <HorizontalChip text='tarik husin' />
                     </View>
-
                 </View>
+
             </ScrollView>
+
+            <SafeAreaView />
         </View>
     );
 }

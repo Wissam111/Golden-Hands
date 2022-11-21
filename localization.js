@@ -60,7 +60,8 @@ const getString = new I18n({
         customers: 'Customers',
         users: 'Users',
         update: 'Update',
-        phone_number: 'Phone Number'
+        phone_number: 'Phone Number',
+        lets_get_haircut: 'let\'s get a hair cut'
 
 
 
@@ -121,7 +122,9 @@ const getString = new I18n({
         customers: 'לקוחות',
         users: 'משתמשים',
         update: 'עדכן',
-        phone_number: 'מספר טלפון'
+        phone_number: 'מספר טלפון',
+        lets_get_haircut: 'בוא נסתפר'
+
 
 
 

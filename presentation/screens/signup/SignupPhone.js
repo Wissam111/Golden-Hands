@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, TextInput, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, TextInput, Text, TouchableWithoutFeedback, Keyboard, SafeAreaView } from "react-native";
 import useAuthContext from "../../../hooks/useAuthContext";
 import getString from "../../../localization";
 import BackButton from "../../components/BackButton";
@@ -63,7 +63,7 @@ const SignupPhone = ({ navigation }) => {
                         }
                     }} />
                 }
-
+                <SafeAreaView />
             </View>
         </TouchableWithoutFeedback>
     );

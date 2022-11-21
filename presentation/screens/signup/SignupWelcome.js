@@ -1,4 +1,4 @@
-import { Image, Text, View } from "react-native";
+import { Image, SafeAreaView, Text, View } from "react-native";
 import DefaultButton from "../../components/DefaultButton";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
@@ -32,7 +32,7 @@ const SignupWelcome = ({ navigation }) => {
                     routes: [{ name: 'HomeScreen' }],
                 });
             }} />
-
+            <SafeAreaView />
 
 
         </View>
