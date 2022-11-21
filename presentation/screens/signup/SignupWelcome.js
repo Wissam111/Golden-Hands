@@ -20,8 +20,8 @@ const SignupWelcome = ({ navigation }) => {
                 <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold', fontSize: 40 }}>{getString.t('welcome')}</Text>
                 <Text style={{ ...globalStyles.font, fontSize: 32 }}>{getString.t('to_our_barbershop')}</Text>
                 <Text style={{ ...globalStyles.font, fontSize: 28 }}>{getString.t('we_are_ready')}</Text>
-
-                <Image style={{ width: 160, height: 160 }} source={require('../../../assets/imgs/barber_logo-2.png')} />
+                <Spacer space={6} />
+                <Image style={{}} source={require('../../../assets/imgs/barber-logo.png')} />
             </View>
 
 

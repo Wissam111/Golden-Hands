@@ -15,7 +15,14 @@ const UserRepository = () => {
     }
 
 
-    return { getUser, updateUser  }
+    // only for superusers
+    const getUsers = async (id) => {
+        const data = await apiCall(`users`)
+        return data
+    }
+
+
+    return { getUser, updateUser , getUsers }
 }
 
 export default UserRepository;

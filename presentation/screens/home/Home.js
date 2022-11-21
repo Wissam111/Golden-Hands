@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, I18nManager } from "react-native";
+import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, I18nManager, Image ,TouchableOpacity} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { backgroundColor, globalStyles, primaryColor, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
@@ -13,6 +13,10 @@ import moment from "moment";
 import getString from "../../../localization";
 import useAuthContext from "../../../hooks/useAuthContext";
 import Spacer from "../../components/Spacer";
+import { openMaps, openWaze, openWhatsapp } from "../../../core/linking";
+
+
+
 
 
 const GeustHeader = () => {
@@ -39,7 +43,15 @@ const LoggedInHeader = ({ appointment }) => {
                                 text={`${appointment.customer.firstName} ${appointment.customer.lastName}`}
                                 imageUrl={appointment.customer.image} />
 
-                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
+                            <Spacer space={20} />
+
+                            <TouchableOpacity onPress={() => { openWaze()}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image style={{ width: 30, height: 30 }} source={require('../../../assets/imgs/location.png')} />
+                                    <Spacer space={6} />
+                                    <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
                     )
                     : (
@@ -58,11 +70,11 @@ const Home = ({ navigation }) => {
     const { isLoading, refreshing, workers, appointment, getAppointment, getWorkers, onRefresh } = useHomeViewModel()
 
     useEffect(() => {
-        if (isFocused) {
+        if (isFocused && user) {
             getAppointment()
             getWorkers()
         }
-    }, [isFocused])
+    }, [isFocused , user])
 
 
     const refresh = useCallback(() => {
@@ -109,10 +121,10 @@ const Home = ({ navigation }) => {
 
                         </LinearGradient>
 
-                        <View style={{ backgroundColor: backgroundColor , minHeight: '100%' }}>
+                        <View style={{ backgroundColor: backgroundColor, minHeight: '100%' }}>
                             {workers &&
-                                <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20}}>
-                                    <Text style={{ ...globalStyles.font, ...styles.margin ,...globalStyles.txtDirection }}>{getString.t('our_staff')}</Text>
+                                <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20 }}>
+                                    <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('our_staff')}</Text>
                                     {
                                         workers && (
                                             <FlatList

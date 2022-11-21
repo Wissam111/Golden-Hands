@@ -18,6 +18,12 @@ import getString from "../localization";
 import EditProfile from "./screens/profile/EditProfile";
 import UpdatePhoneNumber from "./screens/profile/UpdatePhoneNubmer";
 import UsersList from "./screens/users-list/UsersList";
+import { backgroundColor, globalStyles, orange1 } from "./styles/global";
+import { AntDesign } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const SingupStack = createNativeStackNavigator();
 
@@ -84,28 +90,68 @@ const HomeNavigation = () => {
 
 const Drawer = createDrawerNavigator();
 
+
+
 const DrawerNavigation = () => {
   const { user } = useAuthContext()
 
   return (
     <Drawer.Navigator
       useLegacyImplementation
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        drawerStyle: {
+          backgroundColor: 'transparent'
+        },
+        drawerActiveTintColor: "#000",
+        drawerLabelStyle: { ...globalStyles.font, fontSize: 18, color: '#000', textAlign: 'left'},
+        drawerItemStyle: {  borderColor: backgroundColor, borderWidth: 1 , borderRadius: 12 }
+      }}
       drawerContent={(props) => <CustomDrawer {...props} />}
+
     >
-      <Drawer.Screen name="Home" component={HomeNavigation} options={{ title: getString.t('home') }} />
+      <Drawer.Screen name="Home" component={HomeNavigation}
+        options={{
+          drawerIcon: ({ focused, size }) => (
+            <AntDesign name="home" size={size} color={focused ? orange1 : '#ccc'} />
+          ),
+          title: getString.t('home'),
+
+        }} />
+
 
       {user &&
         <Drawer.Group>
-          <Drawer.Screen name="UserAppointments" component={UserAppointments} options={{ title: getString.t('appointments') }} />
-          <Drawer.Screen name="ProfileNavigation" component={ProfileNavigation} options={{ title: getString.t('profile') }} />
+          <Drawer.Screen name="UserAppointments" component={UserAppointments} options={{
+            drawerIcon: ({ focused, size }) => (
+              <Fontisto name="date" size={size} color={focused ? orange1 : '#ccc'} />
+            ),
+            title: getString.t('appointments')
+          }} />
+          <Drawer.Screen name="ProfileNavigation" component={ProfileNavigation} options={{
+            drawerIcon: ({ focused, size }) => (
+              <MaterialCommunityIcons name="card-account-details-outline" size={size} color={focused ? orange1 : '#ccc'} />
+            ),
+            title: getString.t('profile')
+          }} />
         </Drawer.Group>
       }
 
+
       {user && user.role === 'barber' &&
         <Drawer.Group>
-          <Drawer.Screen name="DashBoardScreen" component={DashBoardScreen} options={{ title: getString.t('worker_page') }} />
-          <Drawer.Screen name="UsersList" component={UsersList} options={{ title: getString.t('users') }} />
+          <Drawer.Screen name="DashBoardScreen" component={DashBoardScreen} options={{
+            drawerIcon: ({ focused, size }) => (
+              <MaterialIcons name="work-outline" size={size} color={focused ? orange1 : '#ccc'} />
+            ),
+            title: getString.t('worker_page')
+          }} />
+          <Drawer.Screen name="UsersList" component={UsersList} options={{
+            drawerIcon: ({ focused, size }) => (
+              <FontAwesome5 name="users" size={size} color={focused ? orange1 : '#ccc'} />
+            ),
+            title: getString.t('users')
+          }} />
         </Drawer.Group>
       }
     </Drawer.Navigator>

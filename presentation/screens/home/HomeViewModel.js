@@ -1,13 +1,14 @@
 import { useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
 import useLoadingContext from "../../../hooks/useLoadingContext";
+import getString from "../../../localization";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
 import WorkerRepository from "../../../repository/workerRepository";
 import showAlert from "../../components/ShowAlert";
 
 const useHomeViewModel = () => {
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
-  const { token } = useAuthContext()
+  const { user } = useAuthContext()
   const [state, setState] = useState({
     workers: null,
     isLoading: false,
@@ -23,7 +24,7 @@ const useHomeViewModel = () => {
       return { ...prev, refreshing: true };
     });
     await getWorkers(true);
-    if (token)
+    if (user)
       await getAppointment(true);
     setState((prev) => {
       return { ...prev, refreshing: false };
@@ -48,7 +49,7 @@ const useHomeViewModel = () => {
 
   // get the current loggedin user appointment ( if he has one )
   const getAppointment = async (isRefreshing) => {
-    if (!token)
+    if (!user)
       return
     if (!isRefreshing) setIsLoading({ isLoading: true });
     try {
@@ -63,7 +64,7 @@ const useHomeViewModel = () => {
   };
 
 
-  
+
 
 
 

@@ -6,7 +6,12 @@ const AppointmentRepository = () => {
     return data;
   };
 
-  return { getAppointment };
+  const getUserAppointments = async () => {
+    const data = await apiCall("appointments/user-appointments");
+    return data;
+  }
+
+  return { getAppointment  , getUserAppointments};
 };
 
 export default AppointmentRepository;

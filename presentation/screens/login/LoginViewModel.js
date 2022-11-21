@@ -65,7 +65,6 @@ const LoginViewModel = () => {
 
   // login and verfiy the sms code
   const loginAndVerify = async (code) => {
-    console.log(code, verifyId);
     if (!verifyId) return;
     setLoading({ isLoading: true });
 

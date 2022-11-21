@@ -69,8 +69,8 @@ const getAuthDataFromLoaclStorage = async (dispatch) => {
                 expireDate
             } : null
         })
-
-        getUserProfile(dispatch, user._id)
+        if (user)
+            getUserProfile(dispatch, user._id)
     } catch (e) {
         console.log(e);
     }
