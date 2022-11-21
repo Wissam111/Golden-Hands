@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
@@ -6,7 +6,7 @@ import WorkerRepository from "../../../repository/workerRepository";
 import showAlert from "../../components/ShowAlert";
 
 const useHomeViewModel = () => {
-  const { isLoading, dispatch } = useLoadingContext();
+  const { isLoading, dispatch: setIsLoading } = useLoadingContext();
   const { token } = useAuthContext()
   const [state, setState] = useState({
     workers: null,
@@ -33,7 +33,7 @@ const useHomeViewModel = () => {
 
   // get all workers
   const getWorkers = async (isRefreshing) => {
-    if (!isRefreshing) dispatch({ isLoading: true });
+    if (!isRefreshing) setIsLoading({ isLoading: true });
     try {
       const { workers } = await workerRepository.getWorkers();
       setState((prev) => {
@@ -42,7 +42,7 @@ const useHomeViewModel = () => {
     } catch (e) {
       showAlert(getString.t('error'), getString.t('something_went_wrong'))
     }
-    dispatch({ isLoading: false });
+    setIsLoading({ isLoading: false });
   };
 
 
@@ -50,7 +50,7 @@ const useHomeViewModel = () => {
   const getAppointment = async (isRefreshing) => {
     if (!token)
       return
-    if (!isRefreshing) dispatch({ isLoading: true });
+    if (!isRefreshing) setIsLoading({ isLoading: true });
     try {
       const { appointment } = await appointmentRepository.getAppointment();
       setState((prev) => {
@@ -59,8 +59,13 @@ const useHomeViewModel = () => {
     } catch (e) {
       showAlert(getString.t('error'), getString.t('something_went_wrong'))
     }
-    dispatch({ isLoading: false });
+    setIsLoading({ isLoading: false });
   };
+
+
+  
+
+
 
   return { ...state, getWorkers, getAppointment, onRefresh };
 };

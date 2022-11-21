@@ -16,15 +16,28 @@ const serialize = function (obj) {
 
 const getToken = async () => {
     try {
-        const jsonValue = await AsyncStorage.getItem('authData')
-        if (jsonValue == null)
+        const token = await AsyncStorage.getItem('token')
+        if (token == null)
             return null
-        const { token } = JSON.parse(jsonValue)
         return token
     } catch (e) {
         console.log('getToken:', e);
     }
 }
+
+export const getUserId = async () => {
+    try {
+        const userJson = await AsyncStorage.getItem('user')
+        if (userJson == null)
+            return null
+
+        const user = JSON.parse(userJson)
+        return user._id
+    } catch (e) {
+        console.log('getUserId:', e);
+    }
+}
+
 
 
 export const apiCall = async (url, method = 'GET', body, queryParams) => {
@@ -38,6 +51,7 @@ export const apiCall = async (url, method = 'GET', body, queryParams) => {
         body: body ? JSON.stringify(body) : null
     })
     const json = await result.json()
+
     if (!result.ok) {
         if (result.status === 401) {
             showAlert(getString.t("error"), getString.t('you_are_not_authorized'))

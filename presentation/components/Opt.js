@@ -41,7 +41,8 @@ const Opt = ({ number, callback, goBack, sendAgain, style, timeoutNumber = 60 })
                 })
             } else {
                 clearInterval(timer)
-                goBack()
+                if (goBack)
+                    goBack()
             }
         }, 1000)
 
@@ -88,12 +89,14 @@ const Opt = ({ number, callback, goBack, sendAgain, style, timeoutNumber = 60 })
             alignItems: 'center',
             padding: 8
         }}>
-
-            <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => { if (goBack) goBack() }}>
-                <Text style={{ color: blue, ...globalStyles.font }}>{getString.t('go_back')}</Text>
-            </TouchableOpacity>
-
+            {goBack &&
+                <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => { if (goBack) goBack() }}>
+                    <Text style={{ color: blue, ...globalStyles.font }}>{getString.t('go_back')}</Text>
+                </TouchableOpacity>
+            }
             <Text style={globalStyles.font}>{timeout == 0 ? getString.t('code_expired') : timeout}</Text>
+            
+            <Spacer space={8}/>
 
             <View style={{
                 justifyContent: 'center',

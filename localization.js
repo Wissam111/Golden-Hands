@@ -57,8 +57,10 @@ const getString = new I18n({
         customers: 'Customers',
         are_you_sure_logout: 'Are you sure you want to logout?',
         edit_profile: 'Edit Profile',
-        customers:'Customers',
-        users: 'Users'
+        customers: 'Customers',
+        users: 'Users',
+        update: 'Update',
+        phone_number: 'Phone Number'
 
 
 
@@ -95,7 +97,7 @@ const getString = new I18n({
         must_contain_letters_numbers_only: 'חייב להכיל אותיות ורווחים בלבד',
         is_not_valid: 'לא תקין',
         something_went_wrong: 'משהו השתבש',
-        user_with_this_number_exists: 'User with this number already exists',
+        user_with_this_number_exists: 'משתמש עם מספר זה כבר קיים',
         error: 'שגיאה',
         you_have_too_many_tries: 'יש לך המון נסיונות , נסה שוב אחרי כמה זמן',
         welcome: 'ברוכים הבאים',
@@ -116,8 +118,12 @@ const getString = new I18n({
         customers: 'לקוחות”',
         are_you_sure_logout: 'אתה בטוח לצאת מהמערכת?',
         edit_profile: 'עדכן פרטים',
-        customers:'לקוחות',
-        users: 'משתמשים'
+        customers: 'לקוחות',
+        users: 'משתמשים',
+        update: 'עדכן',
+        phone_number: 'מספר טלפון'
+
+
 
 
 

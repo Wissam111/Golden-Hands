@@ -109,7 +109,7 @@ const Home = ({ navigation }) => {
 
                         </LinearGradient>
 
-                        <View style={{ backgroundColor: backgroundColor }}>
+                        <View style={{ backgroundColor: backgroundColor , minHeight: '100%' }}>
                             {workers &&
                                 <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20}}>
                                     <Text style={{ ...globalStyles.font, ...styles.margin ,...globalStyles.txtDirection }}>{getString.t('our_staff')}</Text>

@@ -8,10 +8,19 @@ import HorizontalChip from "../../components/HorizontalChip";
 import getString from "../../../localization";
 import useProfileViewModel from "./ProfileViewModel";
 import useAuthContext from "../../../hooks/useAuthContext";
+import { useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 const Profile = ({ navigation }) => {
     const { user } = useAuthContext()
-    // const { } = useProfileViewModel()
+    const { getUserProfile, appointmentCount, paid } = useProfileViewModel()
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        if (isFocused)
+            getUserProfile()
+    }, [isFocused])
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -36,7 +45,7 @@ const Profile = ({ navigation }) => {
 
                 <Spacer space={22} />
 
-                   
+
                 <VerticalChip text={`${user.firstName} ${user.lastName}`}
                     imageStyle={{ width: 180, height: 180 }}
                     imageUrl={user.image}
@@ -57,7 +66,7 @@ const Profile = ({ navigation }) => {
                     <View style={{ flexDirection: 'row' }}>
                         <Spacer space={6} />
                         <View style={{ backgroundColor: '#79F877', padding: 20, borderRadius: 16, flex: 1 }}>
-                            <Text style={{ ...globalStyles.font, fontSize: 30, }}>23</Text>
+                            <Text style={{ ...globalStyles.font, fontSize: 30, }}>{appointmentCount}</Text>
                         </View>
 
                         <Spacer space={6} />
