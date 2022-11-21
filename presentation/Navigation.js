@@ -164,7 +164,9 @@ const SplashStack = createNativeStackNavigator();
 const SplashNavigation = () => {
 
   return (
-    <SplashStack.Navigator screenOptions={{ headerShown: false }}>
+    <SplashStack.Navigator screenOptions={{
+      headerShown: false, contentStyle:{backgroundColor:'transparent'}
+    }}>
       <SplashStack.Screen name="Splash" component={Splash} />
       <SplashStack.Screen name="DrawerNavigation" component={DrawerNavigation} />
     </SplashStack.Navigator>
