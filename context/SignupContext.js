@@ -5,7 +5,6 @@ export const SignupContext = createContext()
 
 
 export const signupReducer = (state, action) => {
-    console.log(action);
     switch (action.type) {
         case 'SET_DATA':
             return {
@@ -25,7 +24,11 @@ export const SignupContextProvider = ({ children }) => {
         firstName: null,
         lastName: null,
         birthDate: null,
-        phone: null
+        phone: null,
+        firstNameError: null,
+        lastNameError: null,
+        birthDateError: null,
+        phoneError: null
     });
 
     return (

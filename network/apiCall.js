@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import getString from '../localization';
+import showAlert from '../presentation/components/ShowAlert';
 
 export const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
 export const IMAGE_BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
@@ -14,15 +16,28 @@ const serialize = function (obj) {
 
 const getToken = async () => {
     try {
-        const jsonValue = await AsyncStorage.getItem('authData')
-        if (jsonValue == null)
+        const token = await AsyncStorage.getItem('token')
+        if (token == null)
             return null
-        const { token } = JSON.parse(jsonValue)
         return token
     } catch (e) {
         console.log('getToken:', e);
     }
 }
+
+export const getUserId = async () => {
+    try {
+        const userJson = await AsyncStorage.getItem('user')
+        if (userJson == null)
+            return null
+
+        const user = JSON.parse(userJson)
+        return user._id
+    } catch (e) {
+        console.log('getUserId:', e);
+    }
+}
+
 
 
 export const apiCall = async (url, method = 'GET', body, queryParams) => {
@@ -38,7 +53,14 @@ export const apiCall = async (url, method = 'GET', body, queryParams) => {
     const json = await result.json()
 
     if (!result.ok) {
-        throw Error('Api Call: ' + json.message)
+        if (result.status === 401) {
+            showAlert(getString.t("error"), getString.t('you_are_not_authorized'))
+        }
+
+        throw {
+            status: result.status,
+            ...json
+        }
     }
 
     return json

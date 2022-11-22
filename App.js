@@ -23,8 +23,7 @@ import { SignupContextProvider } from "./context/SignupContext";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
-moment, locale("he");
+moment, locale('he')
 
 export default function App() {
   const [fontsLoaded] = useFonts({
