@@ -1,23 +1,30 @@
 import "react-native-gesture-handler";
-import { ActivityIndicator, SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useFonts } from "expo-font";
 import Navigation from "./presentation/Navigation";
 import { TailwindProvider } from "tailwindcss-react-native";
 import { AuthContextProvider } from "./context/AuthContext";
 import { LoadingContextProvider } from "./context/LoadingContext";
 import Loader from "./presentation/components/Loader";
-import 'moment/locale/he';
+import "moment/locale/he";
 import moment, { locale } from "moment";
-import './localization'
-import { I18nManager } from "react-native"
+import "./localization";
+import { I18nManager } from "react-native";
 import { AndroidSafeAreaStyle } from "./presentation/styles/AndroidSafeArea";
 import { primaryColor } from "./presentation/styles/global";
 import { SignupContextProvider } from "./context/SignupContext";
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 I18nManager.allowRTL(true);
 I18nManager.forceRTL(true);
-moment, locale('he')
+moment, locale("he");
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -32,10 +39,12 @@ export default function App() {
           <LoadingContextProvider>
             <AuthContextProvider>
               <SignupContextProvider>
-                <TailwindProvider>
-                  <Loader />
-                  <Navigation />
-                </TailwindProvider>
+                <SafeAreaProvider>
+                  <TailwindProvider>
+                    <Loader />
+                    <Navigation />
+                  </TailwindProvider>
+                </SafeAreaProvider>
               </SignupContextProvider>
             </AuthContextProvider>
           </LoadingContextProvider>

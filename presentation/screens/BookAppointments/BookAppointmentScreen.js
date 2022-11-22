@@ -7,6 +7,7 @@ import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmation from "../../components/AppointmentConfirmation";
 import { CalendarDaysIcon } from "react-native-heroicons/solid";
+import { Icon } from "react-native-elements";
 const BookAppointmentScreen = () => {
   const {
     workers,
@@ -46,6 +47,8 @@ const BookAppointmentScreen = () => {
           }}
         >
           <CalendarDaysIcon size={50} color="#1D1B1B" />
+
+          <Icon name="calendar" size={30} color="#900" />
           <Text
             className="text-xl  m-2 mb-5 font-bold"
             style={{ color: "#1D1B1B" }}

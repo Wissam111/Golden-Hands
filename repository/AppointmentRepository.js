@@ -5,8 +5,34 @@ const AppointmentRepository = () => {
     const data = await apiCall("appointments/user-appointment");
     return data;
   };
+  const getAppointments = async () => {
+    const data = await apiCall("appointments");
+    return data;
+  };
+  const BookAppointment = async (appointObj) => {
+    const data = await apiCall("appointments/book", "POST", appointObj);
+    return data;
+  };
+  const unBookAppointment = async (appointObj) => {
+    const data = await apiCall("appointments/unbook", "POST", appointObj);
+    return data;
+  };
+  const updateAppointmentStatus = async (appointObj) => {
+    const data = await apiCall(
+      "appointments/update-status",
+      "PATCH",
+      appointObj
+    );
+    return data;
+  };
 
-  return { getAppointment };
+  return {
+    getAppointment,
+    getAppointments,
+    BookAppointment,
+    unBookAppointment,
+    updateAppointmentStatus,
+  };
 };
 
 export default AppointmentRepository;

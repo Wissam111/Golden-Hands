@@ -11,9 +11,7 @@ import SignupPhone from "./screens/signup/SignupPhone";
 import SignupWelcome from "./screens/signup/SignupWelcome";
 import BookingLoadingScreen from "./screens/BookingLoadingScreen";
 
-
 const HomeStack = createNativeStackNavigator();
-
 
 const HomeNavigation = () => {
   return (
