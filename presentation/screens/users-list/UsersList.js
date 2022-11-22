@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Text, View, FlatList } from "react-native";
+import getString from "../../../localization";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
 import { white } from "../../styles/global";
@@ -17,7 +18,7 @@ const UsersList = () => {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ padding: 8 }}>
-                <Title text='Users List' />
+                <Title text={getString.t('users')} />
 
             </View>
 

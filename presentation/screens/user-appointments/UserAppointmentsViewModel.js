@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useLoadingContext from "../../../hooks/useLoadingContext";
+import getString from "../../../localization";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
+import showAlert from "../../components/ShowAlert";
 
 
 const useUserAppointmentsViewModel = () => {
@@ -21,14 +23,24 @@ const useUserAppointmentsViewModel = () => {
                 }
             })
         } catch (e) {
-
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
         setLoading({ isLoading: false })
     }
 
 
+    const unbook = async (id)=>{
+        setLoading({ isLoading: true })
+        try {
+            const data = await appointmentRepository.unbook(id)
+        } catch (e) {
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
+        }
+        setLoading({ isLoading: false })
+    }
 
-    return { ...state, getUserAppointments }
+
+    return { ...state, getUserAppointments , unbook }
 }
 
 export default useUserAppointmentsViewModel;

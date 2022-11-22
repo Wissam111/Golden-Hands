@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useLoadingContext from "../../../hooks/useLoadingContext";
+import getString from "../../../localization";
 import UserRepository from "../../../repository/UsersRepository";
+import showAlert from "../../components/ShowAlert";
 
 
 
@@ -23,7 +25,7 @@ const useUsersListViewModel = () => {
             })
 
         } catch (e) {
-
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
         setLoading({ isLoading: false })
     }

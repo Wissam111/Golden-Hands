@@ -10,6 +10,7 @@ import useProfileViewModel from "./ProfileViewModel";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Profile = ({ navigation }) => {
     const { user } = useAuthContext()
@@ -21,6 +22,7 @@ const Profile = ({ navigation }) => {
             getUserProfile()
     }, [isFocused])
 
+   
 
     return (
         <View style={{ flex: 1, backgroundColor: backgroundColor }}>
@@ -65,8 +67,9 @@ const Profile = ({ navigation }) => {
 
                     <View style={{ flexDirection: 'row' }}>
                         <Spacer space={6} />
-                        <View style={{ backgroundColor: '#79F877', padding: 20, borderRadius: 16, flex: 1 }}>
-                            <Text style={{ ...globalStyles.font, fontSize: 30, }}>{appointmentCount}</Text>
+                        <View style={{ backgroundColor: '#79F877', padding: 20, borderRadius: 16, flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                            <Text style={{ ...globalStyles.font, fontSize: 36, }}>{appointmentCount}</Text>
+                            <MaterialCommunityIcons name="account-arrow-up-outline" size={24} color="black" />
                         </View>
 
                         <Spacer space={6} />

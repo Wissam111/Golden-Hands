@@ -11,7 +11,12 @@ const AppointmentRepository = () => {
     return data;
   }
 
-  return { getAppointment  , getUserAppointments};
+  const unbook = async (appointmentId) => {
+    const data = await apiCall("appointments/unbook", 'POST', { appointmentId: appointmentId });
+    return data;
+  }
+
+  return { getAppointment, getUserAppointments , unbook };
 };
 
 export default AppointmentRepository;

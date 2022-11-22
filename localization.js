@@ -61,7 +61,11 @@ const getString = new I18n({
         users: 'Users',
         update: 'Update',
         phone_number: 'Phone Number',
-        lets_get_haircut: 'let\'s get a hair cut'
+        lets_get_haircut: 'let\'s get a hair cut',
+        'in-progress': 'in progress',
+        canceled: 'Canceled',
+        cancel: 'Cancel' , 
+        users:'Users'
 
 
 
@@ -123,7 +127,12 @@ const getString = new I18n({
         users: 'משתמשים',
         update: 'עדכן',
         phone_number: 'מספר טלפון',
-        lets_get_haircut: 'בוא נסתפר'
+        lets_get_haircut: 'בוא נסתפר',
+        'in-progress': 'בטיפול',
+        canceled: 'בוטל',
+        cancel: 'בטל',
+        users:'משתמשים'
+
 
 
 
