@@ -11,8 +11,8 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import { SquaresPlusIcon } from "react-native-heroicons/outline";
 import AppointmentView from "./AppointmentView";
 const AppointmentsSheet = (props) => {
-  const { appointments } = props;
-  const snapPoints = useMemo(() => ["25%", "48%", "100%"], []);
+  const { appointments, handleShowStatusList } = props;
+  const snapPoints = useMemo(() => ["25%", "48%", "80%", "100%"], []);
   const [index, setIndex] = useState(0);
   const bottomSheetRef = useRef(null);
 
@@ -21,10 +21,9 @@ const AppointmentsSheet = (props) => {
   }, []);
   return (
     <View
-      className="flex-1 p-24 "
+      className="flex-1 p-24 absolute"
       style={{
         // zIndex: index == 0 || index == 1 ? -1 : 99999,
-        position: "absolute",
         bottom: 0,
         width: "100%",
         height: "48%",
@@ -54,7 +53,12 @@ const AppointmentsSheet = (props) => {
             data={appointments}
             keyExtractor={(item) => item._id}
             horizontal={false}
-            renderItem={({ item }) => <AppointmentView appointment={item} />}
+            renderItem={({ item }) => (
+              <AppointmentView
+                appointment={item}
+                handleShowStatusList={handleShowStatusList}
+              />
+            )}
             showsHorizontalScrollIndicator={false}
           />
         ) : (

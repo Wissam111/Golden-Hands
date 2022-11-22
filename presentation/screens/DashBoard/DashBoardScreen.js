@@ -7,8 +7,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import useAuthContext from "../../../hooks/useAuthContext";
 import HorizontalChipS from "../../components/HorizontalChipS";
@@ -17,6 +18,7 @@ import CalendarView from "../../components/CalendarView";
 import DayView from "../../components/DayView";
 import AppointmentsSheet from "../../components/AppointmentsSheet";
 import DashBoardModel from "./DashBoardModel";
+import StatusListView from "../../components/StatusListView";
 import moment from "moment";
 const DashBoardScreen = () => {
   const {
@@ -25,12 +27,22 @@ const DashBoardScreen = () => {
     getAppointments,
     dateInterval,
     selectedDay,
+    showStatusList,
     handleDateRight,
     handleDateLeft,
     handleSelectedDay,
+    handleUpdateStatus,
+    handleShowStatusList,
   } = DashBoardModel();
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+        handleShowStatusList(null, false);
+      }}
+      accessible={false}
+    >
       <SafeAreaView className="flex-1">
         <View
           className="bg-[#1D1B1B] flex-1 relative"
@@ -51,7 +63,7 @@ const DashBoardScreen = () => {
 
           <View
             className="flex-row space-x-9 p-4 items-center justify-between"
-            style={{ borderWidth: 2, borderColor: "red" }}
+            // style={{ borderWidth: 2, borderColor: "red" }}
           >
             {dateInterval.map((date, index) => (
               <DayView
@@ -81,10 +93,16 @@ const DashBoardScreen = () => {
               className="bg-[#F5F5F5] rounded-full"
               style={{ width: 85, height: 32 }}
             >
-              <Text className="text-center mt-2 font-medium">progress</Text>
+              <Text className="text-center mt-2 font-medium">Booked</Text>
             </TouchableOpacity>
           </View>
-          <AppointmentsSheet appointments={appointments} />
+          <AppointmentsSheet
+            appointments={appointments}
+            handleShowStatusList={handleShowStatusList}
+          />
+          {showStatusList && (
+            <StatusListView handleUpdateStatus={handleUpdateStatus} />
+          )}
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>

@@ -58,9 +58,7 @@ const ProfileNavigation = () => {
   );
 };
 
-
 const HomeStack = createNativeStackNavigator();
-
 
 const HomeNavigation = () => {
 

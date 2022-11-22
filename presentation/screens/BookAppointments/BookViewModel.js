@@ -2,8 +2,7 @@ import { View, Text } from "react-native";
 import React, { useEffect, useState, Alert } from "react";
 
 import WorkerRepository from "../../../repository/workerRepository";
-import AppointmentsRepository from "../../../repository/AppointmentsRepository";
-import BookAppointmentRepository from "../../../repository/BookAppointmentRepository";
+import AppointmentRepository from "../../../repository/AppointmentRepository";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
 const BookViewModel = () => {
@@ -20,8 +19,7 @@ const BookViewModel = () => {
   });
   const navigation = useNavigation();
   const workerRepository = WorkerRepository();
-  const appointmentsRepository = AppointmentsRepository();
-  const bookAppointmentRepository = BookAppointmentRepository();
+  const appointmentRepository = AppointmentRepository();
   const { user } = useAuthContext();
 
   const getWorkers = async () => {
@@ -37,7 +35,7 @@ const BookViewModel = () => {
 
   const getAppointments = async () => {
     try {
-      const { appointments } = await appointmentsRepository.getAppointments();
+      const { appointments } = await appointmentRepository.getAppointments();
       setState((prev) => {
         return { ...prev, appointments: appointments };
       });
@@ -120,7 +118,7 @@ const BookViewModel = () => {
     };
 
     try {
-      const data = await bookAppointmentRepository.BookAppointment(appointObj);
+      const data = await appointmentRepository.BookAppointment(appointObj);
       navigation.navigate({
         name: "BookingLoadingScreen",
         params: { message: data.message },

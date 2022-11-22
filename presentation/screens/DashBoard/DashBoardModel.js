@@ -1,7 +1,7 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
-import AppointmentsRepository from "../../../repository/AppointmentsRepository";
+import AppointmentRepository from "../../../repository/AppointmentRepository";
 import moment from "moment";
 const DashBoardModel = () => {
   const { user } = useAuthContext();
@@ -11,12 +11,13 @@ const DashBoardModel = () => {
     dateInterval: [startDate.clone().add(4, "days")],
     worker: user,
     selectedDay: null,
+    showStatusList: false,
+    currentAppoint: null,
   });
-  const appointmentsRepository = AppointmentsRepository();
+  const appointmentRepository = AppointmentRepository();
   const getAppointments = async (date) => {
-    // console.log(date);
     try {
-      const { appointments } = await appointmentsRepository.getAppointments();
+      const { appointments } = await appointmentRepository.getAppointments();
       const _date = moment(date).format("L");
 
       let appoints = appointments.filter(
@@ -66,6 +67,33 @@ const DashBoardModel = () => {
     });
     getAppointments(state.dateInterval[dayId]);
   };
+
+  const handleUpdateStatus = async (status) => {
+    let message;
+    const appointObj = {
+      appointmentId: state.currentAppoint,
+      status: status,
+    };
+    try {
+      const data = await appointmentRepository.updateAppointmentStatus(
+        appointObj
+      );
+      message = data.message;
+    } catch (e) {
+      console.log(e);
+    }
+    showAlert(message, handleShowStatusList(null, false));
+  };
+
+  const handleShowStatusList = (appointId, action) => {
+    setState((prev) => {
+      return { ...prev, currentAppoint: appointId, showStatusList: action };
+    });
+  };
+  const showAlert = (message, handlePress) => {
+    Alert.alert("", message, [{ text: "OK", onPress: () => handlePress }]);
+  };
+
   useEffect(() => {
     handleDateLeft();
     handleSelectedDay(0); //bug here
@@ -76,6 +104,8 @@ const DashBoardModel = () => {
     handleDateRight,
     handleDateLeft,
     handleSelectedDay,
+    handleUpdateStatus,
+    handleShowStatusList,
   };
 };
 
