@@ -13,7 +13,7 @@ const AppointmentRepository = () => {
   const getUserAppointments = async () => {
     const data = await apiCall("appointments/user-appointments");
     return data;
-  }
+  };
 
   const BookAppointment = async (appointObj) => {
     const data = await apiCall("appointments/book", "POST", appointObj);
@@ -32,10 +32,17 @@ const AppointmentRepository = () => {
     return data;
   };
 
-  const unbook = async (appointmentId) => {
-    const data = await apiCall("appointments/unbook", 'POST', { appointmentId: appointmentId });
+  const PostAppointment = async (appointObj) => {
+    const data = await apiCall("appointments", "POST", appointObj);
     return data;
-  }
+  };
+
+  const unbook = async (appointmentId) => {
+    const data = await apiCall("appointments/unbook", "POST", {
+      appointmentId: appointmentId,
+    });
+    return data;
+  };
 
   return {
     getAppointment,
@@ -45,7 +52,8 @@ const AppointmentRepository = () => {
     updateAppointmentStatus,
     getAppointment,
     getUserAppointments,
-    unbook
+    unbook,
+    PostAppointment,
   };
 };
 

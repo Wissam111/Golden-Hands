@@ -7,7 +7,7 @@ import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmation from "../../components/AppointmentConfirmation";
 import { CalendarDaysIcon } from "react-native-heroicons/solid";
-import { Icon } from "react-native-elements";
+import { FontAwesome5 } from "@expo/vector-icons";
 const BookAppointmentScreen = () => {
   const {
     workers,
@@ -39,16 +39,15 @@ const BookAppointmentScreen = () => {
         showsHorizontalScrollIndicator={false}
       >
         <View
-          className="mb-4 border-b-2  p-1 flex-row"
+          className="mb-4 border-b-2  p-1 flex-row ml-2 items-center"
           style={{
             borderBottomColor: "#D9D9D9",
             justifyContent: "space-between",
             // width: 120,
           }}
         >
-          <CalendarDaysIcon size={50} color="#1D1B1B" />
+          <FontAwesome5 name="calendar-alt" size={35} color="black" />
 
-          <Icon name="calendar" size={30} color="#900" />
           <Text
             className="text-xl  m-2 mb-5 font-bold"
             style={{ color: "#1D1B1B" }}
