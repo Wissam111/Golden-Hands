@@ -20,10 +20,9 @@ import { I18nManager } from "react-native";
 import { AndroidSafeAreaStyle } from "./presentation/styles/AndroidSafeArea";
 import { primaryColor } from "./presentation/styles/global";
 import { SignupContextProvider } from "./context/SignupContext";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 
 I18nManager.allowRTL(true);
-moment, locale('he')
+moment, locale("he");
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,12 +37,10 @@ export default function App() {
           <LoadingContextProvider>
             <AuthContextProvider>
               <SignupContextProvider>
-                <SafeAreaProvider>
-                  <TailwindProvider>
-                    <Loader />
-                    <Navigation />
-                  </TailwindProvider>
-                </SafeAreaProvider>
+                <TailwindProvider>
+                  <Loader />
+                  <Navigation />
+                </TailwindProvider>
               </SignupContextProvider>
             </AuthContextProvider>
           </LoadingContextProvider>

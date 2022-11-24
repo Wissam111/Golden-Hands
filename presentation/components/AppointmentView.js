@@ -1,10 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import {
-  UserCircleIcon,
-  ScissorsIcon,
-  PencilSquareIcon,
-} from "react-native-heroicons/outline";
+
+import { FontAwesome, FontAwesome5, Entypo } from "@expo/vector-icons";
 import HorizontalChipS from "./HorizontalChipS";
 import useAuthContext from "../../hooks/useAuthContext";
 import moment from "moment";
@@ -26,7 +23,7 @@ const AppointmentView = (props) => {
           className="m-2"
           onPress={() => handleShowStatusList(appointment._id, true)}
         >
-          <PencilSquareIcon size={35} color={"black"} />
+          <FontAwesome name="pencil-square-o" size={34} color="black" />
         </TouchableOpacity>
       </View>
 
@@ -46,7 +43,7 @@ const AppointmentView = (props) => {
         className="bg-[#F4EBD0] rounded-xl mt-3 "
       >
         <View className="items-center flex-row justify-center mt-2 space-x-3">
-          <UserCircleIcon size={25} color="#122620" />
+          <FontAwesome5 name="user-circle" size={22} color="black" />
           <Text className="font-bold text-[#122620] text-lg">Appointment</Text>
         </View>
         <View className="m-2 p-2 space-y-2 flex-wrap items-center ">
@@ -59,8 +56,8 @@ const AppointmentView = (props) => {
             {moment(appointment.start_time).format("MMMM Do YYYY")}
           </Text>
         </View>
-        <View className="flex-row items-center absolute bottom-0 left-0 pl-2 pb-1">
-          <ScissorsIcon size={30} color="#122620" />
+        <View className="flex-row items-center absolute bottom-0 left-0 pl-2 pb-1 ml-2">
+          <Entypo name="scissors" size={25} color="black" />
           <HorizontalChipS user={user} handlePress={() => {}} />
         </View>
       </View>

@@ -2,6 +2,7 @@ import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
+import WorkerRepository from "../../../repository/workerRepository";
 import moment from "moment";
 const DashBoardModel = () => {
   const { user } = useAuthContext();
@@ -10,11 +11,15 @@ const DashBoardModel = () => {
     appointments: [],
     dateInterval: [startDate.clone().add(4, "days")],
     worker: user,
+    workerServices: [],
     selectedDay: null,
     showStatusList: false,
     currentAppoint: null,
+    allSelected: true,
+    showServSheet: false,
   });
   const appointmentRepository = AppointmentRepository();
+  const workerRepository = WorkerRepository();
   const getAppointments = async (date) => {
     try {
       const { appointments } = await appointmentRepository.getAppointments();
@@ -26,7 +31,21 @@ const DashBoardModel = () => {
           _date == moment(appoint.start_time).format("L")
       );
       setState((prev) => {
-        return { ...prev, appointments: appoints };
+        return {
+          ...prev,
+          appointments: appoints,
+        };
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getWorkerServices = async () => {
+    try {
+      const data = await workerRepository.getWorkerServices(user._id);
+      setState((prev) => {
+        return { ...prev, workerServices: data.services };
       });
     } catch (e) {
       console.log(e);
@@ -68,11 +87,12 @@ const DashBoardModel = () => {
     getAppointments(state.dateInterval[dayId]);
   };
 
-  const handleUpdateStatus = async (status) => {
+  const handleUpdateStatus = async (status, service = "") => {
     let message;
     const appointObj = {
       appointmentId: state.currentAppoint,
       status: status,
+      service: service,
     };
     try {
       const data = await appointmentRepository.updateAppointmentStatus(
@@ -90,13 +110,107 @@ const DashBoardModel = () => {
       return { ...prev, currentAppoint: appointId, showStatusList: action };
     });
   };
-  const showAlert = (message, handlePress) => {
+
+  const handleSelectAll = () => {
+    setState((prev) => {
+      return { ...prev, allSelected: true };
+    });
+    getAppointments(state.dateInterval[state.selectedDay]);
+  };
+  const handleSelectBooked = () => {
+    let appoints = state.appointments.filter(
+      (appoint) => appoint.user != null || appoint.status == "hold"
+    );
+    setState((prev) => {
+      return {
+        ...prev,
+        appointments: appoints,
+        allSelected: false,
+      };
+    });
+  };
+  const handleSearch = (text) => {
+    if (state.allSelected) {
+      return;
+    }
+    console.log(text);
+    let temp = [...state.appointments];
+    let tempSearched = temp.filter((appoint) => {
+      return (
+        appoint?.user?.phone.includes(text) ||
+        appoint?.user.firstName.toLowerCase().includes(text.toLowerCase())
+      );
+    });
+    setState((prev) => {
+      return {
+        ...prev,
+        appointments: tempSearched,
+      };
+    });
+  };
+  const handleShowServSheet = () => {
+    setState((prev) => {
+      return {
+        ...prev,
+        showServSheet: !prev.showServSheet,
+      };
+    });
+  };
+
+  const handlePostServ = async (servObj) => {
+    let messg;
+    try {
+      const data = await workerRepository.postService(servObj);
+      messg = data.message;
+      getWorkerServices();
+    } catch (e) {
+      console.log(e);
+      messg = e.message;
+    }
+    showAlert(messg);
+  };
+
+  const showAlert = async (message, handlePress) => {
     Alert.alert("", message, [{ text: "OK", onPress: () => handlePress }]);
+  };
+
+  const handleDeleteServ = async (servId) => {
+    let messg;
+    try {
+      const data = await workerRepository.deleteService(servId);
+      messg = data.message;
+      getWorkerServices();
+    } catch (e) {
+      messg = e.message;
+    }
+    showAlert(messg);
+  };
+
+  const handlePostAppoint = async (startTime, endTime) => {
+    const format = "yyyy-MM-DDTHH:mm:ssZZ";
+
+    const appointObj = {
+      worker: user._id,
+      start_time: moment(startTime).format(format),
+      end_time: moment(endTime).format(format),
+    };
+
+    let messg;
+    try {
+      const data = await appointmentRepository.PostAppointment(appointObj);
+      messg = data.message;
+      getAppointments(state.dateInterval[state.selectedDay]);
+    } catch (e) {
+      messg = e.message;
+    }
+    showAlert(messg);
   };
 
   useEffect(() => {
     handleDateLeft();
     handleSelectedDay(0); //bug here
+    getWorkerServices();
+    // getWorker();
   }, []);
   return {
     ...state,
@@ -106,6 +220,13 @@ const DashBoardModel = () => {
     handleSelectedDay,
     handleUpdateStatus,
     handleShowStatusList,
+    handleSelectAll,
+    handleSelectBooked,
+    handleSearch,
+    handleShowServSheet,
+    handlePostServ,
+    handleDeleteServ,
+    handlePostAppoint,
   };
 };
 

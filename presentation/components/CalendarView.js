@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import {
-  ArrowLeftCircleIcon,
-  ArrowRightCircleIcon,
-  CalendarIcon,
-} from "react-native-heroicons/outline";
+
+import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import moment from "moment/moment";
 const CalendarView = (props) => {
   const { dateInterval, handleDateRight, handleDateLeft } = props;
@@ -14,14 +12,15 @@ const CalendarView = (props) => {
       // style={{ borderWidth: 2, borderColor: "red" }}
     >
       <TouchableOpacity
-        className="bg-[#47566A] rounded-full"
+        className="bg-[#47566A] rounded-full w-8 h-8 justify-center items-center"
         onPress={handleDateLeft}
       >
-        <ArrowRightCircleIcon size={35} color={"white"} />
+        {/* <ArrowRightCircleIcon size={35} color={"white"} /> */}
+        <FontAwesome name="arrow-circle-o-right" size={27} color="white" />
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <CalendarIcon size={35} color="white" />
+        <Feather name="calendar" size={30} color="white" />
       </TouchableOpacity>
 
       <Text className="text-white text-base">
@@ -30,10 +29,10 @@ const CalendarView = (props) => {
           moment(dateInterval[4]).format("l")}
       </Text>
       <TouchableOpacity
-        className="bg-[#47566A] rounded-full"
+        className="bg-[#47566A] rounded-full w-8 h-8 justify-center items-center"
         onPress={handleDateRight}
       >
-        <ArrowLeftCircleIcon size={35} color="white" />
+        <FontAwesome name="arrow-circle-o-left" size={27} color="white" />
       </TouchableOpacity>
     </View>
   );

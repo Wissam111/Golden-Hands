@@ -8,14 +8,14 @@ import {
 } from "react-native";
 import React, { useMemo, useRef, useCallback, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { SquaresPlusIcon } from "react-native-heroicons/outline";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppointmentView from "./AppointmentView";
+import AddAppointmentView from "./AddAppointmentView";
 const AppointmentsSheet = (props) => {
-  const { appointments, handleShowStatusList } = props;
-  const snapPoints = useMemo(() => ["25%", "48%", "80%", "100%"], []);
+  const { appointments, handleShowStatusList, h } = props;
+  const snapPoints = useMemo(() => ["20%", "48%", "80%", "100%"], []);
   const [index, setIndex] = useState(0);
   const bottomSheetRef = useRef(null);
-
   var handleSheetChanges = useCallback(function (index) {
     setIndex(index);
   }, []);
@@ -43,8 +43,15 @@ const AppointmentsSheet = (props) => {
             style={{ width: "100%" }}
           >
             <Text className="font-bold text-lg">Appointments</Text>
-            <TouchableOpacity className="absolute left-0 pl-1">
-              <SquaresPlusIcon size={30} color={"black"} />
+            <TouchableOpacity
+              className="absolute left-0 pl-1"
+              onPress={() => setShowAddAppoint}
+            >
+              <MaterialCommunityIcons
+                name="view-grid-plus-outline"
+                size={30}
+                color="black"
+              />
             </TouchableOpacity>
           </View>
         </View>
