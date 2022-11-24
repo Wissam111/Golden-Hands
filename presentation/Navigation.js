@@ -25,6 +25,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Splash from "./screens/Splash";
+import ImageSignup from "./screens/signup/ImageSignup";
 
 const SingupStack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ const SignupNavigation = () => {
 
         <HomeStack.Screen name="SignupScreen" component={Signup} />
         <HomeStack.Screen name="SignupPhone" component={SignupPhone} />
+        <HomeStack.Screen name="ImageSignup" component={ImageSignup} />
         <HomeStack.Screen name="SignupWelcome" component={SignupWelcome} />
 
       </SingupStack.Navigator>
@@ -68,8 +70,8 @@ const HomeNavigation = () => {
 
       <HomeStack.Screen name="HomeScreen" component={Home} />
       <HomeStack.Screen name="LoginScreen" component={Login} />
-
       <HomeStack.Screen name="SignupNavigation" component={SignupNavigation} />
+
 
       <HomeStack.Screen
         name="BookAppointment"
