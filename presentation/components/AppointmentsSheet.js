@@ -4,31 +4,32 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  FlatList,
 } from "react-native";
 import React, { useMemo, useRef, useCallback, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppointmentView from "./AppointmentView";
 import AddAppointmentView from "./AddAppointmentView";
+import { FlatList } from "react-native-gesture-handler";
 const AppointmentsSheet = (props) => {
-  const { appointments, handleShowStatusList, h } = props;
-  const snapPoints = useMemo(() => ["20%", "48%", "80%", "100%"], []);
+  const { appointments, handleShowStatusList, handleShowAppoint } = props;
+  const snapPoints = useMemo(() => ["50%", "100%"], []);
   const [index, setIndex] = useState(0);
   const bottomSheetRef = useRef(null);
   var handleSheetChanges = useCallback(function (index) {
     setIndex(index);
   }, []);
+
   return (
     <View
-      className="flex-1 p-24 absolute"
+      className="flex-1  p-24"
       style={{
-        // zIndex: index == 0 || index == 1 ? -1 : 99999,
-        bottom: 0,
+        // maxHeight: 300,
+        // zIndex: index == 0 ? -1 : 99999,
         width: "100%",
-        height: "48%",
-        borderWidth: 2,
-        borderColor: "red",
+        height: "50%",
+        // borderWidth: 2,
+        // borderColor: "red",
       }}
     >
       <BottomSheet
@@ -45,7 +46,7 @@ const AppointmentsSheet = (props) => {
             <Text className="font-bold text-lg">Appointments</Text>
             <TouchableOpacity
               className="absolute left-0 pl-1"
-              onPress={() => setShowAddAppoint}
+              onPress={handleShowAppoint}
             >
               <MaterialCommunityIcons
                 name="view-grid-plus-outline"
@@ -55,6 +56,7 @@ const AppointmentsSheet = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+
         {appointments.length ? (
           <FlatList
             data={appointments}

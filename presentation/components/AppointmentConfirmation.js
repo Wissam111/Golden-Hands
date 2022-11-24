@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { XCircleIcon } from "react-native-heroicons/solid";
+import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 const AppointmentConfirmation = (props) => {
   const { appointsByday, handleCloseConfirmation, handleBook } = props;
@@ -26,7 +26,7 @@ const AppointmentConfirmation = (props) => {
           className="rounded-full bg-gray-100"
           onPress={handleCloseConfirmation}
         >
-          <XCircleIcon color="black" height={50} width={50} />
+          <AntDesign name="closecircle" size={40} color="black" />
         </TouchableOpacity>
       </View>
       <Text className="font-medium text-base mb-10">

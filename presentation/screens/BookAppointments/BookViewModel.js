@@ -116,16 +116,22 @@ const BookViewModel = () => {
       userId: user._id,
       service: state.selectedService,
     };
-
+    let messg;
     try {
       const data = await appointmentRepository.BookAppointment(appointObj);
       navigation.navigate({
-        name: "BookingLoadingScreen",
+        name: "HomeScreen",
         params: { message: data.message },
       });
+      messg = data.message;
     } catch (e) {
       console.log(e);
+      messg = e.message;
     }
+    navigation.navigate({
+      name: "BookingLoadingScreen",
+      params: { message: messg },
+    });
   };
   const handleCloseConfirmation = () => {
     setState((prev) => {

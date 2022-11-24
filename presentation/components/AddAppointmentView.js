@@ -1,14 +1,11 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import DefaultButton from "./DefaultButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-// import moment from "moment";
+
 const AddAppointmentView = (props) => {
   const { handlePostAppoint } = props;
-  // const [date, setDate] = useState(new Date(props.date));
-  const [date, setDate] = useState(new Date());
-
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
 
@@ -20,16 +17,17 @@ const AddAppointmentView = (props) => {
       <View className="space-y-5 mt-4">
         <View style={styles.datePicker}>
           <DateTimePicker
-            value={date}
+            value={startTime}
             mode={"time"}
             is24Hour={true}
             onChange={(event, value) => setStartTime(value)}
           />
+
           <Ionicons name="time-outline" size={24} color="black" />
         </View>
         <View style={styles.datePicker}>
           <DateTimePicker
-            value={date}
+            value={endTime}
             mode={"time"}
             is24Hour={true}
             onChange={(event, value) => setEndTime(value)}

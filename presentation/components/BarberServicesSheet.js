@@ -1,10 +1,19 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  // ScrollView,
+} from "react-native";
 
 import React, { useMemo, useRef, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
+
 import AddServiceView from "./AddServiceView";
+
 const BarberServicesSheet = (props) => {
   const {
     worker,
