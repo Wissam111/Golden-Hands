@@ -124,7 +124,7 @@ const Profile = ({ navigation, route }) => {
                 }
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: primaryColor, flex: 1  }} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: primaryColor, flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
 
                 <View style={{ backgroundColor: backgroundColor }}>
                     <View style={{
@@ -153,15 +153,17 @@ const Profile = ({ navigation, route }) => {
                 </View>
 
                 <View style={{ backgroundColor: backgroundColor, height: '100%' }}>
-                    <Spacer space={6} />
+                    {route.params &&
+                        <>
+                            <Spacer space={6} />
 
-
-                    <View style={{ padding: 8, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => { setShow(!show) }}>
-                            <Feather name="settings" size={24} color="black" />
-                        </TouchableOpacity>
-                    </View>
-
+                            <View style={{ padding: 8, flexDirection: 'row' }}>
+                                <TouchableOpacity onPress={() => { setShow(!show) }}>
+                                    <Feather name="settings" size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                    }
                     <Spacer space={16} />
 
                     <View style={{ backgroundColor: surfaceColor, paddingVertical: 16, paddingHorizontal: 8, marginHorizontal: 6, borderRadius: 12 }}>
