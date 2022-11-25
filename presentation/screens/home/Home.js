@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { backgroundColor, globalStyles, primaryColor, surfaceColor, white } from "../../styles/global";
+import { backgroundColor, fontLarge, globalStyles, primaryColor, semiLarge, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
@@ -23,7 +23,7 @@ import { FontAwesome } from '@expo/vector-icons';
 const GeustHeader = () => {
     return (
         <View style={{ marginTop: 16 }}>
-            <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>{getString.t('hello_there_login_first')}</Text>
+            <Text style={{ ...globalStyles.font, fontSize: semiLarge, color: white, textAlign: 'center' }}>{getString.t('hello_there_login_first')}</Text>
         </View>
     )
 }
@@ -36,8 +36,8 @@ const LoggedInHeader = ({ appointment }) => {
                 appointment ?
                     (
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('you_have_an_appointment')}</Text>
-                            <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{moment(appointment.start_time).format(`dddd, MMMM DD [${getString.t('at')}] HH:mm`)}</Text>
+                            <Text style={{ ...globalStyles.font, fontSize: semiLarge, ...styles.margin, color: '#fff' }}>{getString.t('you_have_an_appointment')}</Text>
+                            <Text style={{ ...globalStyles.font, fontSize: semiLarge, ...styles.margin, color: '#fff' }}>{moment(appointment.start_time).format(`dddd, MMMM DD [${getString.t('at')}] HH:mm`)}</Text>
 
                             <HorizontalChip
                                 style={styles.margin}
@@ -50,13 +50,13 @@ const LoggedInHeader = ({ appointment }) => {
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Image style={{ width: 30, height: 30 }} source={require('../../../assets/imgs/location.png')} />
                                     <Spacer space={6} />
-                                    <Text style={{ ...globalStyles.font, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
+                                    <Text style={{ ...globalStyles.font, fontSize: semiLarge, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
                     )
                     : (
-                        <Text style={{ ...globalStyles.font, color: white, textAlign: 'center' }}>{getString.t('you_dont_have_appointment')}</Text>
+                        <Text style={{ ...globalStyles.font, fontSize: semiLarge, color: white, textAlign: 'center' }}>{getString.t('you_dont_have_appointment')}</Text>
                     )
             }
         </View>
@@ -129,7 +129,7 @@ const Home = ({ navigation }) => {
                     <View style={{ backgroundColor: backgroundColor, minHeight: '100%' }}>
                         {workers &&
                             <View style={{ backgroundColor: surfaceColor, paddingVertical: 12, marginVertical: 4, borderRadius: 20 }}>
-                                <Text style={{ ...globalStyles.font, paddingHorizontal: 12, paddingBottom: 12, ...styles.margin, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('our_staff')}</Text>
+                                <Text style={{ ...globalStyles.font, paddingHorizontal: 12, paddingBottom: 12, fontSize: semiLarge, ...styles.margin, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('our_staff')}</Text>
                                 {
                                     workers && (
                                         <FlatList
@@ -148,7 +148,7 @@ const Home = ({ navigation }) => {
                         }
 
                         <View style={{ backgroundColor: surfaceColor, paddingVertical: 12, paddingBottom: 20, paddingHorizontal: 12, marginVertical: 4, borderRadius: 20 }}>
-                            <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('about_us')}</Text>
+                            <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection, fontSize: semiLarge, fontFamily: 'poppins-bold' }}>{getString.t('about_us')}</Text>
 
                             <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us_details')}</Text>
                         </View>

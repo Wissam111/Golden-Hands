@@ -4,7 +4,7 @@ import { I18nManager, StyleSheet } from "react-native";
 export const globalStyles = StyleSheet.create({
     font: {
         fontFamily: 'poppins-medium',
-        fontSize: 16
+        fontSize: fontMeduim
     },
     input: {
         padding: 16,
@@ -23,6 +23,13 @@ export const globalStyles = StyleSheet.create({
     }
 
 })
+
+
+export const fontXLarge = Platform.OS === 'android' ? 30 : 32
+export const fontLarge = Platform.OS === 'android' ? 20 : 22
+export const semiLarge = Platform.OS === 'android' ? 18 : 20
+export const fontMeduim = Platform.OS === 'android' ? 14 : 16
+export const fontSmall = Platform.OS === 'android' ? 10 : 12
 
 
 export const primaryColor = '#1D1B1B'

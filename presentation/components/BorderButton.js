@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import { globalStyles } from "../styles/global";
+import { globalStyles, semiLarge } from "../styles/global";
 
 
 const BorderButton = ({ style, text, onPress }) => {
@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
     text: {
         ...globalStyles.font,
         color: '#fff',
-        fontSize: 16
+        fontSize: semiLarge
     }
 })

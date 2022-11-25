@@ -2,7 +2,7 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import Title from "../../components/Title";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Spacer from "../../components/Spacer";
-import { backgroundColor, globalStyles, orange1, primaryColor, surfaceColor, white } from "../../styles/global";
+import { backgroundColor, fontLarge, fontXLarge, globalStyles, orange1, primaryColor, surfaceColor, white } from "../../styles/global";
 import VerticalChip from "../../components/VerticalChip";
 import HorizontalChip from "../../components/HorizontalChip";
 import getString from "../../../localization";
@@ -84,7 +84,7 @@ const Profile = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>תפקיד :</Text>
                                 <Spacer space={6} />
-                                <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: 20 }}>{getString.t(user.role)}</Text>
+                                <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontLarge }}>{getString.t(user.role)}</Text>
                             </View>
 
                             <Spacer space={8} />
@@ -102,14 +102,14 @@ const Profile = ({ navigation }) => {
                     <View style={{ flexDirection: 'row' }}>
                         <Spacer space={6} />
                         <View style={{ backgroundColor: '#79F877', padding: 20, borderRadius: 16, flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                            <Text style={{ ...globalStyles.font, fontSize: 36, }}>{appointmentCount}</Text>
+                            <Text style={{ ...globalStyles.font, fontSize: fontXLarge, }}>{appointmentCount}</Text>
                             <MaterialCommunityIcons name="account-arrow-up-outline" size={24} color="black" />
                         </View>
 
                         <Spacer space={6} />
 
                         <View style={{ backgroundColor: surfaceColor, padding: 20, borderRadius: 16, flex: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ ...globalStyles.font, fontSize: 22 }}>{getString.t('rating')}</Text>
+                            <Text style={{ ...globalStyles.font, fontSize: fontLarge }}>{getString.t('rating')}</Text>
                             <Spacer space={12} />
                             <Rating rating={rating} from={5} />
                         </View>
@@ -130,11 +130,14 @@ const Profile = ({ navigation }) => {
                         {
                             preferredWorkers &&
                             preferredWorkers.map(item => (
-                                <View key={item.worker._id} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <HorizontalChip imageUrl={item.worker.image} text={`${item.worker.firstName} ${item.worker.lastName}`} />
-                                    <Spacer style={{ flex: 1 }} />
-                                    <Text style={{ ...globalStyles.font, fontSize: 22 }}>{item.count} {getString.t('appointments')}</Text>
-                                    <Spacer style={{ flex: 1 }} />
+                                <View key={item.worker._id}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <HorizontalChip imageUrl={item.worker.image} text={`${item.worker.firstName} ${item.worker.lastName}`} />
+                                        <Spacer style={{ flex: 1 }} />
+                                        <Text style={{ ...globalStyles.font, fontSize: fontLarge }}>{item.count} {getString.t('appointments')}</Text>
+                                        <Spacer style={{ flex: 1 }} />
+                                    </View>
+                                    <Spacer space={6} />
                                 </View>
                             ))
                         }

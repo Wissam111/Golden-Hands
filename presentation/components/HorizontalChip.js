@@ -6,6 +6,7 @@ import {
   Image,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { globalStyles } from "../styles/global";
@@ -80,13 +81,16 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   chip: {
-    // backgroundColor: isSelected ? "#FF9B02" : "#f5f5f5",
-    paddingVertical: 8,
+    paddingVertical: Platform.OS === 'android' ? 4 : 8,
     paddingHorizontal: 20,
     borderRadius: 100,
     position: "relative",
     start: -26,
     paddingStart: 40,
-    elevation: 3,
+    elevation: .3,
+    shadowColor: 'black',
+    shadowRadius: 1,
+    shadowOpacity: .2,
+    shadowOffset: { width: .7, height: .7 },
   },
 });

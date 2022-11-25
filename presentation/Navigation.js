@@ -18,7 +18,7 @@ import getString from "../localization";
 import EditProfile from "./screens/profile/EditProfile";
 import UpdatePhoneNumber from "./screens/profile/UpdatePhoneNubmer";
 import UsersList from "./screens/users-list/UsersList";
-import { backgroundColor, globalStyles, orange1 } from "./styles/global";
+import { backgroundColor, fontMeduim, globalStyles, orange1 } from "./styles/global";
 import { AntDesign } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -108,7 +108,7 @@ const DrawerNavigation = () => {
         drawerActiveTintColor: "#000",
         drawerLabelStyle: {
           ...globalStyles.font,
-          fontSize: 18,
+          fontSize: fontMeduim,
           color: "#000",
           textAlign: "left",
         },

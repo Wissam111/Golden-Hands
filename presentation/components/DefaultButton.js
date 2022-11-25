@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, Platform } from "react-native";
 import { globalStyles, primaryColor } from "../styles/global";
 
 const DefaultButton = ({ style, text, onPress }) => {
@@ -16,8 +16,8 @@ export default DefaultButton;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    paddingVertical: Platform.OS === 'android' ? 4 : 8,
+    paddingHorizontal: Platform.OS === 'android' ? 16 : 20,
     backgroundColor: primaryColor,
     justifyContent: "center",
     alignItems: "center",
