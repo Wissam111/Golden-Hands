@@ -21,7 +21,7 @@ const SignupPhone = ({ navigation }) => {
         if (user) {
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'SignupWelcome' }],
+                routes: [{ name: 'ImageUpload' }],
             })
         }
     }, [user])

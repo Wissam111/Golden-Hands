@@ -1,34 +1,35 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { globalStyles } from "../styles/global";
 
 
-const VerticalChip = ({ style, text, imageUrl, imageStyle }) => {
+const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage }) => {
     const [showDefualtImage, setDefaultImage] = useState(false)
     const [progressBar, setProgressBar] = useState(true)
-
     return (
         <View style={{ ...style, ...styles.container }}>
+
             <View style={{ ...styles.image, ...imageStyle }}>
-                <Image
-                    style={{
-                        width: 120, height: 120, borderRadius: 100, borderWidth: 2,
-                        borderColor: '#f9f9f9',
-                        ...imageStyle
-                    }}
-                    source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl }}
-                    onLoadEnd={() => {
-                        setProgressBar(false)
-                    }}
-                    onError={(e) => {
-                        setDefaultImage(true)
-                    }} />
+                <TouchableOpacity onPress={onClickImage}>
+                    <Image
+                        style={{
+                            width: 120, height: 120, borderRadius: 100, borderWidth: 2,
+                            borderColor: '#f9f9f9',
+                            ...imageStyle
+                        }}
+                        source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl+'?time=' + new Date()}}
+                        onLoadEnd={() => {
+                            setProgressBar(false)
+                        }}
+                        onError={(e) => {
+                            setDefaultImage(true)
+                        }} />
 
-                <View style={{ position: 'absolute', zIndex: 3 }}>
-                    {progressBar && <ActivityIndicator />}
-                </View>
-
+                    <View style={{ position: 'absolute', zIndex: 3 }}>
+                        {progressBar && <ActivityIndicator />}
+                    </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.chip}>
                 <Text style={{ ...globalStyles.font, textAlign: 'center' }}>{text}</Text>

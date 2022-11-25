@@ -3,6 +3,7 @@ import getString from '../localization';
 import showAlert from '../presentation/components/ShowAlert';
 
 export const BASE_URL = 'https://saloon-ibra-api.herokuapp.com/api/'
+export const BASE_URL_DEV = 'http://192.168.1.46:4000/api/'
 export const IMAGE_BASE_URL = 'https://saloon-ibra-api.herokuapp.com/imgs/'
 
 const serialize = function (obj) {
@@ -40,15 +41,29 @@ export const getUserId = async () => {
 
 
 
-export const apiCall = async (url, method = 'GET', body, queryParams) => {
-    // const customURL = queryParams ? BASE_URL + url + serialize(queryParams) : BASE_URL + url
-    const result = await fetch(BASE_URL + url, {
+export const apiCall = async (url, method = 'GET', body, queryParams, contentType = 'application/json') => {
+    const customURL = queryParams ? BASE_URL + url + serialize(queryParams) : BASE_URL + url
+    let bbody
+
+    if (body) {
+        if (contentType === 'multipart/form-data') {
+            console.log(body);
+            bbody = body
+        } else {
+            bbody = JSON.stringify(body)
+        }
+    } else {
+        bbody = null
+    }
+
+
+    const result = await fetch(customURL, {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': contentType,
             'Authorization': `Bearer ${await getToken()}`
         },
         method: method,
-        body: body ? JSON.stringify(body) : null
+        body: bbody
     })
     const json = await result.json()
 

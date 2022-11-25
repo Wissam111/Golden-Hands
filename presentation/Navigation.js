@@ -25,20 +25,21 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Splash from "./screens/Splash";
-import ImageSignup from "./screens/signup/ImageSignup";
-import { TransitionPresets } from "@react-navigation/stack";
-
-const SingupStack = createNativeStackNavigator();
+import ImageUpload from "./screens/signup/ImageUpload";
 
 const SignupNavigation = () => {
   return (
     <SignupContextProvider>
-      <SingupStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Navigator screenOptions={{ headerShown: false }}>
         <HomeStack.Screen name="SignupScreen" component={Signup} />
         <HomeStack.Screen name="SignupPhone" component={SignupPhone} />
-        <HomeStack.Screen name="ImageSignup" component={ImageSignup} />
+        <HomeStack.Screen
+          name="ImageUpload"
+          component={ImageUpload}
+          initialParams={{}}
+        />
         <HomeStack.Screen name="SignupWelcome" component={SignupWelcome} />
-      </SingupStack.Navigator>
+      </HomeStack.Navigator>
     </SignupContextProvider>
   );
 };
@@ -54,6 +55,7 @@ const ProfileNavigation = () => {
         name="UpdatePhoneNumber"
         component={UpdatePhoneNumber}
       />
+      <ProfileStack.Screen name="ImageUpload" component={ImageUpload} />
     </ProfileStack.Navigator>
   );
 };

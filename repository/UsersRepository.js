@@ -1,4 +1,5 @@
 import { apiCall } from "../network/apiCall";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -22,7 +23,16 @@ const UserRepository = () => {
     }
 
 
-    return { getUser, updateUser , getUsers }
+    const uploadImage = async (localUri, filename, type) => {
+        let formData = new FormData();
+        formData.append('image', { uri: localUri, name: filename, type });
+
+        const data = await apiCall(`users/upload-image`, 'POST', formData, null, 'multipart/form-data')
+        AsyncStorage.setItem('user_image', data.filename)
+        return data
+    }
+
+    return { getUser, updateUser, getUsers, uploadImage }
 }
 
 export default UserRepository;
