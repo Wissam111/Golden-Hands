@@ -173,7 +173,7 @@ const DashBoardModel = () => {
   };
   const handleSelectedDay = (dayId) => {
     setState((prev) => {
-      return { ...prev, selectedDay: dayId };
+      return { ...prev, selectedDay: dayId, allSelected: true };
     });
     getAppointments(state.dateInterval[dayId]);
   };
