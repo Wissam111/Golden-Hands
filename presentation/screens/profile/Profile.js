@@ -124,7 +124,7 @@ const Profile = ({ navigation, route }) => {
                 }
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: primaryColor, flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: primaryColor, flex: 1  }} contentContainerStyle={{ flexGrow: 1 }}>
 
                 <View style={{ backgroundColor: backgroundColor }}>
                     <View style={{

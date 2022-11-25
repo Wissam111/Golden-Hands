@@ -44,7 +44,7 @@ const useProfileViewModel = () => {
             })
 
         } catch (e) {
-
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
 
         setIsLoading({ isLoading: false })
@@ -68,7 +68,7 @@ const useProfileViewModel = () => {
             })
         }
         catch (e) {
-            console.log(e);
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
 
         setIsLoading({ isLoading: false })
@@ -92,7 +92,7 @@ const useProfileViewModel = () => {
             })
         }
         catch (e) {
-            console.log(e);
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
 
         setIsLoading({ isLoading: false })
