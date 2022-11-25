@@ -1,14 +1,14 @@
 import { Image, View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import getString from "../../../localization";
-import DefaultButton from "../../components/DefaultButton";
-import Spacer from "../../components/Spacer";
-import Title from "../../components/Title";
-import { backgroundColor, globalStyles, white } from "../../styles/global";
+import getString from "../../localization";
+import DefaultButton from "./DefaultButton";
+import Spacer from "./Spacer";
+import Title from "./Title";
+import { backgroundColor, globalStyles, white } from "../styles/global";
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from "react";
-import { BASE_URL_DEV } from "../../../network/apiCall";
-import useSignupViewModel from "./SignupViewModel";
-import BackButton from "../../components/BackButton";
+import { BASE_URL_DEV } from "../../network/apiCall";
+import useSignupViewModel from "../screens/signup/SignupViewModel";
+import BackButton from "./BackButton";
 
 
 const ImageUpload = ({ route, navigation }) => {
@@ -61,7 +61,7 @@ const ImageUpload = ({ route, navigation }) => {
                 }}>
                     <Image
                         style={{ width: 200, height: 200, borderRadius: 100, borderWidth: 1, borderColor: white }}
-                        source={image ? { uri: image } : require('../../../assets/imgs/person_place_holder.jpg')} />
+                        source={image ? { uri: image } : require('../../assets/imgs/person_place_holder.jpg')} />
                 </View>
             </TouchableOpacity>
 

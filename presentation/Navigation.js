@@ -25,7 +25,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Splash from "./screens/Splash";
-import ImageUpload from "./screens/signup/ImageUpload";
+import ImageUpload from "./components/ImageUpload";
 
 
 const SignupNavigation = () => {

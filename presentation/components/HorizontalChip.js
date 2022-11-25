@@ -22,7 +22,7 @@ const HorizontalChip = ({ style, text, imageUrl }) => {
             setDefaultImage(true)
           }}
         />
-        <View style={{ position: 'absolute', zIndex: 3 }}>
+        <View style={{ position: 'absolute', zIndex: 3,  width:'100%' , height:'100%' , justifyContent:'center' , alignItems:'center' }}>
           {progressBar && <ActivityIndicator />}
         </View>
       </View>

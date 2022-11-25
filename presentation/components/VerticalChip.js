@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
-import { globalStyles } from "../styles/global";
+import { backgroundColor, globalStyles } from "../styles/global";
 
 
 const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage }) => {
@@ -10,27 +10,25 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage }) => {
     return (
         <View style={{ ...style, ...styles.container }}>
 
-            <View style={{ ...styles.image, ...imageStyle }}>
-                <TouchableOpacity onPress={onClickImage}>
-                    <Image
-                        style={{
-                            width: 120, height: 120, borderRadius: 100, borderWidth: 2,
-                            borderColor: '#f9f9f9',
-                            ...imageStyle
-                        }}
-                        source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl+'?time=' + new Date()}}
-                        onLoadEnd={() => {
-                            setProgressBar(false)
-                        }}
-                        onError={(e) => {
-                            setDefaultImage(true)
-                        }} />
+            <TouchableOpacity style={{ ...styles.image, ...imageStyle }} onPress={onClickImage}>
+                <Image
+                    style={{
+                        width: 120, height: 120, borderRadius: 100, borderWidth: 2,
+                        borderColor: '#f9f9f9',
+                        ...imageStyle
+                    }}
+                    source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
+                    onLoadEnd={() => {
+                        setProgressBar(false)
+                    }}
+                    onError={(e) => {
+                        setDefaultImage(true)
+                    }} />
 
-                    <View style={{ position: 'absolute', zIndex: 3 }}>
-                        {progressBar && <ActivityIndicator />}
-                    </View>
-                </TouchableOpacity>
-            </View>
+                <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                    {progressBar && <ActivityIndicator />}
+                </View>
+            </TouchableOpacity>
             <View style={styles.chip}>
                 <Text style={{ ...globalStyles.font, textAlign: 'center' }}>{text}</Text>
             </View>
@@ -49,6 +47,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
+        backgroundColor:backgroundColor,
         borderRadius: 100,
         width: 120,
         height: 120,

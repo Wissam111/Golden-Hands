@@ -14,6 +14,7 @@ import getString from "../../../localization";
 import useAuthContext from "../../../hooks/useAuthContext";
 import Spacer from "../../components/Spacer";
 import { openMaps, openWaze, openWhatsapp } from "../../../core/linking";
+import { FontAwesome } from '@expo/vector-icons';
 
 
 
@@ -83,78 +84,82 @@ const Home = ({ navigation }) => {
     }, [])
 
     return (
-            <View style={{ ...styles.backLayer }}>
-                <View style={{ paddingHorizontal: 16, paddingVertical: 36 }}>
-                    {user &&
-                        <HorizontalChip imageUrl={user.image} text={`${user.firstName} ${user.lastName}`} />
-                    }
-                </View>
+        <View style={{ ...styles.backLayer }}>
+            <View style={{ paddingHorizontal: 16, paddingVertical: 36, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={navigation.toggleDrawer}>
+                    <FontAwesome name="navicon" size={24} color={white} />
+                </TouchableOpacity>
+                <Spacer space={12} />
+                {user &&
+                    <HorizontalChip imageUrl={user.image} text={`${user.firstName} ${user.lastName}`} />
+                }
+            </View>
 
-                <View
-                    style={{
-                        borderTopStartRadius: 26,
-                        borderTopEndRadius: 26,
-                        flex: 1,
-                        overflow: 'hidden'
-                    }}>
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        style={styles.scroll}
-                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} progressBackgroundColor='#fff' tintColor='#fff' />}>
+            <View
+                style={{
+                    borderTopStartRadius: 26,
+                    borderTopEndRadius: 26,
+                    flex: 1,
+                    overflow: 'hidden'
+                }}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={styles.scroll}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} progressBackgroundColor='#fff' tintColor='#fff' />}>
 
-                        <LinearGradient
-                            style={styles.gradient}
-                            colors={['#FF9502', '#FD7501']} >
+                    <LinearGradient
+                        style={styles.gradient}
+                        colors={['#FF9502', '#FD7501']} >
 
-                            <View style={styles.appointmentStatus}>
-                                <BorderButton
-                                    style={styles.margin}
-                                    text={user ? getString.t('book') : getString.t('login_or_signup')}
-                                    onPress={() => { user ? navigation.navigate('BookAppointment') : navigation.navigate('LoginScreen') }} />
+                        <View style={styles.appointmentStatus}>
+                            <BorderButton
+                                style={styles.margin}
+                                text={user ? getString.t('book') : getString.t('login_or_signup')}
+                                onPress={() => { user ? navigation.navigate('BookAppointment') : navigation.navigate('LoginScreen') }} />
+                            {
+                                user ?
+                                    <LoggedInHeader appointment={appointment} />
+                                    :
+                                    <GeustHeader />
+                            }
+                        </View>
+
+                    </LinearGradient>
+
+                    <View style={{ backgroundColor: backgroundColor, minHeight: '100%' }}>
+                        {workers &&
+                            <View style={{ backgroundColor: surfaceColor, paddingVertical: 12, marginVertical: 4, borderRadius: 20 }}>
+                                <Text style={{ ...globalStyles.font, paddingHorizontal: 12, paddingBottom: 12, ...styles.margin, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('our_staff')}</Text>
                                 {
-                                    user ?
-                                        <LoggedInHeader appointment={appointment} />
-                                        :
-                                        <GeustHeader />
+                                    workers && (
+                                        <FlatList
+                                            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 16 }}
+                                            ItemSeparatorComponent={<View style={{ padding: 6 }} />}
+                                            centerContent={true}
+                                            showsHorizontalScrollIndicator={false}
+                                            data={workers}
+                                            horizontal
+                                            keyExtractor={(item) => item._id}
+                                            renderItem={({ item: worker }) => (
+                                                <VerticalChip key={worker._id} text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
+                                            )} />)
                                 }
                             </View>
+                        }
 
-                        </LinearGradient>
+                        <View style={{ backgroundColor: surfaceColor, paddingVertical: 12, paddingBottom: 20, paddingHorizontal: 12, marginVertical: 4, borderRadius: 20 }}>
+                            <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('about_us')}</Text>
 
-                        <View style={{ backgroundColor: backgroundColor, minHeight: '100%' }}>
-                            {workers &&
-                                <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20 }}>
-                                    <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('our_staff')}</Text>
-                                    {
-                                        workers && (
-                                            <FlatList
-                                                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-                                                ItemSeparatorComponent={<View style={{ padding: 6 }} />}
-                                                centerContent={true}
-                                                showsHorizontalScrollIndicator={false}
-                                                data={workers}
-                                                horizontal
-                                                keyExtractor={(item) => item._id}
-                                                renderItem={({ item: worker }) => (
-                                                    <VerticalChip key={worker._id} text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
-                                                )} />)
-                                    }
-                                </View>
-                            }
-
-                            <View style={{ backgroundColor: surfaceColor, padding: 12, marginVertical: 4, borderRadius: 20 }}>
-                                <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us')}</Text>
-
-                                <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us_details')}</Text>
-                            </View>
-
-                            <Spacer space={12}/>
-
-                            <SafeAreaView />
+                            <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection }}>{getString.t('about_us_details')}</Text>
                         </View>
-                    </ScrollView>
-                </View>
+
+                        <Spacer space={12} />
+
+                        <SafeAreaView />
+                    </View>
+                </ScrollView>
             </View>
+        </View>
     );
 }
 
