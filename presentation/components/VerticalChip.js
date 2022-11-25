@@ -2,9 +2,10 @@ import { useState } from "react";
 import { StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { backgroundColor, globalStyles } from "../styles/global";
+import Spacer from "./Spacer";
 
 
-const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage }) => {
+const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIcon }) => {
     const [showDefualtImage, setDefaultImage] = useState(false)
     const [progressBar, setProgressBar] = useState(true)
     return (
@@ -30,6 +31,11 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage }) => {
                 </View>
             </TouchableOpacity>
             <View style={styles.chip}>
+                {chipIcon && <>
+                    {chipIcon}
+                    < Spacer space={6} />
+                </>
+                }
                 <Text style={{ ...globalStyles.font, textAlign: 'center' }}>{text}</Text>
             </View>
         </View>
@@ -47,7 +53,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     image: {
-        backgroundColor:backgroundColor,
+        backgroundColor: backgroundColor,
         borderRadius: 100,
         width: 120,
         height: 120,
@@ -68,6 +74,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         top: -6,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection:'row'
     }
 })

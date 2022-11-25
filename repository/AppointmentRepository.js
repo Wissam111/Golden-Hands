@@ -9,6 +9,12 @@ const AppointmentRepository = () => {
     const data = await apiCall("appointments");
     return data;
   };
+
+  const rateAppointment = async (appointmentId, rate) => {
+    const data = await apiCall("appointments/rate", 'POST', { appointmentId, rate });
+    return data;
+  }
+
   // /api/appointments/available
   const getAvailableAppointment = async () => {
     const data = await apiCall("appointments/available", "GET");
@@ -59,6 +65,7 @@ const AppointmentRepository = () => {
     getUserAppointments,
     unbook,
     PostAppointment,
+    rateAppointment
   };
 };
 

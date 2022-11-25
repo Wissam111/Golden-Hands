@@ -12,7 +12,8 @@ const useProfileViewModel = () => {
     const [state, setState] = useState({
         appointmentCount: null,
         paid: null,
-        preferredWorkers: null
+        preferredWorkers: null,
+        rating: null
     })
 
     const getUserProfile = async () => {
@@ -31,7 +32,8 @@ const useProfileViewModel = () => {
                     ...prev,
                     appointmentCount: data.appointmentCount,
                     paid: data.paid,
-                    preferredWorkers: data.preferredWorkers
+                    preferredWorkers: data.preferredWorkers,
+                    rating: data.rating
                 }
             })
 

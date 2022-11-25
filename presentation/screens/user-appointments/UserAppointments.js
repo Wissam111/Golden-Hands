@@ -9,6 +9,7 @@ import useUserAppointmentsViewModel from "./UserAppointmentsViewModel";
 import moment from 'moment'
 import DefaultButton from "../../components/DefaultButton";
 import { useIsFocused } from "@react-navigation/native";
+import Rating from "../../components/Rating";
 
 const UserAppointments = () => {
     const { appointments, getUserAppointments, unbook } = useUserAppointmentsViewModel()
@@ -19,7 +20,7 @@ const UserAppointments = () => {
             getUserAppointments()
     }, [isFocused])
 
-
+    // console.log(appointments);
     const getStatusColor = (status) => {
         switch (status) {
             case 'in-progress': return orange1
@@ -73,6 +74,10 @@ const UserAppointments = () => {
 
                         <Spacer space={12} />
                         <HorizontalChip text={`${item.worker.firstName} ${item.worker.lastName}`} />
+
+                        {item.rating &&
+                            <Rating rating={item.rating} from={5} />
+                        }
 
                         {
                             item.status === 'in-progress' &&

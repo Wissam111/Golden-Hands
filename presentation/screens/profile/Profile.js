@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Title from "../../components/Title";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Spacer from "../../components/Spacer";
@@ -13,17 +13,18 @@ import { useIsFocused } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import Rating from "../../components/Rating";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Profile = ({ navigation }) => {
     const { user } = useAuthContext()
-    const { getUserProfile, appointmentCount, paid, preferredWorkers } = useProfileViewModel()
+    const { getUserProfile, appointmentCount, paid, rating, preferredWorkers } = useProfileViewModel()
     const isFocused = useIsFocused();
 
     useEffect(() => {
         if (isFocused)
             getUserProfile()
     }, [isFocused])
-
 
 
     return (
@@ -49,8 +50,12 @@ const Profile = ({ navigation }) => {
 
                 <Spacer space={22} />
 
-
-                <VerticalChip text={`${user.firstName} ${user.lastName}`}
+                {user && user.superUser &&
+                    <Image style={{ alignSelf: 'center', width: 60, height: 60 }} source={require('../../../assets/imgs/crown.png')} />
+                }
+                <VerticalChip
+                    chipIcon={user.role !== 'customer' ? <MaterialIcons name="work-outline" size={24} color="black" /> : <FontAwesome5 name="user" size={24} color="black" />}
+                    text={`${user.firstName} ${user.lastName}`}
                     imageStyle={{ width: 180, height: 180 }}
                     imageUrl={user.image}
                     onClickImage={() => { navigation.navigate('ImageUpload', { title: getString.t('upload_image'), buttonText: getString.t('upload'), backButton: true }) }}
@@ -75,22 +80,24 @@ const Profile = ({ navigation }) => {
 
                         <Spacer space={16} />
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>תפקיד :</Text>
-                            <Spacer space={6} />
-                            <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: 20 }}>{getString.t(user.role)}</Text>
-                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>תפקיד :</Text>
+                                <Spacer space={6} />
+                                <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: 20 }}>{getString.t(user.role)}</Text>
+                            </View>
 
-                        <Spacer space={8} />
+                            <Spacer space={8} />
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Feather name="phone" size={24} color="black" />
-                            <Spacer space={6}/>
-                            <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection }}>{user.phone}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Feather name="phone" size={24} color="black" />
+                                <Spacer space={6} />
+                                <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection }}>{user.phone}</Text>
+                            </View>
                         </View>
                     </View>
 
-                    <Spacer space={16} />
+                    <Spacer space={12} />
 
                     <View style={{ flexDirection: 'row' }}>
                         <Spacer space={6} />
@@ -104,18 +111,12 @@ const Profile = ({ navigation }) => {
                         <View style={{ backgroundColor: surfaceColor, padding: 20, borderRadius: 16, flex: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ ...globalStyles.font, fontSize: 22 }}>{getString.t('rating')}</Text>
                             <Spacer space={12} />
-                            <View style={{ flexDirection: 'row' }}>
-                                <AntDesign name="star" size={24} color={orange1} />
-                                <AntDesign name="star" size={24} color={orange1} />
-                                <AntDesign name="star" size={24} color={orange1} />
-                                <AntDesign name="star" size={24} color={orange1} />
-                                <AntDesign name="star" size={24} color={orange1} />
-                            </View>
+                            <Rating rating={rating} from={5} />
                         </View>
                         <Spacer space={6} />
                     </View>
 
-                    <Spacer space={16} />
+                    <Spacer space={12} />
 
                     <View style={{ backgroundColor: surfaceColor, padding: 8, marginHorizontal: 6, borderRadius: 12 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -137,9 +138,6 @@ const Profile = ({ navigation }) => {
                                 </View>
                             ))
                         }
-                        {/* <HorizontalChip text='tarik husin' />
-                        <Spacer space={6} />
-                        <HorizontalChip text='tarik husin' /> */}
                     </View>
                 </View>
                 <Spacer space={16} />
