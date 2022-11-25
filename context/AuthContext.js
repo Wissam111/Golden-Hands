@@ -26,8 +26,7 @@ export const authReducer = (state, action) => {
             AsyncStorage.setItem('user_image', action.payload)
             const data = { ...state }
             data.user.image = action.payload
-            console.log(data, action.payload);
-            return {...data}
+            return data
 
 
         case 'LOGOUT':

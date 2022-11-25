@@ -23,7 +23,7 @@ const HorizontalChip = ({
   return (
     <TouchableOpacity
       style={{ ...styles.container, justifyContent: "flex-start", ...style }}
-      onPress={onPress ? () => onPress(user) : () => {}}
+      onPress={onPress ? () => onPress(user) : () => { }}
     >
       <View
         style={{ zIndex: 2, justifyContent: "center", alignItems: "center" }}
@@ -33,7 +33,7 @@ const HorizontalChip = ({
           source={
             showDefualtImage
               ? require("../../assets/imgs/person_place_holder.jpg")
-              : { uri: IMAGE_BASE_URL + imageUrl }
+              : { uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }
           }
           onLoadEnd={() => {
             setProgressBar(false);
@@ -42,7 +42,7 @@ const HorizontalChip = ({
             setDefaultImage(true);
           }}
         />
-        <View style={{ position: 'absolute', zIndex: 3,  width:'100%' , height:'100%' , justifyContent:'center' , alignItems:'center' }}>
+        <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
           {progressBar && <ActivityIndicator />}
         </View>
       </View>
