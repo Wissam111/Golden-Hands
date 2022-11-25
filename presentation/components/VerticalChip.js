@@ -27,7 +27,7 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
                     }} />
 
                 <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                    {progressBar && <ActivityIndicator />}
+                    <ActivityIndicator animating={progressBar} color='#000' size='large' />
                 </View>
             </TouchableOpacity>
             <View style={styles.chip}>
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
         top: -6,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection:'row'
+        flexDirection: 'row'
     }
 })
