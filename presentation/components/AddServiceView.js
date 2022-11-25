@@ -19,14 +19,16 @@ const AddServiceView = (props) => {
   const [showAddServ, setShowAddServ] = useState(false);
   return (
     <View className="p-2 m-3" style={styles.shadow}>
-      <View>
+      <View className="flex-row justify-between items-center">
         <TouchableOpacity
           className="mr-2 mb-5 mt-2"
           onPress={() => setShowAddServ(!showAddServ)}
         >
           <AntDesign name="pluscircle" size={30} color="green" />
         </TouchableOpacity>
-        {/* {!showAddServ && <Text>Add Service</Text>} */}
+        {!showAddServ && (
+          <Text className="font-bold mb-1 text-lg">Add Service</Text>
+        )}
       </View>
 
       {showAddServ && (

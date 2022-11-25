@@ -51,6 +51,7 @@ const DashBoardScreen = () => {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
+        // console.log("hh");
         Keyboard.dismiss();
         handleShowStatusList(null, false);
       }}
@@ -112,7 +113,7 @@ const DashBoardScreen = () => {
                   !allSelected ? "bg-[#F4EBD0]" : "bg-[#F5F5F5]"
                 } rounded-full`}
                 style={{ width: 85, height: 32 }}
-                onPress={handleSelectBooked}
+                onPress={() => handleSelectBooked()}
               >
                 <Text className="text-center mt-2 font-medium">Booked</Text>
               </TouchableOpacity>

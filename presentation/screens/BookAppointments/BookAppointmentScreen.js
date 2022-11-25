@@ -1,11 +1,13 @@
 import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import HorizontalChipS from "../../components/HorizontalChipS";
+import HorizontalChip from "../../components/HorizontalChip";
+
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Card from "../../components/Card";
 import moment from "moment";
 import BookViewModel from "./BookViewModel";
-import AppointmentConfirmation from "../../components/AppointmentConfirmation";
+import AppointmentConfirmationSheet from "../../components/AppointmentConfirmationSheet";
 import { CalendarDaysIcon } from "react-native-heroicons/solid";
 import { FontAwesome5 } from "@expo/vector-icons";
 const BookAppointmentScreen = () => {
@@ -46,7 +48,7 @@ const BookAppointmentScreen = () => {
             // width: 120,
           }}
         >
-          <FontAwesome5 name="calendar-alt" size={35} color="black" />
+          <FontAwesome5 name="calendar-alt" size={32} color="black" />
 
           <Text
             className="text-xl  m-2 mb-5 font-bold"
@@ -63,9 +65,11 @@ const BookAppointmentScreen = () => {
             keyExtractor={(item) => item._id}
             horizontal
             renderItem={({ item }) => (
-              <HorizontalChipS
+              <HorizontalChip
+                text={item.firstName + " " + item.lastName}
+                imageUrl={item.image}
                 user={item}
-                handlePress={handleSelectWorker}
+                onPress={handleSelectWorker}
                 isSelected={selectedWorker?._id == item._id}
               />
             )}
@@ -108,6 +112,7 @@ const BookAppointmentScreen = () => {
                   title={item.title}
                   handlePress={handleSelectService}
                   isSelected={selectedService == item._id}
+                  price={item.price}
                 />
               )}
               showsHorizontalScrollIndicator={false}
@@ -137,7 +142,7 @@ const BookAppointmentScreen = () => {
           </View>
         )}
         {selectedHour && (
-          <AppointmentConfirmation
+          <AppointmentConfirmationSheet
             id={selectedHour}
             appointsByday={appointsByday}
             handleCloseConfirmation={handleCloseConfirmation}

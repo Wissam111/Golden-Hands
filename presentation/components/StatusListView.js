@@ -21,14 +21,16 @@ const StatusListView = (props) => {
   ];
   const services = ["Hair Cut", "Face Cut", "Wax", "Massage"];
   return (
-    <View
+    <TouchableOpacity
       className="absolute  bg-[#f1f3f2] rounded-xl shadow-xl items-center p-8"
       style={{
-        zIndex: 99999,
+        zIndex: 9999,
         top: 200,
         left: 65,
         width: "65%",
         height: "55%",
+        borderWidth: 2,
+        borderColor: "red",
       }}
     >
       {
@@ -92,7 +94,7 @@ const StatusListView = (props) => {
           />
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
