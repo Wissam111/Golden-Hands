@@ -22,7 +22,7 @@ const Profile = ({ navigation }) => {
             getUserProfile()
     }, [isFocused])
 
-   
+
 
     return (
         <View style={{ flex: 1, backgroundColor: backgroundColor }}>
@@ -51,6 +51,7 @@ const Profile = ({ navigation }) => {
                 <VerticalChip text={`${user.firstName} ${user.lastName}`}
                     imageStyle={{ width: 180, height: 180 }}
                     imageUrl={user.image}
+                    onClickImage={() => { navigation.navigate('ImageUpload', { title: getString.t('upload_image'), buttonText: getString.t('upload'), backButton: true }) }}
                 />
 
                 <Spacer space={22} />

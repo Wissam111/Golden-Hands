@@ -22,6 +22,14 @@ export const authReducer = (state, action) => {
                 ...action.payload
             }
 
+        case 'UPDATE_USER_IMAGE':
+            AsyncStorage.setItem('user_image', action.payload)
+            const data = { ...state }
+            data.user.image = action.payload
+            console.log(data, action.payload);
+            return {...data}
+
+
         case 'LOGOUT':
             const { logout } = AuthRepository()
             logout()
@@ -37,6 +45,7 @@ const getUserProfile = async (dispatch, id) => {
     try {
         const { getUser } = UserRepository()
         const data = await getUser(id)
+
         dispatch({
             type: 'UPDATE_USER',
             payload: {
@@ -56,8 +65,9 @@ const getAuthDataFromLoaclStorage = async (dispatch) => {
         const refreshToken = await AsyncStorage.getItem('refreshToken')
         const expireDate = await AsyncStorage.getItem('expireDate')
         const userJson = await AsyncStorage.getItem('user')
+        const image = await AsyncStorage.getItem('user_image')
         const user = userJson != null ? JSON.parse(userJson) : null;
-
+        user.image = image
         const isTokenExpired = new Date(expireDate) < new Date()
 
         dispatch({

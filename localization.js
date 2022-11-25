@@ -64,8 +64,12 @@ const getString = new I18n({
         lets_get_haircut: 'let\'s get a hair cut',
         'in-progress': 'in progress',
         canceled: 'Canceled',
-        cancel: 'Cancel' , 
-        users:'Users'
+        cancel: 'Cancel',
+        users: 'Users',
+        lets_add_profile_image: 'Let\'s add a profile image',
+        upload_image: 'Upload Image',
+        upload: 'Upload'
+
 
 
 
@@ -131,15 +135,11 @@ const getString = new I18n({
         'in-progress': 'בטיפול',
         canceled: 'בוטל',
         cancel: 'בטל',
-        users:'משתמשים'
-
-
-
-
-
-
-
-
+        users: 'משתמשים',
+        lets_add_profile_image: 'בוא נוסיף תמונת פרופיל',
+        image_uploaded_successfuly: 'התמונה עלתה בהצלחה',
+        upload_image: 'העלה תמונה',
+        upload: 'העלה'
 
 
 

@@ -7,16 +7,18 @@ import { validate } from "../../../validation/ValidateName";
 import showAlert from "../../components/ShowAlert";
 import { useNavigation } from '@react-navigation/native';
 import getString from "../../../localization";
+import UserRepository from "../../../repository/UsersRepository";
 
 let verifyId
 
 const useSignupViewModel = () => {
-    const { dispatch: setLoading } = useLoadingContext();
+    const { dispatch: setLoading, isLoading } = useLoadingContext();
     const { dispatch: setAuth } = useAuthContext();
     const context = useSignupContext()
     const [showCode, setShowCode] = useState(false)
     const navigation = useNavigation();
     const authRepository = AuthRepository();
+    const userRepository = UserRepository();
 
 
     const hideCode = () => {
@@ -129,7 +131,35 @@ const useSignupViewModel = () => {
     }
 
 
-    return { ...context, showCode, navigateToSignupPhone, hideCode, onInputChanged, signup, sendAuthVerification }
+
+    const uploadImage = async (uri) => {
+
+        try {
+            if (!uri) {
+                return showAlert('Choose an Image', null)
+            }
+            setLoading({ isLoading: true })
+            let filename = uri.split('/').pop();
+            let match = /\.(\w+)$/.exec(filename);
+            let type = match ? `image/${match[1]}` : `image`;
+            console.log(uri, filename, type);
+            const data = await userRepository.uploadImage(uri, filename, type)
+            setAuth({
+                type: 'UPDATE_USER_IMAGE',
+                payload: data.filename
+            })
+
+            showAlert(getString.t('image_uploaded_successfuly'), null)
+        } catch (e) {
+            console.log(e);
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
+        }
+        setLoading({ isLoading: false })
+    }
+
+
+
+    return { ...context, isLoading, showCode, uploadImage, navigateToSignupPhone, hideCode, onInputChanged, signup, sendAuthVerification }
 }
 
 export default useSignupViewModel;

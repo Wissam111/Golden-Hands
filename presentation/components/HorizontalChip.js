@@ -14,7 +14,7 @@ const HorizontalChip = ({ style, text, imageUrl }) => {
       <View style={{ zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
         <Image
           style={styles.image}
-          source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl }}
+          source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
           onLoadEnd={() => {
             setProgressBar(false)
           }}

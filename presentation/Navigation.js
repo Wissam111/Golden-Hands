@@ -25,21 +25,20 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Splash from "./screens/Splash";
-import ImageSignup from "./screens/signup/ImageSignup";
+import ImageUpload from "./screens/signup/ImageUpload";
 
-const SingupStack = createNativeStackNavigator();
 
 const SignupNavigation = () => {
   return (
     <SignupContextProvider>
-      <SingupStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Navigator screenOptions={{ headerShown: false }}>
 
         <HomeStack.Screen name="SignupScreen" component={Signup} />
         <HomeStack.Screen name="SignupPhone" component={SignupPhone} />
-        <HomeStack.Screen name="ImageSignup" component={ImageSignup} />
+        <HomeStack.Screen name="ImageUpload" component={ImageUpload} initialParams={{}} />
         <HomeStack.Screen name="SignupWelcome" component={SignupWelcome} />
 
-      </SingupStack.Navigator>
+      </HomeStack.Navigator>
     </SignupContextProvider>
   );
 };
@@ -55,6 +54,7 @@ const ProfileNavigation = () => {
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
       <ProfileStack.Screen name="UpdatePhoneNumber" component={UpdatePhoneNumber} />
+      <ProfileStack.Screen name="ImageUpload" component={ImageUpload} />
 
     </ProfileStack.Navigator>
   );
@@ -164,7 +164,7 @@ const SplashNavigation = () => {
 
   return (
     <SplashStack.Navigator screenOptions={{
-      headerShown: false, contentStyle:{backgroundColor:'transparent'}
+      headerShown: false, contentStyle: { backgroundColor: 'transparent' }
     }}>
       <SplashStack.Screen name="Splash" component={Splash} />
       <SplashStack.Screen name="DrawerNavigation" component={DrawerNavigation} />
