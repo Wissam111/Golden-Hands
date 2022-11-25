@@ -38,3 +38,12 @@ export const openWhatsapp = () => {
     });
     Linking.openURL(url);
 }
+
+
+
+export const dialPhoneNumber = (phone) => {
+    Linking.openURL(`tel:${phone}`)
+}
+
+
+

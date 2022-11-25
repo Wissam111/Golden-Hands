@@ -72,7 +72,14 @@ const getString = new I18n({
         preferred_workers: 'Preferred Workers',
         rating: 'Rating',
         barber: 'Barber',
-        general: 'General'
+        general: 'General',
+        mark_as_barber: 'Mark as barber',
+        call: 'Call',
+        block: 'Block',
+        unblock: 'Unblock',
+        mark_as_customer: 'Mark as customer',
+        actions:'Actions'
+
 
 
 
@@ -147,7 +154,15 @@ const getString = new I18n({
         preferred_workers: 'עובדים מועדפים',
         rating: 'דירוג',
         barber: 'ספר',
-        general: 'כללי'
+        general: 'כללי',
+        mark_as_barber: 'סמן כספר',
+        call: 'התקשר',
+        block: 'חסום',
+        unblock: 'בטל חסימה',
+        mark_as_customer: 'סמן כלקוח',
+        actions:'פעולות'
+
+
 
 
 
