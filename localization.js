@@ -54,10 +54,10 @@ const getString = new I18n({
         appointments: 'Appointments',
         worker_page: 'Worker Page',
         logout: 'Logout',
-        customers: 'Customers',
         are_you_sure_logout: 'Are you sure you want to logout?',
         edit_profile: 'Edit Profile',
         customers: 'Customers',
+        customer: 'Customer',
         users: 'Users',
         update: 'Update',
         phone_number: 'Phone Number',
@@ -68,7 +68,11 @@ const getString = new I18n({
         users: 'Users',
         lets_add_profile_image: 'Let\'s add a profile image',
         upload_image: 'Upload Image',
-        upload: 'Upload'
+        upload: 'Upload',
+        preferred_workers: 'Preferred Workers',
+        rating: 'Rating',
+        barber: 'Barber',
+        general: 'General'
 
 
 
@@ -124,10 +128,10 @@ const getString = new I18n({
         appointments: 'תורים',
         worker_page: 'דף עובד',
         logout: 'התנתק',
-        customers: 'לקוחות”',
         are_you_sure_logout: 'אתה בטוח לצאת מהמערכת?',
         edit_profile: 'עדכן פרטים',
         customers: 'לקוחות',
+        customer: 'לקוח',
         users: 'משתמשים',
         update: 'עדכן',
         phone_number: 'מספר טלפון',
@@ -139,7 +143,13 @@ const getString = new I18n({
         lets_add_profile_image: 'בוא נוסיף תמונת פרופיל',
         image_uploaded_successfuly: 'התמונה עלתה בהצלחה',
         upload_image: 'העלה תמונה',
-        upload: 'העלה'
+        upload: 'העלה',
+        preferred_workers: 'עובדים מועדפים',
+        rating: 'דירוג',
+        barber: 'ספר',
+        general: 'כללי'
+
+
 
 
 

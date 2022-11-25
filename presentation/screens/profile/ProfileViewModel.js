@@ -11,7 +11,8 @@ const useProfileViewModel = () => {
     const userRepository = UserRepository()
     const [state, setState] = useState({
         appointmentCount: null,
-        paid: null
+        paid: null,
+        preferredWorkers: null
     })
 
     const getUserProfile = async () => {
@@ -29,7 +30,8 @@ const useProfileViewModel = () => {
                 return {
                     ...prev,
                     appointmentCount: data.appointmentCount,
-                    paid: data.paid
+                    paid: data.paid,
+                    preferredWorkers: data.preferredWorkers
                 }
             })
 
