@@ -11,7 +11,7 @@ const AppointmentRepository = () => {
   };
   // /api/appointments/available
   const getAvailableAppointment = async () => {
-    const data = await apiCall("appointments/available");
+    const data = await apiCall("appointments/available", "GET");
     return data;
   };
 
