@@ -92,6 +92,22 @@ const HomeNavigation = () => {
   );
 };
 
+
+
+
+const UsersListStack = createNativeStackNavigator();
+
+const UsersListNavigation = () => {
+  return (
+    <UsersListStack.Navigator screenOptions={{ headerShown: false }}>
+      <UsersListStack.Screen name="UsersListScreen" component={UsersList} />
+      <ProfileStack.Screen name="ProfileScreen" component={Profile} />
+    </UsersListStack.Navigator>
+  );
+};
+
+
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = () => {
@@ -186,7 +202,7 @@ const DrawerNavigation = () => {
           />
           <Drawer.Screen
             name="UsersList"
-            component={UsersList}
+            component={UsersListNavigation}
             options={{
               drawerIcon: ({ focused, size }) => (
                 <FontAwesome5

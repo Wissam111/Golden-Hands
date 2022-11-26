@@ -41,8 +41,8 @@ const LoggedInHeader = ({ appointment }) => {
 
                             <HorizontalChip
                                 style={styles.margin}
-                                text={`${appointment.customer.firstName} ${appointment.customer.lastName}`}
-                                imageUrl={appointment.customer.image} />
+                                text={`${appointment.worker.firstName} ${appointment.worker.lastName}`}
+                                imageUrl={appointment.worker.image} />
 
                             <Spacer space={20} />
 
