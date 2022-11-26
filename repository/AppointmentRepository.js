@@ -24,6 +24,7 @@ const AppointmentRepository = () => {
       null,
       appointObj
     );
+    console.log(data);
     return data;
   };
 

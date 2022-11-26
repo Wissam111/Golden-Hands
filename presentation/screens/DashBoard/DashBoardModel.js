@@ -40,7 +40,9 @@ const DashBoardModel = () => {
       const _date = moment(date).format("L");
 
       let appoints = appointments.filter(
-        (appoint) => _date == moment(appoint.start_time).format("L")
+        (appoint) =>
+          _date == moment(appoint.start_time).format("L") &&
+          appoint?.worker?._id == user._id
       );
       setState((prev) => {
         return {

@@ -48,8 +48,6 @@ export const apiCall = async (
     ? BASE_URL + url + serialize(queryParams)
     : BASE_URL + url;
   let bbody;
-
-  console.log(queryParams);
   if (body) {
     if (contentType === "multipart/form-data") {
       console.log(body);
@@ -81,6 +79,5 @@ export const apiCall = async (
       ...json,
     };
   }
-
   return json;
 };
