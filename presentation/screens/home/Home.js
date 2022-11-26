@@ -93,22 +93,20 @@ const Time = ({ startTime, endTime }) => {
 }
 
 
-const WorkerLine = ({ worker }) => {
+const LocationView = () => {
     return (
         <View style={{ alignSelf: 'flex-end' }}>
             <View style={{ height: 16, width: 1, backgroundColor: backgroundColor, borderRadius: 100 }} />
             <Spacer space={6} />
 
             <View style={{ height: 16, width: 1, backgroundColor: backgroundColor, borderRadius: 100 }} />
-            <Spacer space={6} /> 
+            <Spacer space={6} />
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ position: 'relative', top: -20, height: 16, width: 1, backgroundColor: backgroundColor, borderRadius: 100 }} />
                 <View style={{ height: 1, width: 16, backgroundColor: backgroundColor, borderRadius: 100 }} />
                 <Spacer space={6} />
                 <View style={{ height: 1, width: 16, backgroundColor: backgroundColor, borderRadius: 100 }} />
-                <Spacer space={6} />
-                <HorizontalChip text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
                 <Spacer space={6} />
                 <TouchableOpacity onPress={() => { openWaze() }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -142,9 +140,8 @@ const AppointmentStatus = ({ appointment }) => {
 
             <Spacer space={6} />
 
-            <AppointmentCard appointment={appointment} />
-            <WorkerLine worker={appointment.worker} />
-
+            <AppointmentCard appointment={appointment} image={appointment.worker.image} text={`${appointment.worker.firstName} ${appointment.worker.lastName}`} />
+            <LocationView />
         </View>
     )
 }

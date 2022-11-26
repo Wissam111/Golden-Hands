@@ -29,7 +29,7 @@ const useUserAppointmentsViewModel = () => {
     }
 
 
-    const unbook = async (id)=>{
+    const unbook = async (id) => {
         setLoading({ isLoading: true })
         try {
             const data = await appointmentRepository.unbook(id)
@@ -40,7 +40,25 @@ const useUserAppointmentsViewModel = () => {
     }
 
 
-    return { ...state, getUserAppointments , unbook }
+    const rateAppointment = async (id, stars, index) => {
+        setLoading({ isLoading: true })
+        try {
+            const data = await appointmentRepository.rateAppointment(id, stars)
+            state.appointments[index] = data.appointment
+            setState(prev => {
+                return {
+                    ...prev
+                }
+            })
+
+        } catch (e) {
+            showAlert(getString.t('error'), getString.t('something_went_wrong'))
+        }
+        setLoading({ isLoading: false })
+    }
+
+
+    return { ...state, getUserAppointments, unbook, rateAppointment }
 }
 
 export default useUserAppointmentsViewModel;

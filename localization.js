@@ -78,7 +78,8 @@ const getString = new I18n({
         block: 'Block',
         unblock: 'Unblock',
         mark_as_customer: 'Mark as customer',
-        actions:'Actions'
+        actions:'Actions',
+        rate_us: 'rate us'
 
 
 
@@ -160,7 +161,9 @@ const getString = new I18n({
         block: 'חסום',
         unblock: 'בטל חסימה',
         mark_as_customer: 'סמן כלקוח',
-        actions:'פעולות'
+        actions:'פעולות',
+        rate_us: 'דרג אותנו'
+
 
 
 
