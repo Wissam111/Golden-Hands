@@ -6,7 +6,6 @@ import Spacer from "./Spacer";
 
 
 const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIcon }) => {
-    const [showDefualtImage, setDefaultImage] = useState(false)
     const [progressBar, setProgressBar] = useState(true)
     return (
         <View style={{ ...style, ...styles.container }}>
@@ -18,12 +17,10 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
                         borderColor: '#f9f9f9',
                         ...imageStyle
                     }}
-                    source={showDefualtImage ? require('../../assets/imgs/person_place_holder.jpg') : { uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
+                    source={{ uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
+                    defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
                     onLoadEnd={() => {
                         setProgressBar(false)
-                    }}
-                    onError={(e) => {
-                        setDefaultImage(true)
                     }} />
 
                 <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
