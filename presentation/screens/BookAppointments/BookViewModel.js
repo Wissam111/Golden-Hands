@@ -5,6 +5,7 @@ import WorkerRepository from "../../../repository/workerRepository";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment";
 const BookViewModel = () => {
   const [state, setState] = useState({
     workers: [],
@@ -39,6 +40,52 @@ const BookViewModel = () => {
       setState((prev) => {
         return { ...prev, appointments: appointments };
       });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleBook = async () => {
+    const appointObj = {
+      appointmentId: state.selectedHour,
+      userId: user._id,
+      service: state.selectedService,
+    };
+    let messg;
+    try {
+      const data = await appointmentRepository.BookAppointment(appointObj);
+      navigation.navigate({
+        name: "HomeScreen",
+        params: { message: data.message },
+      });
+      messg = data.message;
+    } catch (e) {
+      console.log(e);
+      messg = e.message;
+    }
+    navigation.navigate({
+      name: "BookingLoadingScreen",
+      params: { message: messg },
+    });
+  };
+
+  const getAvailableAppointment = async () => {
+    const format = "yyyy-MM-DDTHH:mm:ssZZ";
+    const startD = moment().format(format);
+
+    let appointObj = {
+      workerId: user._id,
+      startDate: startD,
+    };
+
+    try {
+      const { appointments } =
+        await appointmentRepository.getAvailableAppointment(appointObj);
+      // setState((prev) => {
+      //   return { ...prev, appointments: appointments };
+      // });
+      console.log("hx");
+      console.log(appointments);
     } catch (e) {
       console.log(e);
     }
@@ -110,29 +157,7 @@ const BookViewModel = () => {
       };
     });
   };
-  const handleBook = async () => {
-    const appointObj = {
-      appointmentId: state.selectedHour,
-      userId: user._id,
-      service: state.selectedService,
-    };
-    let messg;
-    try {
-      const data = await appointmentRepository.BookAppointment(appointObj);
-      navigation.navigate({
-        name: "HomeScreen",
-        params: { message: data.message },
-      });
-      messg = data.message;
-    } catch (e) {
-      console.log(e);
-      messg = e.message;
-    }
-    navigation.navigate({
-      name: "BookingLoadingScreen",
-      params: { message: messg },
-    });
-  };
+
   const handleCloseConfirmation = () => {
     setState((prev) => {
       return {
@@ -145,6 +170,7 @@ const BookViewModel = () => {
   useEffect(() => {
     getWorkers();
     getAppointments();
+    getAvailableAppointment();
   }, []);
 
   return {

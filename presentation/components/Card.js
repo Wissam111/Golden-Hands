@@ -1,17 +1,14 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
 const Card = (props) => {
   const { cardContent, title, handlePress, isSelected, price } = props;
   return (
     <TouchableOpacity
-      className={`rounded-full px-4 shadow-sm relative ${
-        isSelected ? "bg-[#FF9B02]" : "bg-[#f5f5f5"
+      style={styles.card}
+      className={`rounded-full px-4  relative ${
+        isSelected ? "bg-[#FF9B02]" : "bg-white"
       } mx-2 mb-2 justify-center items-center`}
-      style={{
-        width: 120,
-        height: 42,
-      }}
       onPress={() => handlePress(props.id)}
     >
       <Text
@@ -24,7 +21,9 @@ const Card = (props) => {
       {price && (
         <View className=" flex-row items-center relative">
           <Text
-            className={`font-medium ${isSelected ? "black" : "text-[#FFD700]"}`}
+            className={`font-semibold  ${
+              isSelected ? "black" : "text-[#FFD700]"
+            }`}
           >
             {price + "ש"}
           </Text>
@@ -36,5 +35,15 @@ const Card = (props) => {
     </TouchableOpacity>
   );
 };
-
+const styles = StyleSheet.create({
+  card: {
+    shadowColor: "black",
+    elevation: 5,
+    shadowOffset: { width: 1, height: 1 },
+    shadowRadius: 2,
+    shadowOpacity: 0.1,
+    width: 120,
+    height: 42,
+  },
+});
 export default Card;
