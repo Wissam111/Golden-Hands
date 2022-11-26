@@ -10,6 +10,7 @@ import moment from 'moment'
 import DefaultButton from "../../components/DefaultButton";
 import { useIsFocused } from "@react-navigation/native";
 import Rating from "../../components/Rating";
+import AppointmentCard from "../../components/AppointmentCard";
 
 const UserAppointments = () => {
     const { appointments, getUserAppointments, unbook } = useUserAppointmentsViewModel()
@@ -41,47 +42,26 @@ const UserAppointments = () => {
 
             <FlatList
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 8, paddingBottom: 20 }}
-                ItemSeparatorComponent={<Spacer space={6} />}
+                contentContainerStyle={{ flexGrow: 1, padding: 8, paddingTop: 16, paddingBottom: 20 }}
+                ItemSeparatorComponent={<Spacer space={8} />}
                 style={{ height: '100%', backgroundColor: white, borderTopEndRadius: 26, borderTopStartRadius: 26 }}
                 data={appointments}
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
-                    <View style={{ borderRadius: 12, padding: 16, backgroundColor: '#cecece' }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <View style={{
-                                width: 8, height: 8, borderRadius: 100,
-                                backgroundColor: getStatusColor(item.status),
-                            }} />
-                            <Spacer space={6} />
-                            <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>{getString.t(item.status)}</Text>
+                    <View style={{ borderRadius: 12, alignItems: 'center' }}>
+                        <View>
+                            <Text style={{ ...globalStyles.font, alignSelf: 'flex-end' }}>{moment(item.start_time).format('DD/MM/yyyy')}</Text>
+                            <AppointmentCard appointment={item} />
+                            <View style={{ alignSelf: 'flex-start' }}>
+                                {item.rating &&
+                                    <Rating rating={item.rating} from={5} />
+                                }
+                            </View>
                         </View>
-
-                        <Spacer space={12} />
-
-                        <Text style={{ alignSelf: 'center', ...globalStyles.font }}>{moment(item.start_time).format('DD/MM/yyyy')}</Text>
-
-                        <Spacer space={6} />
-
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            <Text style={{ alignSelf: 'center', ...globalStyles.font }}>{moment(item.start_time).format('HH:mm')}</Text>
-                            <Spacer space={4} />
-                            <Text>-</Text>
-                            <Spacer space={4} />
-                            <Text style={{ alignSelf: 'center', ...globalStyles.font }}>{moment(item.end_time).format('HH:mm')}</Text>
-                        </View>
-
-                        <Spacer space={12} />
-                        <HorizontalChip text={`${item.worker.firstName} ${item.worker.lastName}`} />
-
-                        {item.rating &&
-                            <Rating rating={item.rating} from={5} />
-                        }
 
                         {
                             item.status === 'in-progress' &&
-                            <View>
+                            <View style={{ alignItems: 'stretch' }}>
                                 <Spacer space={12} />
                                 <DefaultButton text={getString.t('cancel')} onPress={() => { unbook(item._id) }} />
                             </View>

@@ -19,7 +19,6 @@ const HorizontalChip = ({
   user,
   isSelected,
 }) => {
-  const [showDefualtImage, setDefaultImage] = useState(false);
   const [progressBar, setProgressBar] = useState(true);
   return (
     <TouchableOpacity
@@ -31,16 +30,10 @@ const HorizontalChip = ({
       >
         <Image
           style={styles.image}
-          source={
-            showDefualtImage
-              ? require("../../assets/imgs/person_place_holder.jpg")
-              : { uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }
-          }
+          source={{ uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
+          defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
           onLoadEnd={() => {
             setProgressBar(false);
-          }}
-          onError={(e) => {
-            setDefaultImage(true);
           }}
         />
         <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>

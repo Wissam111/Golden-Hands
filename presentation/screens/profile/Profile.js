@@ -1,8 +1,8 @@
-import { Image, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Image, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, UIManager, View } from "react-native";
 import Title from "../../components/Title";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Spacer from "../../components/Spacer";
-import { backgroundColor, fontLarge, fontXLarge, globalStyles, green, orange1, orange2, primaryColor, red, semiLarge, surfaceColor, white } from "../../styles/global";
+import { backgroundColor, blue, fontLarge, fontXLarge, globalStyles, green, orange1, orange2, primaryColor, red, semiLarge, surfaceColor, white } from "../../styles/global";
 import VerticalChip from "../../components/VerticalChip";
 import HorizontalChip from "../../components/HorizontalChip";
 import getString from "../../../localization";
@@ -20,6 +20,8 @@ import { dialPhoneNumber } from "../../../core/linking";
 import { FontAwesome } from '@expo/vector-icons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo } from "react";
+import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut, SlideInRight } from "react-native-reanimated";
+import { duration } from "moment";
 
 const Option = ({ text, icon, onPress }) => {
     return (
@@ -82,8 +84,6 @@ const ProfileOptionsBottomSheet = ({ user, call, markAsBarber, block, show, onCl
 
 
 
-
-
 const Profile = ({ navigation, route }) => {
     let { user } = useAuthContext()
     const { getUserProfile, user: fetchedUser, appointmentCount, paid, rating, preferredWorkers, markAsBarber, block } = useProfileViewModel()
@@ -124,6 +124,8 @@ const Profile = ({ navigation, route }) => {
                 }
             </View>
 
+
+
             <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: primaryColor, flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
 
                 <View style={{ backgroundColor: backgroundColor }}>
@@ -137,23 +139,35 @@ const Profile = ({ navigation, route }) => {
 
                         <Spacer space={12} />
 
+
                         {user && user.superUser &&
-                            <Image style={{ alignSelf: 'center', width: 60, height: 60 }} source={require('../../../assets/imgs/crown.png')} />
+                            <Animated.View
+                                entering={FadeInDown.duration(1000)}
+                                exiting={FadeInUp}
+                            >
+                                <Image style={{ alignSelf: 'center', width: 60, height: 60 }} source={require('../../../assets/imgs/crown.png')} />
+                            </Animated.View>
                         }
-                        <VerticalChip
-                            chipIcon={user && user.role !== 'customer' ? <MaterialIcons name="work-outline" size={24} color="black" /> : <FontAwesome name="user" size={24} color="black" />}
-                            text={user ? `${user.firstName} ${user.lastName}` : ''}
-                            imageStyle={{ width: 180, height: 180 }}
-                            imageUrl={user ? user.image : null}
-                            onClickImage={() => { if (!route.params) navigation.navigate('ImageUpload', { title: getString.t('upload_image'), buttonText: getString.t('upload'), backButton: true }) }}
-                        />
+
+                        <Animated.View
+                            entering={FadeInDown.duration(1000)}
+                            exiting={FadeInUp}
+                        >
+                            <VerticalChip
+                                chipIcon={user && user.role !== 'customer' ? <MaterialIcons name="work-outline" size={24} color="black" /> : <FontAwesome name="user" size={24} color="black" />}
+                                text={user ? `${user.firstName} ${user.lastName}` : ''}
+                                imageStyle={{ width: 180, height: 180 }}
+                                imageUrl={user ? user.image : null}
+                                onClickImage={() => { if (!route.params) navigation.navigate('ImageUpload', { title: getString.t('upload_image'), buttonText: getString.t('upload'), backButton: true }) }}
+                            />
+                        </Animated.View>
                         <Spacer space={12} />
 
                     </View>
                 </View>
 
                 <View style={{ backgroundColor: backgroundColor, height: '100%' }}>
-                    {route.params &&
+                    {route.params && user && !user.superUser &&
                         <>
                             <Spacer space={6} />
 
@@ -166,102 +180,120 @@ const Profile = ({ navigation, route }) => {
                     }
                     <Spacer space={16} />
 
-                    <View style={{ backgroundColor: surfaceColor, paddingVertical: 16, paddingHorizontal: 8, marginHorizontal: 6, borderRadius: 12 }}>
-                        <View style={{ flexDirection: 'row', alignSelf: 'center', alignItems: 'center' }}>
-                            <AntDesign name="idcard" size={24} color="black" />
-                            <Spacer space={6} />
-                            <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>{getString.t('general')}</Text>
-                        </View>
-
-                        <Spacer space={16} />
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                    <Animated.View
+                        entering={FadeIn.duration(600)}
+                        exiting={FadeOut}
+                    >
+                        <View style={{ backgroundColor: surfaceColor, paddingVertical: 16, paddingHorizontal: 8, marginHorizontal: 6, borderRadius: 12 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>תפקיד :</Text>
+                                <AntDesign name="idcard" size={24} color={primaryColor} />
                                 <Spacer space={6} />
-                                {user &&
-                                    <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontLarge }}>{getString.t(user.role)}</Text>
-                                }
+                                <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold', fontSize: semiLarge }}>{getString.t('general')}</Text>
                             </View>
 
-                            <Spacer space={8} />
+                            <Spacer space={16} />
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Feather name="phone" size={24} color="black" />
-                                <Spacer space={6} />
-                                {user &&
-                                    <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection }}>{user.phone}</Text>
-                                }
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Text style={{ ...globalStyles.font, fontFamily: 'poppins-bold' }}>תפקיד :</Text>
+                                    <Spacer space={6} />
+                                    {user &&
+                                        <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontLarge }}>{getString.t(user.role)}</Text>
+                                    }
+                                </View>
+
+                                <Spacer space={8} />
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Feather name="phone" size={24} color="black" />
+                                    <Spacer space={6} />
+                                    {user &&
+                                        <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection }}>{user.phone}</Text>
+                                    }
+                                </View>
                             </View>
                         </View>
-                    </View>
-
+                    </Animated.View>
                     <Spacer space={12} />
 
 
                     {route.params &&
-                        <View style={{ flexDirection: 'row' }}>
-                            <Spacer space={6} />
+                        <Animated.View
+                            entering={FadeIn.duration(600)}
+                            exiting={FadeOut}
+                        >
+                            <View style={{ flexDirection: 'row' }}>
+                                <Spacer space={6} />
 
-                            <View style={{ backgroundColor: orange1, padding: 20, borderRadius: 16, flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                                <Text style={{ ...globalStyles.font, fontSize: fontXLarge, color: white }}>{paid}₪</Text>
-                                <MaterialCommunityIcons name="account-cash-outline" size={24} color={white} />
+                                <View style={{ backgroundColor: orange1, padding: 20, borderRadius: 16, flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                                    <Text style={{ ...globalStyles.font, fontSize: fontXLarge, color: white }}>{paid}₪</Text>
+                                    <MaterialCommunityIcons name="account-cash-outline" size={24} color={white} />
+                                </View>
+                                <Spacer space={6} />
                             </View>
-                            <Spacer space={6} />
-                        </View>
+                        </Animated.View>
                     }
 
                     <Spacer space={12} />
 
+                    <Animated.View
+                        entering={FadeIn.duration(600)}
+                        exiting={FadeOut}
+                    >
+                        <View style={{ flexDirection: 'row' }}>
+                            <Spacer space={6} />
+                            <View style={{ backgroundColor: '#79F877', padding: 20, borderRadius: 16, flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <Text style={{ ...globalStyles.font, fontSize: fontXLarge, }}>{appointmentCount}</Text>
+                                <MaterialCommunityIcons name="account-arrow-up-outline" size={24} color="black" />
+                            </View>
 
-                    <View style={{ flexDirection: 'row' }}>
-                        <Spacer space={6} />
-                        <View style={{ backgroundColor: '#79F877', padding: 20, borderRadius: 16, flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                            <Text style={{ ...globalStyles.font, fontSize: fontXLarge, }}>{appointmentCount}</Text>
-                            <MaterialCommunityIcons name="account-arrow-up-outline" size={24} color="black" />
+                            <Spacer space={6} />
+
+                            <View style={{ backgroundColor: surfaceColor, padding: 20, borderRadius: 16, flex: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ ...globalStyles.font, fontSize: fontLarge }}>{getString.t('rating')}</Text>
+                                <Spacer space={12} />
+                                <Rating rating={rating} from={5} />
+                            </View>
+                            <Spacer space={6} />
                         </View>
-
-                        <Spacer space={6} />
-
-                        <View style={{ backgroundColor: surfaceColor, padding: 20, borderRadius: 16, flex: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ ...globalStyles.font, fontSize: fontLarge }}>{getString.t('rating')}</Text>
-                            <Spacer space={12} />
-                            <Rating rating={rating} from={5} />
-                        </View>
-                        <Spacer space={6} />
-                    </View>
+                    </Animated.View>
 
                     <Spacer space={12} />
 
-                    <View style={{ backgroundColor: surfaceColor, padding: 8, marginHorizontal: 6, borderRadius: 12 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <AntDesign name="staro" size={24} color="black" />
-                            <Spacer space={6} />
-                            <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('preferred_workers')}</Text>
-                        </View>
-                        <Spacer space={12} />
+                    <Animated.View
+                        entering={FadeIn.duration(600)}
+                        exiting={FadeOut}
+                    >
+                        <View style={{ backgroundColor: surfaceColor, padding: 8, marginHorizontal: 6, borderRadius: 12 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <AntDesign name="staro" size={24} color={orange2} />
+                                <Spacer space={6} />
+                                <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('preferred_workers')}</Text>
+                            </View>
+                            <Spacer space={12} />
 
 
-                        {
-                            preferredWorkers &&
-                            preferredWorkers.map(item => (
-                                <View key={item.worker._id}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <HorizontalChip imageUrl={item.worker.image} text={`${item.worker.firstName} ${item.worker.lastName}`} />
-                                        <Spacer style={{ flex: 1 }} />
-                                        <Text style={{ ...globalStyles.font, fontSize: fontLarge }}>{item.count} {getString.t('appointments')}</Text>
-                                        <Spacer style={{ flex: 1 }} />
+                            {
+                                preferredWorkers &&
+                                preferredWorkers.map(item => (
+                                    <View key={item.worker._id}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <HorizontalChip imageUrl={item.worker.image} text={`${item.worker.firstName} ${item.worker.lastName}`} />
+                                            <Spacer style={{ flex: 1 }} />
+                                            <Text style={{ ...globalStyles.font, fontSize: fontLarge }}>{item.count} {getString.t('appointments')}</Text>
+                                            <Spacer style={{ flex: 1 }} />
+                                        </View>
+                                        <Spacer space={6} />
                                     </View>
-                                    <Spacer space={6} />
-                                </View>
-                            ))
-                        }
-                    </View>
+                                ))
+                            }
+                        </View>
+                    </Animated.View>
                 </View>
                 <Spacer space={16} />
             </ScrollView>
 
-            {user && !user.superUser &&
+            {route.params && user && !user.superUser &&
                 < ProfileOptionsBottomSheet
                     onClose={() => {
                         setShow(false)
