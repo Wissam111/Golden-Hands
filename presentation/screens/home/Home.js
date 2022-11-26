@@ -293,7 +293,8 @@ const Home = ({ navigation }) => {
                         </Animated.View>
 
                         <Spacer space={12} />
-
+                        <Image style={{ alignSelf: 'center', height: 100, width: 80 }} source={require('../../../assets/imgs/barber-logo.png')} />
+                        <Spacer space={12} />
                         <SafeAreaView />
                     </View>
                 </ScrollView>
