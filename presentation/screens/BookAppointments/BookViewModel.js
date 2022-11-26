@@ -6,6 +6,7 @@ import AppointmentRepository from "../../../repository/AppointmentRepository";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
+import useLoadingContext from "../../../hooks/useLoadingContext";
 const BookViewModel = () => {
   const [state, setState] = useState({
     workers: [],
@@ -21,6 +22,7 @@ const BookViewModel = () => {
   const navigation = useNavigation();
   const workerRepository = WorkerRepository();
   const appointmentRepository = AppointmentRepository();
+  const { isLoading, dispatch: setIsLoading } = useLoadingContext();
   const { user } = useAuthContext();
 
   const getWorkers = async () => {
@@ -69,43 +71,43 @@ const BookViewModel = () => {
     });
   };
 
-  const getAvailableAppointment = async () => {
+  const getAvailableAppointment = async (workerId) => {
     const format = "yyyy-MM-DDTHH:mm:ssZZ";
     const startD = moment().format(format);
-
     let appointObj = {
-      workerId: user._id,
-      startDate: startD,
+      workerId: workerId,
+      fromDate: startD,
     };
-
+    setIsLoading({ isLoading: true });
+    let appoints;
     try {
-      const { appointments } =
+      const { availableAppointments } =
         await appointmentRepository.getAvailableAppointment(appointObj);
-      // setState((prev) => {
-      //   return { ...prev, appointments: appointments };
-      // });
-      console.log("hx");
-      console.log(appointments);
+      appoints = availableAppointments;
     } catch (e) {
       console.log(e);
     }
+    setIsLoading({ isLoading: false });
+    return appoints;
   };
 
-  const filterWorkerAppoints = (worker) => {
+  const filterWorkerAppoints = async (worker) => {
+    let appointments = await getAvailableAppointment(worker._id);
     const today = new Date();
-    let appoints = state.appointments.filter(
-      (appoint) =>
-        appoint.status == "free" &&
-        appoint.worker &&
-        today <= new Date(appoint.start_time) &&
-        appoint.worker._id == worker._id
+    let appoints = appointments.filter(
+      (appoint) => appoint.status == "free"
+      // today <= new Date(appoint.start_time) &&
+      // appoint.worker._id == worker._id
     );
-    const groupedAppoints = appoints.reduce((results, appoint) => {
-      let day = new Date(appoint.start_time).getDay() + 1;
-      (results[day] = results[day] || []).push(appoint);
-      return results;
-    }, {});
 
+    const groupedAppoints = appoints.reduce((groups, appoint) => {
+      const date = new Date(appoint.start_time).getDay() + 1;
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(appoint);
+      return groups;
+    }, {});
     setState((prev) => {
       return {
         ...prev,
@@ -169,8 +171,7 @@ const BookViewModel = () => {
 
   useEffect(() => {
     getWorkers();
-    getAppointments();
-    getAvailableAppointment();
+    // getAppointments();
   }, []);
 
   return {
