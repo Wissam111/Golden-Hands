@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Text, View, FlatList, SafeAreaView } from "react-native";
 import getString from "../../../localization";
-import HorizontalChip from "../../components/HorizontalChip";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
 import { backgroundColor, fontSmall, globalStyles, gray1, green, orange1, primaryColor, red, semiLarge, white } from "../../styles/global";
@@ -11,7 +10,6 @@ import DefaultButton from "../../components/DefaultButton";
 import { useIsFocused } from "@react-navigation/native";
 import Rating from "../../components/Rating";
 import AppointmentCard from "../../components/AppointmentCard";
-import { Entypo } from '@expo/vector-icons';
 
 const UserAppointments = () => {
     const { appointments, getUserAppointments, unbook, rateAppointment } = useUserAppointmentsViewModel()

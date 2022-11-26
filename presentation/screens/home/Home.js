@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { backgroundColor, fontLarge, fontSmall, globalStyles, primaryColor, semiLarge, surfaceColor, white } from "../../styles/global";
+import { backgroundColor, fontLarge, fontSmall, globalStyles, gray1, primaryColor, semiLarge, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
@@ -146,7 +146,32 @@ const AppointmentStatus = ({ appointment }) => {
     )
 }
 
-
+const Story = () => {
+    return (
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ padding: 8 }}>
+            <View>
+                <Image style={{ width: 160, height: 200, borderRadius: 36, borderWidth: 2, borderColor: gray1 }} source={require('../../../assets/imgs/tarik.jpg')} />
+                <View style={{ position: 'relative', top: -26 }}>
+                    <VerticalChip imageStyle={{ width: 60, height: 60 }} text={'tarik husin'} />
+                </View>
+            </View>
+            <Spacer space={6} />
+            <View>
+                <Image style={{ width: 160, height: 200, borderRadius: 36, borderWidth: 2, borderColor: gray1 }} source={require('../../../assets/imgs/tarik.jpg')} />
+                <View style={{ position: 'relative', top: -26 }}>
+                    <VerticalChip imageStyle={{ width: 60, height: 60 }} text={'tarik husin'} />
+                </View>
+            </View>
+            <Spacer space={6} />
+            <View>
+                <Image style={{ width: 160, height: 200, borderRadius: 36, borderWidth: 2, borderColor: gray1 }} source={require('../../../assets/imgs/tarik.jpg')} />
+                <View style={{ position: 'relative', top: -26 }}>
+                    <VerticalChip imageStyle={{ width: 60, height: 60 }} text={'tarik husin'} />
+                </View>
+            </View>
+        </ScrollView>
+    )
+}
 
 const Home = ({ navigation }) => {
     const isFocused = useIsFocused();
@@ -247,6 +272,16 @@ const Home = ({ navigation }) => {
                                 }
                             </Animated.View>
                         }
+
+                        <Animated.View
+                            entering={FadeIn.duration(600)}
+                            exiting={FadeOut}
+                            style={{ backgroundColor: surfaceColor, paddingVertical: 12, paddingBottom: 20, marginVertical: 4, borderRadius: 20 }}>
+                            <Text style={{ paddingHorizontal: 8, ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection, fontSize: semiLarge, fontFamily: 'poppins-bold' }}>Stories</Text>
+                            <Spacer space={8} />
+                            <Story />
+                        </Animated.View>
+
 
                         <Animated.View
                             entering={FadeIn.duration(600)}
