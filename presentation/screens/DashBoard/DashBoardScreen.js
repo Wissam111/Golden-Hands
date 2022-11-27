@@ -17,7 +17,7 @@ import CalendarView from "../../components/CalendarView";
 import DayView from "../../components/DayView";
 import AppointmentsSheet from "../../components/AppointmentsSheet";
 import DashBoardModel from "./DashBoardModel";
-import StatusListView from "../../components/StatusListView";
+import StatusSheet from "../../components/StatusSheet";
 import BarberServicesSheet from "../../components/BarberServicesSheet";
 import { EvilIcons } from "@expo/vector-icons";
 import AddAppointmentView from "../../components/AddAppointmentView";
@@ -28,7 +28,7 @@ const DashBoardScreen = () => {
     worker,
     dateInterval,
     selectedDay,
-    showStatusList,
+    showStatusSheet,
     allSelected,
     showServSheet,
     showAddAppoint,
@@ -37,7 +37,7 @@ const DashBoardScreen = () => {
     handleDateLeft,
     handleSelectedDay,
     handleUpdateStatus,
-    handleShowStatusList,
+    handleShowStatusSheet,
     handleSelectAll,
     handleSelectBooked,
     handleSearch,
@@ -53,7 +53,7 @@ const DashBoardScreen = () => {
       onPress={() => {
         // console.log("hh");
         Keyboard.dismiss();
-        handleShowStatusList(null, false);
+        // handleShowStatusList(null, false);
       }}
       accessible={false}
     >
@@ -122,7 +122,7 @@ const DashBoardScreen = () => {
 
           <AppointmentsSheet
             appointments={appointments}
-            handleShowStatusList={handleShowStatusList}
+            handleShowStatusSheet={handleShowStatusSheet}
             handleShowAppoint={handleShowAppoint}
           />
           {showServSheet && (
@@ -135,8 +135,11 @@ const DashBoardScreen = () => {
             />
           )}
 
-          {showStatusList && (
-            <StatusListView handleUpdateStatus={handleUpdateStatus} />
+          {showStatusSheet && (
+            <StatusSheet
+              handleUpdateStatus={handleUpdateStatus}
+              handleShowStatusSheet={handleShowStatusSheet}
+            />
           )}
           {showAddAppoint && (
             <AddAppointmentView

@@ -2,10 +2,10 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React, { useMemo, useRef, useCallback, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import AppointmentView from "./AppointmentView";
 import { FlatList } from "react-native-gesture-handler";
+import AppointmentView from "./AppointmentView";
 const AppointmentsSheet = (props) => {
-  const { appointments, handleShowStatusList, handleShowAppoint } = props;
+  const { appointments, handleShowStatusSheet, handleShowAppoint } = props;
   const snapPoints = useMemo(() => ["50%", "100%"], []);
   const [index, setIndex] = useState(0);
   const bottomSheetRef = useRef(null);
@@ -45,9 +45,13 @@ const AppointmentsSheet = (props) => {
           keyExtractor={(item) => item._id}
           horizontal={false}
           renderItem={({ item }) => (
+            // <AppointmentView
+            //   appointment={item}
+            //   handleShowStatusList={handleShowStatusList}
+            // />
             <AppointmentView
               appointment={item}
-              handleShowStatusList={handleShowStatusList}
+              handleShowStatusSheet={handleShowStatusSheet}
             />
           )}
           showsHorizontalScrollIndicator={false}
