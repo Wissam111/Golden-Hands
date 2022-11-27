@@ -1,10 +1,10 @@
 import { StyleSheet, TouchableOpacity, View, Text, Platform } from "react-native";
 import { globalStyles, primaryColor } from "../styles/global";
 
-const DefaultButton = ({ style, text, onPress }) => {
+const DefaultButton = ({ style, text, onPress, color }) => {
   return (
     <TouchableOpacity style={{ ...style }} onPress={onPress}>
-      <View style={{ ...styles.button }}>
+      <View style={{ ...styles.button, backgroundColor: color ? color : primaryColor }}>
         <Text style={styles.text}>{text}</Text>
       </View>
     </TouchableOpacity>

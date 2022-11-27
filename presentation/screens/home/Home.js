@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ScrollView, RefreshControl, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { backgroundColor, fontLarge, fontSmall, globalStyles, primaryColor, semiLarge, surfaceColor, white } from "../../styles/global";
+import { backgroundColor, fontLarge, fontSmall, globalStyles, gray1, primaryColor, semiLarge, surfaceColor, white } from "../../styles/global";
 import BorderButton from "../../components/BorderButton";
 import HorizontalChip from "../../components/HorizontalChip";
 import VerticalChip from '../../components/VerticalChip'
@@ -93,22 +93,20 @@ const Time = ({ startTime, endTime }) => {
 }
 
 
-const WorkerLine = ({ worker }) => {
+const LocationView = () => {
     return (
         <View style={{ alignSelf: 'flex-end' }}>
             <View style={{ height: 16, width: 1, backgroundColor: backgroundColor, borderRadius: 100 }} />
             <Spacer space={6} />
 
             <View style={{ height: 16, width: 1, backgroundColor: backgroundColor, borderRadius: 100 }} />
-            <Spacer space={6} /> 
+            <Spacer space={6} />
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ position: 'relative', top: -20, height: 16, width: 1, backgroundColor: backgroundColor, borderRadius: 100 }} />
                 <View style={{ height: 1, width: 16, backgroundColor: backgroundColor, borderRadius: 100 }} />
                 <Spacer space={6} />
                 <View style={{ height: 1, width: 16, backgroundColor: backgroundColor, borderRadius: 100 }} />
-                <Spacer space={6} />
-                <HorizontalChip text={`${worker.firstName} ${worker.lastName}`} imageUrl={worker.image} />
                 <Spacer space={6} />
                 <TouchableOpacity onPress={() => { openWaze() }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -142,14 +140,38 @@ const AppointmentStatus = ({ appointment }) => {
 
             <Spacer space={6} />
 
-            <AppointmentCard appointment={appointment} />
-            <WorkerLine worker={appointment.worker} />
-
+            <AppointmentCard appointment={appointment} image={appointment.worker.image} text={`${appointment.worker.firstName} ${appointment.worker.lastName}`} />
+            <LocationView />
         </View>
     )
 }
 
-
+const Story = () => {
+    return (
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ padding: 8 }}>
+            <View>
+                <Image style={{ width: 160, height: 200, borderRadius: 36, borderWidth: 2, borderColor: gray1 }} source={require('../../../assets/imgs/tarik.jpg')} />
+                <View style={{ position: 'relative', top: -26 }}>
+                    <VerticalChip imageStyle={{ width: 60, height: 60 }} text={'tarik husin'} />
+                </View>
+            </View>
+            <Spacer space={6} />
+            <View>
+                <Image style={{ width: 160, height: 200, borderRadius: 36, borderWidth: 2, borderColor: gray1 }} source={require('../../../assets/imgs/tarik.jpg')} />
+                <View style={{ position: 'relative', top: -26 }}>
+                    <VerticalChip imageStyle={{ width: 60, height: 60 }} text={'tarik husin'} />
+                </View>
+            </View>
+            <Spacer space={6} />
+            <View>
+                <Image style={{ width: 160, height: 200, borderRadius: 36, borderWidth: 2, borderColor: gray1 }} source={require('../../../assets/imgs/tarik.jpg')} />
+                <View style={{ position: 'relative', top: -26 }}>
+                    <VerticalChip imageStyle={{ width: 60, height: 60 }} text={'tarik husin'} />
+                </View>
+            </View>
+        </ScrollView>
+    )
+}
 
 const Home = ({ navigation }) => {
     const isFocused = useIsFocused();
@@ -254,6 +276,16 @@ const Home = ({ navigation }) => {
                         <Animated.View
                             entering={FadeIn.duration(600)}
                             exiting={FadeOut}
+                            style={{ backgroundColor: surfaceColor, paddingVertical: 12, paddingBottom: 20, marginVertical: 4, borderRadius: 20 }}>
+                            <Text style={{ paddingHorizontal: 8, ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection, fontSize: semiLarge, fontFamily: 'poppins-bold' }}>Stories</Text>
+                            <Spacer space={8} />
+                            <Story />
+                        </Animated.View>
+
+
+                        <Animated.View
+                            entering={FadeIn.duration(600)}
+                            exiting={FadeOut}
                             style={{ backgroundColor: surfaceColor, paddingVertical: 12, paddingBottom: 20, paddingHorizontal: 12, marginVertical: 4, borderRadius: 20 }}>
                             <Text style={{ ...globalStyles.font, ...styles.margin, ...globalStyles.txtDirection, fontSize: semiLarge, fontFamily: 'poppins-bold' }}>{getString.t('about_us')}</Text>
 
@@ -261,7 +293,8 @@ const Home = ({ navigation }) => {
                         </Animated.View>
 
                         <Spacer space={12} />
-
+                        <Image style={{ alignSelf: 'center', height: 100, width: 80 }} source={require('../../../assets/imgs/barber-logo.png')} />
+                        <Spacer space={12} />
                         <SafeAreaView />
                     </View>
                 </ScrollView>

@@ -50,7 +50,6 @@ export const apiCall = async (
   let bbody;
   if (body) {
     if (contentType === "multipart/form-data") {
-      console.log(body);
       bbody = body;
     } else {
       bbody = JSON.stringify(body);

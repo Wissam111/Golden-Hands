@@ -1,13 +1,16 @@
 import moment from 'moment'
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { IMAGE_BASE_URL } from '../../network/apiCall'
-import { fontSmall, globalStyles, semiLarge, white } from '../styles/global'
+import { fontMeduim, fontSmall, globalStyles, gray1, semiLarge, white } from '../styles/global'
 import Spacer from './Spacer'
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react'
 
 
 
-const AppointmentCard = ({ appointment }) => {
+const AppointmentCard = ({ appointment, image, text, onPress }) => {
+    const [progressBar, setProgressBar] = useState(true)
+
     const getServiceImage = () => {
         switch (appointment.service.title) {
             case 'Massage': return require('../../assets/imgs/massage.png')
@@ -28,30 +31,42 @@ const AppointmentCard = ({ appointment }) => {
     }
 
     return (
-        <View style={{
-            backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
-        }}>
+        <TouchableOpacity onPress={onPress}>
+            <View style={{
+                backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
+            }}>
 
-            <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1 }}>
-                <Image style={{ width: 56, height: 56, borderRadius: 36 }} source={{ uri: IMAGE_BASE_URL + appointment.customer.image + '?time=' + new Date() }} />
-            </View>
+                <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1 }}>
+                    <Image
+                        defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
+                        style={{ width: 56, height: 56, borderRadius: 36 }}
+                        source={{ uri: IMAGE_BASE_URL + image + '?time=' + new Date() }}
+                        onLoadEnd={() => {
+                            setProgressBar(false)
+                        }} />
 
-            <Spacer space={8} />
-
-            <View>
-                <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: semiLarge, fontFamily: 'poppins-bold' }}>{appointment.customer.firstName} {appointment.customer.lastName}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons name="time-outline" size={18} color="#8A8A8A" />
-                    <Spacer space={4} />
-                    <Text style={{ ...globalStyles.font, fontSize: fontSmall, color: '#8A8A8A' }}>{moment(appointment.start_time).format('HH:mm')} - {moment(appointment.end_time).format('HH:mm')}</Text>
+                    <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator animating={progressBar} color='#000' size='small' />
+                    </View>
                 </View>
-            </View>
 
-            <Spacer space={26} />
+                <Spacer space={8} />
 
-            <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />
-            <Spacer space={8} />
-        </View >
+                <View>
+                    <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontMeduim, fontFamily: 'poppins-bold' }}>{text}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name="time-outline" size={18} color={gray1} />
+                        <Spacer space={4} />
+                        <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontSmall, color: gray1 }}>{moment(appointment.start_time).format('HH:mm')} - {moment(appointment.end_time).format('HH:mm')}</Text>
+                    </View>
+                </View>
+
+                <Spacer space={26} style={{ flex: 1 }} />
+
+                <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />
+                <Spacer space={8} />
+            </View >
+        </TouchableOpacity>
     )
 }
 
