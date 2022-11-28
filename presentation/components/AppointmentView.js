@@ -1,71 +1,152 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-
-import { FontAwesome, FontAwesome5, Entypo } from "@expo/vector-icons";
 import HorizontalChipS from "./HorizontalChipS";
 import useAuthContext from "../../hooks/useAuthContext";
 import moment from "moment";
+import {
+  Feather,
+  MaterialCommunityIcons,
+  FontAwesome5,
+  MaterialIcons,
+  Ionicons,
+  AntDesign,
+} from "@expo/vector-icons";
 const AppointmentView = (props) => {
-  const { appointment, handleShowStatusList } = props;
+  const { appointment, handleShowStatusSheet } = props;
   const { user } = useAuthContext();
+
   return (
-    <View className="pr-5" style={{ width: "100%" }}>
-      <View
-        className="m-2 mt-3 relative  flex-row justify-between pt-5 pr-1"
+    <View className="justify-left m-2 flex-row items-center">
+      <TouchableOpacity
+        className="rounded-full flex-row justify-between items-center p-2 pl-4 bg-white"
+        // style={{ borderWidth: 2, borderColor: "red", width: "80%", height: 70 }}
+        // style={styles.card}
+        onPress={() => handleShowStatusSheet(appointment._id, true)}
         style={{
-          // width: 355,
-          width: "100%",
-          height: 250,
+          shadowColor: getIconByStatus(appointment.status).color,
+          elevation: 10,
+          shadowOffset: { width: 1, height: 1 },
+          shadowRadius: 5,
+          shadowOpacity: 0.5,
+          width: "80%",
+          height: 70,
         }}
       >
-        <View className="items-center justify-center">
-          <TouchableOpacity
-            className="m-2"
-            onPress={() => handleShowStatusList(appointment._id, true)}
-          >
-            <FontAwesome name="pencil-square-o" size={34} color="black" />
-          </TouchableOpacity>
+        <View>
+          {getIconByStatus(appointment.status).icon}
+          {/* <MaterialCommunityIcons
+            name="progress-check"
+            size={24}
+            color="black"
+          /> */}
         </View>
-
-        <View
-          className="bg-[#D6AD60]  absolute right-1 rounded-xl items-center p-2 "
-          style={{ width: 100, height: 100 }}
-        >
-          <Text className="text-white font-semibold">{appointment.status}</Text>
-        </View>
-        <View
-          style={{
-            // borderWidth: 2,
-            // borderColor: "red",
-            width: "82%",
-            height: "80%",
-          }}
-          className="bg-[#F4EBD0] rounded-xl mt-3 "
-        >
-          <View className="items-center flex-row justify-center mt-2 space-x-3">
-            <FontAwesome5 name="user-circle" size={22} color="black" />
-            <Text className="font-bold text-[#122620] text-lg">
-              Appointment
+        <View className="items-end">
+          {appointment.customer && (
+            <Text className="text-gray-600">
+              {appointment.customer.firstName +
+                " " +
+                appointment.customer.lastName}
             </Text>
-          </View>
-          <View className="m-2 p-2 space-y-2 flex-wrap items-center ">
-            <Text className="text-base text-[#122620]">
+          )}
+          <View className="flex-row space-x-2 items-center">
+            <Text className="text-base text-gray-400">
               {moment(appointment.start_time).format("LT") +
                 " - " +
                 moment(appointment.end_time).format("LT")}
             </Text>
-            <Text className="text-base text-[#122620]">
-              {moment(appointment.start_time).format("MMMM Do YYYY")}
-            </Text>
-          </View>
-          <View className="flex-row items-center absolute bottom-0 left-0 pl-2 pb-1 ml-2">
-            <Entypo name="scissors" size={25} color="black" />
-            <HorizontalChipS user={user} handlePress={() => {}} />
+            <Feather name="clock" size={20} color="gray" />
           </View>
         </View>
+
+        <Image
+          source={require("../.././assets/imgs/barber-chair.png")}
+          style={{
+            width: 45,
+            height: 45,
+            // borderWidth: 2,
+            // borderColor: "red",
+            // zIndex: 9999,
+          }}
+        />
+      </TouchableOpacity>
+      <View
+        className="items-center relative  m-1 mr-10"
+        // style={{ borderWidth: 2, borderColor: "red" }}
+      >
+        <Text className="text-gray-500">
+          {" "}
+          {moment(appointment.start_time).format("LT")}
+        </Text>
+        <View
+        // style={{ borderWidth: 2, borderColor: "yellow" }}
+        >
+          <Image
+            className="rotate-90 mt-3"
+            source={require("../.././assets/imgs/sciss.png")}
+            style={{
+              // borderWidth: 2,
+              // borderColor: "red",
+              width: 56,
+              height: 40,
+            }}
+          />
+        </View>
+
+        <Text className="mt-1 z-50 text-gray-500">
+          {" "}
+          {moment(appointment.end_time).format("LT")}
+        </Text>
       </View>
     </View>
   );
+};
+
+export const getIconByStatus = (status) => {
+  switch (status) {
+    case "done":
+      return {
+        icon: <Feather name="check-circle" size={23} color="black" />,
+        color: "green",
+      };
+    case "hold":
+      return {
+        icon: <AntDesign name="lock" size={24} color="black" />,
+        color: "yellow",
+      };
+
+    case "in-progress":
+      return {
+        icon: (
+          <MaterialCommunityIcons
+            name="progress-clock"
+            size={24}
+            color="black"
+          />
+        ),
+        color: "orange",
+      };
+    case "canceled":
+      return {
+        icon: <MaterialIcons name="cancel" size={24} color="black" />,
+        color: "red",
+      };
+    case "didnt-come":
+      return {
+        icon: <MaterialIcons name="not-interested" size={24} color="black" />,
+        color: "red",
+      };
+    case "free":
+      return {
+        icon: <Ionicons name="ios-lock-open-outline" size={24} color="black" />,
+        color: "#F4EBD0",
+      };
+
+    default:
+      return {
+        icon: <AntDesign name="frowno" size={24} color="black" />,
+        color: "#F4EBD0",
+      };
+  }
 };
 
 export default AppointmentView;

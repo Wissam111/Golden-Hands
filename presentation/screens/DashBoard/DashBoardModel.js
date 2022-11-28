@@ -21,7 +21,7 @@ const DashBoardModel = () => {
     worker: user,
     workerServices: [],
     selectedDay: null,
-    showStatusList: false,
+    showStatusSheet: false,
     currentAppoint: null,
     allSelected: true,
     showServSheet: false,
@@ -86,7 +86,7 @@ const DashBoardModel = () => {
     } catch (e) {
       console.log(e);
     }
-    showAlert(message, handleShowStatusList(null, false));
+    showAlert(message, handleShowStatusSheet(null, false));
     setIsLoading({ isLoading: false });
   };
 
@@ -180,9 +180,9 @@ const DashBoardModel = () => {
     getAppointments(state.dateInterval[dayId]);
   };
 
-  const handleShowStatusList = (appointId, action) => {
+  const handleShowStatusSheet = (appointId, action) => {
     setState((prev) => {
-      return { ...prev, currentAppoint: appointId, showStatusList: action };
+      return { ...prev, currentAppoint: appointId, showStatusSheet: action };
     });
   };
 
@@ -262,7 +262,7 @@ const DashBoardModel = () => {
     handleDateLeft,
     handleSelectedDay,
     handleUpdateStatus,
-    handleShowStatusList,
+    handleShowStatusSheet,
     handleSelectAll,
     handleSelectBooked,
     handleSearch,
