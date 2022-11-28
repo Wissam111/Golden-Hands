@@ -44,6 +44,7 @@ const DashBoardScreen = () => {
     handlePostAppoint,
     handleShowAppoint,
     handleDeleteAppointment,
+    compineDT,
   } = DashBoardModel();
 
   return (
@@ -119,6 +120,7 @@ const DashBoardScreen = () => {
             appointments={appointments}
             handleShowStatusSheet={handleShowStatusSheet}
             handleShowAppoint={handleShowAppoint}
+            compineDT={compineDT}
           />
           {showServSheet && (
             <BarberServicesSheet

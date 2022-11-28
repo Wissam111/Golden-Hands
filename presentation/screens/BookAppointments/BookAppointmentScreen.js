@@ -135,7 +135,7 @@ const BookAppointmentScreen = () => {
                 <Card
                   cardContent={item}
                   id={item._id}
-                  title={moment(item.start_time).format("hh:mm")}
+                  title={moment(item.start_time).format("LT")}
                   handlePress={handleSelectHour}
                   isSelected={selectedHour == item._id}
                 />

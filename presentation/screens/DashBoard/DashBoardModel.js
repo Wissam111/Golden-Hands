@@ -227,7 +227,6 @@ const DashBoardModel = () => {
     if (state.allSelected) {
       return;
     }
-    console.log(text);
     let temp = [...state.appointments];
     let tempSearched = temp.filter((appoint) => {
       return (
@@ -251,13 +250,13 @@ const DashBoardModel = () => {
     });
   };
 
-  function compineDT(date, time) {
+  const compineDT = (date, time) => {
     let d = JSON.stringify(date);
     let t = JSON.stringify(time);
     let compineD = `${d.split("T")[0]}T${t.split("T")[1]}`;
     const format = "yyyy-MM-DDTHH:mm:ssZZ";
     return moment(compineD, format).format(format);
-  }
+  };
 
   const handleShowAppoint = (action) => {
     setState((prev) => {
@@ -289,6 +288,7 @@ const DashBoardModel = () => {
     handlePostAppoint,
     handleShowAppoint,
     handleDeleteAppointment,
+    compineDT,
   };
 };
 

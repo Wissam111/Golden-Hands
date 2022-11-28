@@ -55,27 +55,6 @@ const AppointmentView = (props) => {
           }}
         />
       </TouchableOpacity>
-      <View className="items-center relative  m-1 mr-10">
-        <Text className="text-gray-500">
-          {" "}
-          {moment(appointment.start_time).format("LT")}
-        </Text>
-        <View>
-          <Image
-            className="rotate-90 mt-3"
-            source={require("../.././assets/imgs/sciss.png")}
-            style={{
-              width: 56,
-              height: 40,
-            }}
-          />
-        </View>
-
-        <Text className="mt-1 z-50 text-gray-500">
-          {" "}
-          {moment(appointment.end_time).format("LT")}
-        </Text>
-      </View>
     </View>
   );
 };
