@@ -19,6 +19,7 @@ import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut, SlideInDown, SlideInRi
 import { useRef } from "react";
 import { IMAGE_BASE_URL } from "../../../network/apiCall";
 import AppointmentCard from "../../components/AppointmentCard";
+import useLoadingContext from "../../../hooks/useLoadingContext";
 
 
 
@@ -122,6 +123,11 @@ const LocationView = () => {
 
 
 const AppointmentStatus = ({ appointment }) => {
+    const { isLoading } = useLoadingContext()
+
+    if (isLoading)
+        return
+
     if (!appointment)
         return (
             <View style={{ paddingTop: 16 }}>
