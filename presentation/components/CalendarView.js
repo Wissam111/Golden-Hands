@@ -7,15 +7,11 @@ import moment from "moment/moment";
 const CalendarView = (props) => {
   const { dateInterval, handleDateRight, handleDateLeft } = props;
   return (
-    <View
-      className="flex-row p-4 items-center justify-center space-x-4 mt-5"
-      // style={{ borderWidth: 2, borderColor: "red" }}
-    >
+    <View className="flex-row p-4 items-center justify-center space-x-4 mt-5">
       <TouchableOpacity
         className="bg-[#47566A] rounded-full w-8 h-8 justify-center items-center"
         onPress={handleDateLeft}
       >
-        {/* <ArrowRightCircleIcon size={35} color={"white"} /> */}
         <FontAwesome name="arrow-circle-o-right" size={27} color="white" />
       </TouchableOpacity>
 

@@ -7,12 +7,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  FlatList,
 } from "react-native";
-import React, { useState, useCallback } from "react";
-// import { Calendar, CalendarList, Agenda } from "react-native-calendars";
-import useAuthContext from "../../../hooks/useAuthContext";
-import HorizontalChipS from "../../components/HorizontalChipS";
+import React from "react";
+import HorizontalChip from "../../components/HorizontalChip";
 import CalendarView from "../../components/CalendarView";
 import DayView from "../../components/DayView";
 import AppointmentsSheet from "../../components/AppointmentsSheet";
@@ -46,25 +43,23 @@ const DashBoardScreen = () => {
     handleDeleteServ,
     handlePostAppoint,
     handleShowAppoint,
+    handleDeleteAppointment,
   } = DashBoardModel();
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        // console.log("hh");
-        Keyboard.dismiss();
-        // handleShowStatusList(null, false);
-      }}
-      accessible={false}
-    >
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView className="flex-1">
-        <View
-          className="bg-[#1D1B1B] flex-1 relative"
-          // style={{ borderWidth: 2, borderColor: "red" }}
-        >
+        <View className="bg-[#1D1B1B] flex-1 relative">
           <View>
             <View className="flex-row items-center space-x-10 mt-4">
-              <HorizontalChipS user={worker} />
+              <View className="ml-4">
+                <HorizontalChip
+                  text={worker.firstName + " " + worker.lastName}
+                  imageUrl={worker.image}
+                  user={worker}
+                />
+              </View>
+
               <TouchableOpacity onPress={handleShowServSheet}>
                 <Image
                   source={require("../../../assets/imgs/designtools.png")}
@@ -139,6 +134,7 @@ const DashBoardScreen = () => {
             <StatusSheet
               handleUpdateStatus={handleUpdateStatus}
               handleShowStatusSheet={handleShowStatusSheet}
+              handleDeleteAppointment={handleDeleteAppointment}
             />
           )}
           {showAddAppoint && (

@@ -4,22 +4,19 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
-import React, { useState, useMemo, useRef, useCallback } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { ScrollView } from "react-native-gesture-handler";
 import { getIconByStatus } from "./AppointmentView";
 const StatusSheet = (props) => {
-  const { handleUpdateStatus, handleShowStatusSheet } = props;
+  const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment } =
+    props;
   const [selectedStatus, setSelectStatus] = useState(null);
   const snapPoints = useMemo(() => ["25%", "50%"], []);
-  const [index, setIndex] = useState(0);
   const bottomSheetRef = useRef(null);
-  var handleSheetChanges = useCallback(function (index) {
-    setIndex(index);
-  }, []);
 
   const statusList = [
     "done",
@@ -30,22 +27,37 @@ const StatusSheet = (props) => {
     "hold",
   ];
   const services = ["Hair Cut", "Face Cut", "Wax", "Massage"];
+  const confirmAlert = (message) => {
+    Alert.alert("", message, [
+      { text: "confirm", onPress: () => handleDeleteAppointment() },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+      },
+    ]);
+  };
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={1}
       snapPoints={snapPoints}
-      onChange={handleSheetChanges}
       enablePanDownToClose
       onClose={() => handleShowStatusSheet(null, false)}
     >
-      <TouchableOpacity className="absolute left-3 top-4">
-        <FontAwesome5 name="trash-alt" size={24} color="black" />
-      </TouchableOpacity>
-      <View
-        className="mt-12 flex-row flex-1 justify-between p-1"
-        // style={{ borderWidth: 2, borderColor: "red" }}
-      >
+      <View className="flex-row p-4 justify-between">
+        <TouchableOpacity
+          onPress={() =>
+            confirmAlert("Are you sure you want to delete this item?")
+          }
+        >
+          <FontAwesome5 name="trash-alt" size={24} color="black" />
+        </TouchableOpacity>
+        <Text className="text-xl font-semibold">
+          Change <Text className="text-gray-500">Status</Text>
+        </Text>
+      </View>
+
+      <View className="mt-8 flex-row flex-1 justify-between p-1">
         <View className="rounded-full" style={{ width: 50 }}>
           {selectedStatus && (
             <SelectDropdown
@@ -93,7 +105,9 @@ const StatusSheet = (props) => {
                   }
                   style={styles.statusCard}
                 >
-                  <View>{getIconByStatus(item).icon}</View>
+                  <View>
+                    {getIconByStatus(item, getIconByStatus(item).color).icon}
+                  </View>
                   <Text className="text-base  font-semibold" key={index}>
                     {item}{" "}
                   </Text>

@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  // ScrollView,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
 import React, { useMemo, useRef, useState } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";

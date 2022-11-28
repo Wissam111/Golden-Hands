@@ -1,6 +1,5 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React, { useRef, useState, useCallback, useMemo } from "react";
-import { AntDesign } from "@expo/vector-icons";
+import { View, Text } from "react-native";
+import React, { useRef, useMemo } from "react";
 import moment from "moment";
 import BottomSheet from "@gorhom/bottom-sheet";
 import DefaultButton from "./DefaultButton";
@@ -8,17 +7,13 @@ const AppointmentConfirmationSheet = (props) => {
   const { appointsByday, handleCloseConfirmation, handleBook } = props;
   const appointment = appointsByday.find((appoint) => appoint._id == props.id);
   const snapPoints = useMemo(() => ["20%", "50%"], []);
-  const [index, setIndex] = useState(0);
   const bottomSheetRef = useRef(null);
-  var handleSheetChanges = useCallback(function (index) {
-    setIndex(index);
-  }, []);
+
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={1}
       snapPoints={snapPoints}
-      onChange={handleSheetChanges}
       onClose={handleCloseConfirmation}
       enablePanDownToClose
     >

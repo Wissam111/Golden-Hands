@@ -1,24 +1,20 @@
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import HorizontalChipS from "../../components/HorizontalChipS";
+import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
+import React from "react";
 import HorizontalChip from "../../components/HorizontalChip";
-
+import { useNavigation } from "@react-navigation/native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Card from "../../components/Card";
 import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmationSheet from "../../components/AppointmentConfirmationSheet";
-import { CalendarDaysIcon } from "react-native-heroicons/solid";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 const BookAppointmentScreen = () => {
   const {
     workers,
-    appointments,
     selectedWorker,
     selectedDay,
     selectedService,
     selectedHour,
-    workerAppointments,
     groupedAppoints,
     handleSelectWorker,
     handleSelectDay,
@@ -28,7 +24,7 @@ const BookAppointmentScreen = () => {
     handleBook,
     handleCloseConfirmation,
   } = BookViewModel();
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView className="flex-1 rounded-md bg-[#F9F9F9]">
       <View
@@ -45,10 +41,17 @@ const BookAppointmentScreen = () => {
           style={{
             borderBottomColor: "#D9D9D9",
             justifyContent: "space-between",
-            // width: 120,
           }}
         >
-          <FontAwesome5 name="calendar-alt" size={32} color="black" />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate({
+                name: "HomeScreen",
+              })
+            }
+          >
+            <Entypo name="arrow-with-circle-right" size={28} color="black" />
+          </TouchableOpacity>
 
           <Text
             className="text-xl  m-2 mb-5 font-bold"

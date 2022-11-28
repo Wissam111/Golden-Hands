@@ -93,13 +93,7 @@ const BookViewModel = () => {
 
   const filterWorkerAppoints = async (worker) => {
     let appointments = await getAvailableAppointment(worker._id);
-    const today = new Date();
-    let appoints = appointments.filter(
-      (appoint) => appoint.status == "free"
-      // today <= new Date(appoint.start_time) &&
-      // appoint.worker._id == worker._id
-    );
-
+    let appoints = appointments.filter((appoint) => appoint.status == "free");
     const groupedAppoints = appoints.reduce((groups, appoint) => {
       const date = new Date(appoint.start_time).getDay() + 1;
       if (!groups[date]) {
@@ -171,7 +165,6 @@ const BookViewModel = () => {
 
   useEffect(() => {
     getWorkers();
-    // getAppointments();
   }, []);
 
   return {

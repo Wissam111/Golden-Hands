@@ -12,7 +12,7 @@ const AddAppointmentView = (props) => {
   return (
     <View
       className="absolute bg-white  rounded-lg justify-between p-4"
-      style={{ zIndex: 99999, top: 200, left: 55, height: 300, width: 280 }}
+      style={{ zIndex: 99999, top: 200, left: 50, height: 300, width: 280 }}
     >
       <View className="space-y-5 mt-4">
         <View style={styles.datePicker}>

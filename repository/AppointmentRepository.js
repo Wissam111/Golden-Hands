@@ -24,7 +24,6 @@ const AppointmentRepository = () => {
       null,
       appointObj
     );
-    console.log(data);
     return data;
   };
 
@@ -41,6 +40,11 @@ const AppointmentRepository = () => {
     const data = await apiCall("appointments/unbook", "POST", appointObj);
     return data;
   };
+  const deleteAppointment = async (appointId) => {
+    const data = await apiCall(`appointments/${appointId}`, "DELETE");
+    return data;
+  };
+
   const updateAppointmentStatus = async (appointObj) => {
     const data = await apiCall(
       "appointments/update-status",
@@ -74,6 +78,7 @@ const AppointmentRepository = () => {
     PostAppointment,
     rateAppointment,
     getAvailableAppointment,
+    deleteAppointment,
   };
 };
 

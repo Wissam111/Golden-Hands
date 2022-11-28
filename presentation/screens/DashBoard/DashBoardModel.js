@@ -85,6 +85,7 @@ const DashBoardModel = () => {
       message = data.message;
     } catch (e) {
       console.log(e);
+      message = e.message;
     }
     showAlert(message, handleShowStatusSheet(null, false));
     setIsLoading({ isLoading: false });
@@ -139,6 +140,22 @@ const DashBoardModel = () => {
     showAlert(messg);
     setIsLoading({ isLoading: false });
   };
+  const handleDeleteAppointment = async () => {
+    let date = state.dateInterval[state.selectedDay];
+    setIsLoading({ isLoading: true });
+    let messg;
+    try {
+      const data = await appointmentRepository.deleteAppointment(
+        state.currentAppoint
+      );
+      messg = data.message;
+      getAppointments(date);
+    } catch (e) {
+      messg = e.message;
+    }
+    showAlert(messg);
+    setIsLoading({ isLoading: false });
+  };
 
   /*------------------handle/healper functions-------------------*/
 
@@ -156,8 +173,9 @@ const DashBoardModel = () => {
       dateInterval.push(d);
       dayCounter++;
     }
+    let sd = dateInterval[0].format("L") == startDate.format("L") ? 0 : null;
     setState((prev) => {
-      return { ...prev, selectedDay: null, dateInterval: dateInterval };
+      return { ...prev, selectedDay: sd, dateInterval: dateInterval };
     });
   };
   const handleDateLeft = () => {
@@ -169,8 +187,9 @@ const DashBoardModel = () => {
       dateInterval.push(d);
       dayCounter++;
     }
+    let sd = dateInterval[0].format("L") == startDate.format("L") ? 0 : null;
     setState((prev) => {
-      return { ...prev, selectedDay: null, dateInterval: dateInterval };
+      return { ...prev, selectedDay: sd, dateInterval: dateInterval };
     });
   };
   const handleSelectedDay = (dayId) => {
@@ -240,7 +259,7 @@ const DashBoardModel = () => {
     return moment(compineD, format).format(format);
   }
 
-  const handleShowAppoint = () => {
+  const handleShowAppoint = (action) => {
     setState((prev) => {
       return {
         ...prev,
@@ -250,10 +269,8 @@ const DashBoardModel = () => {
   };
 
   useEffect(() => {
-    // handleDateLeft();
-    handleSelectedDay(0); //bug here
+    handleSelectedDay(0);
     getWorkerServices();
-    // getWorker();
   }, []);
   return {
     ...state,
@@ -271,6 +288,7 @@ const DashBoardModel = () => {
     handleDeleteServ,
     handlePostAppoint,
     handleShowAppoint,
+    handleDeleteAppointment,
   };
 };
 
