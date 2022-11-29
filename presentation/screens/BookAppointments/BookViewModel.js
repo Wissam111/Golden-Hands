@@ -92,6 +92,13 @@ const BookViewModel = () => {
   };
 
   const filterWorkerAppoints = async (worker) => {
+    setState((prev) => {
+      //for not showing prev worker data
+      return {
+        ...prev,
+        groupedAppoints: [],
+      };
+    });
     let appointments = await getAvailableAppointment(worker._id);
     let appoints = appointments.filter((appoint) => appoint.status == "free");
     const groupedAppoints = appoints.reduce((groups, appoint) => {

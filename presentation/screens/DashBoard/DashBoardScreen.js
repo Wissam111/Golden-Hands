@@ -18,7 +18,6 @@ import StatusSheet from "../../components/StatusSheet";
 import BarberServicesSheet from "../../components/BarberServicesSheet";
 import { EvilIcons } from "@expo/vector-icons";
 import AddAppointmentView from "../../components/AddAppointmentView";
-
 const DashBoardScreen = () => {
   const {
     appointments,
@@ -46,7 +45,6 @@ const DashBoardScreen = () => {
     handleDeleteAppointment,
     compineDT,
   } = DashBoardModel();
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView className="flex-1">
@@ -111,7 +109,9 @@ const DashBoardScreen = () => {
                 style={{ width: 85, height: 32 }}
                 onPress={() => handleSelectBooked()}
               >
-                <Text className="text-center mt-2 font-medium">Booked</Text>
+                <Text className="text-center mt-2 font-medium">
+                  In Progress
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

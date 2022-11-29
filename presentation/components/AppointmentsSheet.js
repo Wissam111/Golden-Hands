@@ -16,7 +16,7 @@ const AppointmentsSheet = (props) => {
 
   const generateHoursInterval = () => {
     const times = [];
-    const interval = 60;
+    const interval = 120;
     let startHourInMinute = 60;
     let endHourInMinute = 60 * 24;
     let timesIntervals = [];
@@ -25,14 +25,23 @@ const AppointmentsSheet = (props) => {
       var hh = Math.floor(startHourInMinute / 60);
       var mm = startHourInMinute % 60;
       times[i] = ("0" + (hh % 24)).slice(-2) + ":" + ("0" + mm).slice(-2);
-      if (i % 2 == 1) {
+
+      startHourInMinute = startHourInMinute + interval;
+    }
+    for (let i = 0; i < times.length; i++) {
+      if (i == times.length - 1) {
         timesIntervals.push({
-          start: times[i - 1],
-          end: times[i],
+          start: times[i],
+          end: "24:00",
           appointments: [],
         });
+        break;
       }
-      startHourInMinute = startHourInMinute + interval;
+      timesIntervals.push({
+        start: times[i],
+        end: times[i + 1],
+        appointments: [],
+      });
     }
     return timesIntervals;
   };
@@ -96,25 +105,6 @@ const AppointmentsSheet = (props) => {
           No Appointments on this day
         </Text>
       )}
-
-      {/* {appointments.length ? (
-        <FlatList
-          data={appointments}
-          keyExtractor={(item) => item._id}
-          horizontal={false}
-          renderItem={({ item }) => (
-            <AppointmentView
-              appointment={item}
-              handleShowStatusSheet={handleShowStatusSheet}
-            />
-          )}
-          showsHorizontalScrollIndicator={false}
-        />
-      ) : (
-        <Text className="text-xl text-center text-red-600 mt-10">
-          No Appointments on this day
-        </Text>
-      )} */}
     </BottomSheet>
   );
 };

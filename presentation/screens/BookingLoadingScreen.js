@@ -1,9 +1,14 @@
-import { View, Text, SafeAreaView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect } from "react";
 import * as Animatable from "react-native-animatable";
 import * as Progress from "react-native-progress";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
 const BookingLoadingScreen = () => {
   const navigation = useNavigation();
   const {
@@ -12,7 +17,7 @@ const BookingLoadingScreen = () => {
   useEffect(() => {
     setTimeout(() => {
       showAlert();
-    }, 3500);
+    }, 2500);
   }, []);
 
   const showAlert = () => {
@@ -36,6 +41,12 @@ const BookingLoadingScreen = () => {
       >
         Confirming ...
       </Animatable.Text>
+      <ActivityIndicator
+        animating={true}
+        style={{ zIndex: 20 }}
+        size="large"
+        color="#000"
+      />
       {/* <Progress.Circle size={60} indeterminate={true} color="white" /> */}
     </SafeAreaView>
   );

@@ -213,7 +213,7 @@ const DashBoardModel = () => {
   };
   const handleSelectBooked = () => {
     let appoints = state.appointments.filter(
-      (appoint) => appoint.user != null || appoint.status == "hold"
+      (appoint) => appoint.status == "in-progress" || appoint.status == "hold"
     );
     setState((prev) => {
       return {

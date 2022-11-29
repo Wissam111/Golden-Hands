@@ -8,6 +8,7 @@ import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmationSheet from "../../components/AppointmentConfirmationSheet";
 import { Entypo } from "@expo/vector-icons";
+import Loader from "../../components/Loader";
 const BookAppointmentScreen = () => {
   const {
     workers,
@@ -36,6 +37,7 @@ const BookAppointmentScreen = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
       >
+        <Loader />
         <View
           className="mb-4 border-b-2  p-1 flex-row ml-2 items-center"
           style={{
