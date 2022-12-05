@@ -3,7 +3,7 @@ import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import getString from "../../../localization";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
-import { white } from "../../styles/global";
+import { globalStyles, white } from "../../styles/global";
 import useUsersListViewModel from "./UsersListViewModel";
 
 const UsersList = ({ navigation }) => {
@@ -22,7 +22,10 @@ const UsersList = ({ navigation }) => {
 
             </View>
 
-            <Text>{users && users.length}</Text>
+
+            <Text>Number of users {users && users.length}</Text>
+
+
             <FlatList
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
@@ -35,8 +38,9 @@ const UsersList = ({ navigation }) => {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => { navigation.navigate('ProfileScreen', { userId: item._id }) }}>
 
-                        <View style={{ borderRadius: 12, padding: 8, height: 400, backgroundColor: '#cecece' }}>
-                            <Text>{item.firstName} {item.lastName}</Text>
+                        <View style={{ borderRadius: 12, padding: 8, backgroundColor: '#f9f9f9', alignItems: 'flex-start' }}>
+                            <Text style={{ ...globalStyles.font }}>{item.firstName} {item.lastName}</Text>
+                            <Text style={{ ...globalStyles.font }}>{item.phone}</Text>
                         </View>
 
                     </TouchableOpacity>

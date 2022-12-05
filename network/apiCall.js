@@ -2,9 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import getString from "../localization";
 import showAlert from "../presentation/components/ShowAlert";
 
-export const BASE_URL = "https://saloon-ibra-api.herokuapp.com/api/";
+export const BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com:8080/api/";
 export const BASE_URL_DEV = "http://192.168.1.46:4000/api/";
-export const IMAGE_BASE_URL = "https://saloon-ibra-api.herokuapp.com/imgs/";
+export const IMAGE_BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com:8080/imgs/";
 
 const serialize = function (obj) {
   var str = [];
