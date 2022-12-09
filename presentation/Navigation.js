@@ -64,10 +64,12 @@ const HomeStack = createNativeStackNavigator();
 
 const HomeNavigation = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator
+      screenOptions={{ headerShown: false }}>
+
       <HomeStack.Screen name="HomeScreen" component={Home} />
-      <HomeStack.Screen name="LoginScreen" component={Login} />
-      <HomeStack.Screen name="SignupNavigation" component={SignupNavigation} />
+      <HomeStack.Screen options={{presentation:'modal'}}  name="SignupNavigation" component={SignupNavigation} />
+      <HomeStack.Screen options={{presentation:'transparentModal'}} name="LoginScreen" component={Login} />
 
       <HomeStack.Screen
         name="BookAppointment"

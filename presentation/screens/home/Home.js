@@ -34,47 +34,6 @@ const GeustHeader = () => {
 }
 
 
-// const LoggedInHeader = ({ appointment }) => {
-
-//     return (
-//         <Animated.View
-//             entering={FadeIn.duration(600)}
-//             exiting={FadeOut}
-//             style={{ justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
-//             {
-//                 appointment ?
-//                     (
-//                         <Animated.View style={{ justifyContent: 'center', alignItems: 'center' }}>
-
-//                             <Text style={{ ...globalStyles.font, fontSize: semiLarge, ...styles.margin, color: '#fff' }}>{getString.t('you_have_an_appointment')}</Text>
-//                             <Text style={{ ...globalStyles.font, fontSize: semiLarge, ...styles.margin, color: '#fff' }}>{moment(appointment.start_time).format(`dddd, MMMM DD [${getString.t('at')}] HH:mm`)}</Text>
-
-//                             <HorizontalChip
-//                                 style={styles.margin}
-//                                 text={`${appointment.worker.firstName} ${appointment.worker.lastName}`}
-//                                 imageUrl={appointment.worker.image} />
-
-//                             <Spacer space={20} />
-
-//                             <TouchableOpacity onPress={() => { openWaze() }}>
-//                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//                                     <Image style={{ width: 30, height: 30 }} source={require('../../../assets/imgs/location.png')} />
-//                                     <Spacer space={6} />
-//                                     <Text style={{ ...globalStyles.font, fontSize: semiLarge, ...styles.margin, color: '#fff' }}>{getString.t('find_us')}</Text>
-//                                 </View>
-//                             </TouchableOpacity>
-//                         </Animated.View>
-//                     )
-//                     : (
-//                         <Animated.View>
-//                             <Text style={{ ...globalStyles.font, fontSize: semiLarge, color: white, textAlign: 'center' }}>{getString.t('you_dont_have_appointment')}</Text>
-//                         </Animated.View>
-//                     )
-//             }
-//         </Animated.View>
-//     );
-// }
-
 
 
 const Time = ({ startTime, endTime }) => {

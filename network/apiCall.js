@@ -6,6 +6,20 @@ export const BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazona
 export const BASE_URL_DEV = "http://192.168.1.46:4000/api/";
 export const IMAGE_BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com/imgs/";
 
+
+/* 
+
+{
+  name :'tarik' ,
+  age: 24
+}
+
+ 
+returns =>  ?name = tarik & age = 24
+
+*/
+
+// turn an object to a query string
 const serialize = function (obj) {
   var str = [];
   for (var p in obj)
@@ -15,6 +29,9 @@ const serialize = function (obj) {
   return "?" + str.join("&");
 };
 
+
+
+// gets the access token from the cache 
 const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem("token");
@@ -37,6 +54,18 @@ export const getUserId = async () => {
   }
 };
 
+
+
+/**
+ *  this is a global HTTP api call 
+ * 
+ * @param {*} url 
+ * @param {*} method  GET / POST / DELETE / PATCH 
+ * @param {*} body 
+ * @param {*} queryParams 
+ * @param {*} contentType 
+ * @returns the server response as json
+ */
 export const apiCall = async (
   url,
   method = "GET",

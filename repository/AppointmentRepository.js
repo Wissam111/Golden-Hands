@@ -1,14 +1,21 @@
 import { apiCall } from "../network/apiCall";
 
 const AppointmentRepository = () => {
+
+  // get the current user active appointment
   const getAppointment = async () => {
     const data = await apiCall("appointments/user-appointment");
     return data;
   };
+
+  // get all appointments
   const getAppointments = async () => {
     const data = await apiCall("appointments");
     return data;
   };
+
+
+  // rate an appointment
   const rateAppointment = async (appointmentId, rate) => {
     const data = await apiCall("appointments/rate", "POST", {
       appointmentId,
@@ -17,6 +24,8 @@ const AppointmentRepository = () => {
     return data;
   };
 
+
+  // get the available appointment
   const getAvailableAppointment = async (appointObj) => {
     const data = await apiCall(
       "appointments/available",
@@ -27,24 +36,34 @@ const AppointmentRepository = () => {
     return data;
   };
 
+
+  // get the current user appointments
   const getUserAppointments = async () => {
     const data = await apiCall("appointments/user-appointments");
     return data;
   };
 
+
+  // book an appointment
   const BookAppointment = async (appointObj) => {
     const data = await apiCall("appointments/book", "POST", appointObj);
     return data;
   };
+
+  // unbook an appointment (marks the customer as null in the database)
   const unBookAppointment = async (appointObj) => {
     const data = await apiCall("appointments/unbook", "POST", appointObj);
     return data;
   };
+
+  // remove this appointment record from the database
   const deleteAppointment = async (appointId) => {
     const data = await apiCall(`appointments/${appointId}`, "DELETE");
     return data;
   };
 
+
+  // update the current status of the appointment
   const updateAppointmentStatus = async (appointObj) => {
     const data = await apiCall(
       "appointments/update-status",
@@ -54,10 +73,13 @@ const AppointmentRepository = () => {
     return data;
   };
 
+
+  // create a new appointment
   const PostAppointment = async (appointObj) => {
     const data = await apiCall("appointments", "POST", appointObj);
     return data;
   };
+
 
   const unbook = async (appointmentId) => {
     const data = await apiCall("appointments/unbook", "POST", {

@@ -5,11 +5,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthRepository = () => {
 
+
+    // sends an SMS message 
     const sendAuthVerification = async (phone, isLogin, isSignup) => {
         const data = await apiCall('send-auth-verification', 'POST', { phone, isLogin, isSignup })
         return data
     }
 
+
+    // login the user and verify the code
     const loginAndVerify = async (verifyId, phone, code) => {
         const data = await apiCall('login-verify-phone', 'POST', { verifyId, phone, code })
         await AsyncStorage.setItem('user', JSON.stringify(data.authData.user))
@@ -20,6 +24,7 @@ const AuthRepository = () => {
     }
 
 
+    // signup the user and verify the code
     const singupAndVerify = async ({ firstName, lastName, birthDate, verifyId, phone, code }) => {
         const data = await apiCall('signup-verify-phone', 'POST', { firstName, lastName, birthDate, verifyId, phone, code })
         await AsyncStorage.setItem('user', JSON.stringify(data.authData.user))
@@ -29,6 +34,8 @@ const AuthRepository = () => {
         return data
     }
 
+
+    // logout the user and remove cache data
     const logout = async () => {
         try {
             await AsyncStorage.removeItem('user')
@@ -40,6 +47,8 @@ const AuthRepository = () => {
         }
     }
 
+
+    // verify and update the phone number
     const verifyUpdatePhone = async (code, phone, verifyId, userId) => {
         const data = await apiCall(`verify-update-phone`, 'PATCH', { code, phone, verifyId, userId })
         return data
