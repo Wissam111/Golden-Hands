@@ -18,6 +18,9 @@ import StatusSheet from "../../components/StatusSheet";
 import BarberServicesSheet from "../../components/BarberServicesSheet";
 import { EvilIcons } from "@expo/vector-icons";
 import AddAppointmentView from "../../components/AddAppointmentView";
+
+/*------- represent's worker Dashboard Screen ---------- */
+
 const DashBoardScreen = () => {
   const {
     appointments,

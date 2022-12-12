@@ -99,7 +99,7 @@ const StatusSheet = (props) => {
                 <TouchableOpacity
                   className="m-1 p-4 items-center rounded-md flex-row justify-between"
                   onPress={
-                    item == "hold" || item == "in-progress"
+                    item == "hold"
                       ? () => setSelectStatus(item)
                       : () => handleUpdateStatus(item)
                   }

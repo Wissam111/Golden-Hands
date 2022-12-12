@@ -9,6 +9,9 @@ import BookViewModel from "./BookViewModel";
 import AppointmentConfirmationSheet from "../../components/AppointmentConfirmationSheet";
 import { Entypo } from "@expo/vector-icons";
 import Loader from "../../components/Loader";
+
+/*------- represent's book appointments Screen ---------- */
+
 const BookAppointmentScreen = () => {
   const {
     workers,

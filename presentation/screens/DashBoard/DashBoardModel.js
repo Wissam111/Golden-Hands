@@ -31,8 +31,7 @@ const DashBoardModel = () => {
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
-  /*------------------api functions use-------------------*/
-
+  /*-------- geting all appointments by date ---------- */
   const getAppointments = async (date) => {
     setIsLoading({ isLoading: true });
     try {
@@ -56,6 +55,7 @@ const DashBoardModel = () => {
     setIsLoading({ isLoading: false });
   };
 
+  /*-------- getting worker Services by workerId ---------- */
   const getWorkerServices = async () => {
     setIsLoading({ isLoading: true });
     try {
@@ -69,6 +69,7 @@ const DashBoardModel = () => {
     setIsLoading({ isLoading: false });
   };
 
+  /*-------- Update the status of an appointment ---------- */
   const handleUpdateStatus = async (status, service = "") => {
     setIsLoading({ isLoading: true });
     let message;
@@ -91,6 +92,7 @@ const DashBoardModel = () => {
     setIsLoading({ isLoading: false });
   };
 
+  /*-------- creating new Service for a worker ---------- */
   const handlePostServ = async (servObj) => {
     setIsLoading({ isLoading: true });
     let messg;
@@ -105,7 +107,7 @@ const DashBoardModel = () => {
     showAlert(messg);
     setIsLoading({ isLoading: false });
   };
-
+  /*--------  deleting service for a worker ---------- */
   const handleDeleteServ = async (servId) => {
     setIsLoading({ isLoading: true });
     let messg;
@@ -120,6 +122,7 @@ const DashBoardModel = () => {
     setIsLoading({ isLoading: false });
   };
 
+  /*--------  creating new appointment for a worker ---------- */
   const handlePostAppoint = async (startTime, endTime) => {
     let date = state.dateInterval[state.selectedDay];
     const appointObj = {
@@ -140,6 +143,7 @@ const DashBoardModel = () => {
     showAlert(messg);
     setIsLoading({ isLoading: false });
   };
+  /*--------  deleting an appointment for a worker ---------- */
   const handleDeleteAppointment = async () => {
     let date = state.dateInterval[state.selectedDay];
     setIsLoading({ isLoading: true });
