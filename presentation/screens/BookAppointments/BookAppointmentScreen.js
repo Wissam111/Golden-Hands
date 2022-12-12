@@ -14,6 +14,9 @@ import BackButton from "../../components/BackButton";
 import Spacer from "../../components/Spacer";
 import getString from "../../../localization";
 import { backgroundColor, globalStyles } from "../../styles/global";
+
+/*------- represent's book appointments Screen ---------- */
+
 const BookAppointmentScreen = () => {
   const {
     workers,

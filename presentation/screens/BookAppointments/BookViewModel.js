@@ -7,6 +7,7 @@ import useAuthContext from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import useLoadingContext from "../../../hooks/useLoadingContext";
+
 const BookViewModel = () => {
   const [state, setState] = useState({
     workers: [],
@@ -24,6 +25,8 @@ const BookViewModel = () => {
   const appointmentRepository = AppointmentRepository();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
   const { user } = useAuthContext();
+
+  /*------- fetching workers from the server ---------- */
 
   const getWorkers = async () => {
     try {
@@ -71,6 +74,7 @@ const BookViewModel = () => {
     });
   };
 
+  /*-------- Fetching all free appointments from the current date ---------- */
   const getAvailableAppointment = async (workerId) => {
     const format = "yyyy-MM-DDTHH:mm:ssZZ";
     const startD = moment().format(format);
@@ -91,17 +95,17 @@ const BookViewModel = () => {
     return appoints;
   };
 
-  const filterWorkerAppoints = async (worker) => {
+  /*-------- grouping worker appointments by day ---------- */
+
+  const groupAppointsByDay = async (worker) => {
     setState((prev) => {
-      //for not showing prev worker data
       return {
         ...prev,
         groupedAppoints: [],
       };
     });
     let appointments = await getAvailableAppointment(worker._id);
-    let appoints = appointments.filter((appoint) => appoint.status == "free");
-    const groupedAppoints = appoints.reduce((groups, appoint) => {
+    const groupedAppoints = appointments.reduce((groups, appoint) => {
       const date = new Date(appoint.start_time).getDay() + 1;
       if (!groups[date]) {
         groups[date] = [];
@@ -127,7 +131,7 @@ const BookViewModel = () => {
         selectedHour: null,
       };
     });
-    filterWorkerAppoints(worker);
+    groupAppointsByDay(worker);
   };
   const handleSelectDay = (key) => {
     let _appointsByDay = state.groupedAppoints[key];
@@ -146,7 +150,6 @@ const BookViewModel = () => {
     setState((prev) => {
       return {
         ...prev,
-
         selectedService: id,
         selectedHour: null,
       };

@@ -4,6 +4,8 @@ import DefaultButton from "./DefaultButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
+/*------- Component represent's Add Working Appointment for the barber ---------- */
+
 const AddAppointmentView = (props) => {
   const { handlePostAppoint } = props;
   const [startTime, setStartTime] = useState(new Date());
