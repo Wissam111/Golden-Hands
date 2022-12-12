@@ -29,6 +29,13 @@ const BarberServicesSheet = (props) => {
   };
   return (
     <BottomSheet
+      containerStyle={{
+        elevation: 8,
+        shadowColor: 'black',
+        shadowRadius: 1,
+        shadowOpacity: 1,
+        shadowOffset: { width: .7, height: .7 },
+      }}
       ref={bottomSheetRef}
       index={1}
       snapPoints={snapPoints}
@@ -44,8 +51,7 @@ const BarberServicesSheet = (props) => {
             <View
               key={serv._id}
               className="flex-row justify-between m-2 items-center   p-3 rounded-md"
-              style={styles.shadow}
-            >
+              style={styles.shadow}>
               <TouchableOpacity
                 onPress={() =>
                   confirmAlert(
@@ -73,10 +79,10 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: "black",
     backgroundColor: "white",
-    elevation: 10,
-    shadowOffset: { width: 1, height: 1 },
-    shadowRadius: 3,
-    shadowOpacity: 0.5,
+    elevation: 8,
+    shadowOffset: { width: .5, height: .5 },
+    shadowRadius: 1.5,
+    shadowOpacity: 0.3,
   },
 });
 

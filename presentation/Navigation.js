@@ -119,6 +119,8 @@ const DrawerNavigation = () => {
     <Drawer.Navigator
       useLegacyImplementation
       screenOptions={{
+        drawerType: 'front',
+        swipeEdgeWidth: 100,
         headerShown: false,
         drawerStyle: {
           backgroundColor: "transparent",

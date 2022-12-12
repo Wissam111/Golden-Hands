@@ -50,10 +50,9 @@ const DashBoardScreen = () => {
   } = DashBoardModel();
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView className="flex-1">
         <View className="bg-[#1D1B1B] flex-1 relative">
           <View>
-            <View className="flex-row items-center space-x-10 mt-4">
+            <View className="flex-row items-center mt-4">
               <View className="ml-4">
                 <HorizontalChip
                   text={worker.firstName + " " + worker.lastName}
@@ -65,7 +64,7 @@ const DashBoardScreen = () => {
               <TouchableOpacity onPress={handleShowServSheet}>
                 <Image
                   source={require("../../../assets/imgs/designtools.png")}
-                  className="w-7 h-7 "
+                  className="w-6 h-6"
                 />
               </TouchableOpacity>
             </View>
@@ -149,7 +148,6 @@ const DashBoardScreen = () => {
             />
           )}
         </View>
-      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };

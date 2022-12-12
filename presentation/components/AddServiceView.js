@@ -18,7 +18,7 @@ const AddServiceView = (props) => {
   const [selectedPrice, setSelectedPrice] = useState("");
   const [showAddServ, setShowAddServ] = useState(false);
   return (
-    <View className="p-2 m-3" style={styles.shadow}>
+    <View className="p-2 m-3 rounded-md" style={styles.shadow}>
       <View className="flex-row justify-between items-center">
         <TouchableOpacity
           className="mr-2 mb-5 mt-2"
@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: "black",
     backgroundColor: "white",
-    elevation: 10,
-    shadowOffset: { width: 1, height: 1 },
-    shadowRadius: 3,
-    shadowOpacity: 0.5,
+    elevation: 8,
+    shadowOffset: { width: .5, height: .5 },
+    shadowRadius: 1.5,
+    shadowOpacity: 0.3,
   },
   dropdown1BtnStyle: {
     backgroundColor: "#FFF",

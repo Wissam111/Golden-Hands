@@ -79,7 +79,18 @@ const getString = new I18n({
         unblock: 'Unblock',
         mark_as_customer: 'Mark as customer',
         actions:'Actions',
-        rate_us: 'rate us'
+        rate_us: 'rate us',
+        book_appointment: 'Book Appointment',
+        select_day:'Select Day',
+        select_worker: 'Select Worker',
+        select_service:'Select Service',
+        select_hour: 'Select Hour',
+        appointment_info: 'Appointment Info',
+        confirm_and_book: 'Confirm and Book',
+        wax: 'Wax',
+        'hair cut':'Hair Cut' ,
+        massage : 'Massage',
+        'face cut': 'Face Cut'
 
 
 
@@ -162,7 +173,22 @@ const getString = new I18n({
         unblock: 'בטל חסימה',
         mark_as_customer: 'סמן כלקוח',
         actions:'פעולות',
-        rate_us: 'דרג אותנו'
+        rate_us: 'דרג אותנו',
+        book_appointment: 'הזמן תור',
+        select_day:'בחר יום',
+        select_worker: 'בחר עובד',
+        select_service:'בחר שירות',
+        select_hour: 'בחר שעה',
+        appointment_info: 'פרטי תור',
+        confirm_and_book: 'אשר והזמן',
+        wax: 'ואקס',
+        'hair cut':'תספורת' ,
+        massage : 'מסאג׳',
+        'face cut': 'זקן'
+
+
+
+
 
 
 

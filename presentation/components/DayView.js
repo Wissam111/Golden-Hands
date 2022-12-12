@@ -6,7 +6,7 @@ const DayView = (props) => {
   return (
     <TouchableOpacity
       className={`${
-        isSelected ? "bg-[#F4EBD0]" : "bg-[#47566A]"
+        isSelected ? `bg-[#F4EBD0]` : "bg-[#47566A]"
       } rounded-md items-center pt-1`}
       style={{ width: 58, height: 59 }}
       onPress={() => handleSelectedDay(id)}
