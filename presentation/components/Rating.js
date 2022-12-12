@@ -6,9 +6,7 @@ import Spacer from "./Spacer";
 import getString from "../../localization";
 
 
-const Rating = ({ style, rating, from, onClick }) => {
-    const showRatingMsg = rating == null
-
+const Rating = ({ style, rating, from, onClick , showRatingMsg}) => {
     if (!from)
         return
 

@@ -20,11 +20,13 @@ const useSignupViewModel = () => {
     const authRepository = AuthRepository();
     const userRepository = UserRepository();
 
-
+    // hide the PIN code
     const hideCode = () => {
         setShowCode(false);
     };
 
+
+    // updates the inputs value 
     const onInputChanged = (key, value) => {
         const payload = {}
         payload[key] = value
@@ -39,7 +41,7 @@ const useSignupViewModel = () => {
         })
     }
 
-
+    // send an SMS message
     const sendAuthVerification = async () => {
         setLoading({ isLoading: true });
         try {
@@ -68,7 +70,9 @@ const useSignupViewModel = () => {
         setLoading({ isLoading: false });
     };
 
+    
 
+    // signup the user
     const signup = async (code) => {
         setLoading({ isLoading: true });
 
@@ -107,7 +111,9 @@ const useSignupViewModel = () => {
         setLoading({ isLoading: false });
     }
 
+    
 
+    // naviogate to the phone screen 
     const navigateToSignupPhone = () => {
         const payload = {}
         const vfirstName = validate('firstName', context.firstName)
@@ -131,7 +137,7 @@ const useSignupViewModel = () => {
     }
 
 
-
+    // upload a profile image
     const uploadImage = async (uri) => {
 
         try {

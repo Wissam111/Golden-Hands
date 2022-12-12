@@ -38,8 +38,8 @@ export default function App() {
           <AuthContextProvider>
             <SignupContextProvider>
               <TailwindProvider>
-                <Loader />
                 <Navigation />
+                <Loader />
               </TailwindProvider>
             </SignupContextProvider>
           </AuthContextProvider>

@@ -22,7 +22,7 @@ const useUpdatePhoneViewModel = () => {
     })
     const [verifyId, setVerifyId] = useState(null)
 
-
+    // send SMS code
     const sendAuthVerification = async () => {
         setLoading({ isLoading: true })
         try {
@@ -49,6 +49,8 @@ const useUpdatePhoneViewModel = () => {
         setLoading({ isLoading: false })
     }
 
+    
+    // verify and update phone number
     const verifyAndUpdate = async (code) => {
         setLoading({ isLoading: true })
         try {
@@ -73,6 +75,8 @@ const useUpdatePhoneViewModel = () => {
         setLoading({ isLoading: false })
     }
 
+
+    // change phone 
     const onPhoneChanged = (s) => {
 
         const vPhone = validate('phone', s)
@@ -85,6 +89,8 @@ const useUpdatePhoneViewModel = () => {
         })
     }
 
+
+    // hide PIN code
     const hideCode = () => {
         setState(prev => {
             return {

@@ -19,12 +19,9 @@ const Signup = ({ navigation }) => {
     const [showDatePicker, setShowDatePicker] = useState(false)
 
     const onChange = (event, selectedDate) => {
-        // console.log(selectedDate);
         onInputChanged('birthDate', selectedDate)
         setShowDatePicker(false)
     };
-
-
 
 
     return (
@@ -39,7 +36,6 @@ const Signup = ({ navigation }) => {
                 <Spacer space={30} />
 
                 <View>
-
 
 
                     <TextInputIcon

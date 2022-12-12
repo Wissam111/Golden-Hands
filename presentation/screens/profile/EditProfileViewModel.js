@@ -13,7 +13,7 @@ const useEditProfileViewModel = () => {
     const userRepository = UserRepository()
     const { dispatch: setLoading } = useLoadingContext()
 
-
+    // update inputs values
     const onInputChange = (key, value) => {
         setState((prev) => {
             const payload = {
@@ -24,6 +24,8 @@ const useEditProfileViewModel = () => {
         })
     }
 
+
+    // update profile info
     const update = async () => {
         setLoading({ isLoading: true })
         try {

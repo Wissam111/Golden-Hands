@@ -75,7 +75,7 @@ const useProfileViewModel = () => {
 
     }
 
-
+    // block the user 
     const block = async (isBlocked) => {
         if (!state.user)
             return
