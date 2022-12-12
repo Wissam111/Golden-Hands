@@ -86,7 +86,11 @@ const getString = new I18n({
         select_service:'Select Service',
         select_hour: 'Select Hour',
         appointment_info: 'Appointment Info',
-        confirm_and_book: 'Confirm and Book'
+        confirm_and_book: 'Confirm and Book',
+        wax: 'Wax',
+        'hair cut':'Hair Cut' ,
+        massage : 'Massage',
+        'face cut': 'Face Cut'
 
 
 
@@ -176,7 +180,11 @@ const getString = new I18n({
         select_service:'בחר שירות',
         select_hour: 'בחר שעה',
         appointment_info: 'פרטי תור',
-        confirm_and_book: 'אשר והזמן'
+        confirm_and_book: 'אשר והזמן',
+        wax: 'ואקס',
+        'hair cut':'תספורת' ,
+        massage : 'מסאג׳',
+        'face cut': 'זקן'
 
 
 

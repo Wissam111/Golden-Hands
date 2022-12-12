@@ -122,7 +122,7 @@ const BookAppointmentScreen = () => {
               <Card
                 cardContent={item}
                 id={item._id}
-                title={item.title}
+                title={getString.t(item.title.toLowerCase())}
                 handlePress={handleSelectService}
                 isSelected={selectedService == item._id}
                 price={item.price}

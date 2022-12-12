@@ -35,7 +35,7 @@ const AppointmentConfirmationSheet = (props) => {
           <Text className="text-xl font-bold">{getString.t('appointment_info')}</Text>
         </View>
         <Text className="font-medium text-base mb-10">
-          {moment(appointment.start_time).format("MMMM Do YYYY, h:mm a") +
+          {moment(appointment.start_time).format(`dddd DD-MM-yyyy [${getString.t('at')}] HH:mm`) +
             ` , ${appointment.worker.firstName} ${appointment.worker.lastName}`}
         </Text>
         <DefaultButton text={getString.t('confirm_and_book')} onPress={handleBook} />
