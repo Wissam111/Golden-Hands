@@ -3,6 +3,7 @@ import React, { useRef, useMemo } from "react";
 import moment from "moment";
 import BottomSheet from "@gorhom/bottom-sheet";
 import DefaultButton from "./DefaultButton";
+import getString from "../../localization";
 const AppointmentConfirmationSheet = (props) => {
   const { appointsByday, handleCloseConfirmation, handleBook } = props;
   const appointment = appointsByday.find((appoint) => appoint._id == props.id);
@@ -11,6 +12,13 @@ const AppointmentConfirmationSheet = (props) => {
 
   return (
     <BottomSheet
+      containerStyle={{
+        elevation: 8,
+        shadowColor: 'black',
+        shadowRadius: 1,
+        shadowOpacity: 1,
+        shadowOffset: { width: .7, height: .7 },
+      }}
       ref={bottomSheetRef}
       index={1}
       snapPoints={snapPoints}
@@ -24,13 +32,13 @@ const AppointmentConfirmationSheet = (props) => {
             width: "100%",
           }}
         >
-          <Text className="text-xl font-bold">Appointment Info</Text>
+          <Text className="text-xl font-bold">{getString.t('appointment_info')}</Text>
         </View>
         <Text className="font-medium text-base mb-10">
           {moment(appointment.start_time).format("MMMM Do YYYY, h:mm a") +
             ` , ${appointment.worker.firstName} ${appointment.worker.lastName}`}
         </Text>
-        <DefaultButton text="Confirm and Book" onPress={handleBook} />
+        <DefaultButton text={getString.t('confirm_and_book')} onPress={handleBook} />
       </View>
     </BottomSheet>
   );

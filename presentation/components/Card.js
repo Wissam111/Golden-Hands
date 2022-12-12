@@ -1,11 +1,12 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
+import { backgroundColor, orange1, orange2 } from "../styles/global";
 const Card = (props) => {
   const { cardContent, title, handlePress, isSelected, price } = props;
   return (
     <TouchableOpacity
-      style={styles.card}
+      style={{...styles.card , backgroundColor: isSelected? orange1 : backgroundColor}}
       className={`rounded-full px-4  relative ${
         isSelected ? "bg-[#FF9B02]" : "bg-white"
       } mx-2 mb-2 justify-center items-center`}
@@ -21,6 +22,7 @@ const Card = (props) => {
       {price && (
         <View className=" flex-row items-center relative">
           <Text
+          style = {{color: isSelected? 'black' : orange2}}
             className={`font-semibold  ${
               isSelected ? "black" : "text-[#FFD700]"
             }`}

@@ -49,7 +49,7 @@ const UserAppointments = () => {
                             <View style={{ flexDirection: 'row' }}>
                                 {item.status === 'in-progress' &&
                                     <TouchableOpacity onPress={() => { unbook(item._id) }}>
-                                        <View style={{ backgroundColor: red, borderRadius: 38, height: "100%", paddingEnd: 50, width: 100, start: -30, position: 'absolute' , justifyContent:'center' }} >
+                                        <View style={{ backgroundColor: red, borderRadius: 38, height: "100%", paddingEnd: 50, width: 100, start: -50, position: 'absolute' , justifyContent:'center' }} >
                                             <MaterialCommunityIcons name="cancel" size={24} color="black" />
                                         </View>
                                     </TouchableOpacity>
