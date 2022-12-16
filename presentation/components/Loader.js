@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 import useLoadingContext from "../../hooks/useLoadingContext";
+import { orange1, orange2 } from "../styles/global";
 
 const Loader = () => {
   const { isLoading } = useLoadingContext();
@@ -19,9 +20,16 @@ const Loader = () => {
       {
         <ActivityIndicator
           animating={isLoading}
-          style={{ zIndex: 20 }}
+          style={{
+            zIndex: 20,
+            elevation: .3,
+            shadowColor: 'black',
+            shadowRadius: 1,
+            shadowOpacity: .6,
+            shadowOffset: { width: 1, height: 1 },
+          }}
           size="large"
-          color="#000"
+          color={orange2}
         />
       }
     </View>

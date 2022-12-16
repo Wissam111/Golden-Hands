@@ -20,10 +20,10 @@ const AppointmentView = (props) => {
         onPress={() => handleShowStatusSheet(appointment._id, true)}
         style={{
           shadowColor: getIconByStatus(appointment.status).color,
-          elevation: 10,
-          shadowOffset: { width: 1, height: 1 },
-          shadowRadius: 5,
-          shadowOpacity: 0.5,
+          elevation: 8,
+          shadowOffset: { width: .5, height: .5 },
+          shadowRadius: 3,
+          shadowOpacity: 0.6,
           width: "80%",
           height: 70,
         }}

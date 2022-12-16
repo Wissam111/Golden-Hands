@@ -45,7 +45,7 @@ const UserRepository = () => {
     const uploadImage = async (localUri, filename, type) => {
         let formData = new FormData();
         formData.append('image', { uri: localUri, name: filename, type });
-
+        console.log(formData);
         const data = await apiCall(`users/upload-image`, 'POST', formData, null, 'multipart/form-data')
         AsyncStorage.setItem('user_image', data.filename)
         return data

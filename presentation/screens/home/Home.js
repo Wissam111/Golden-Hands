@@ -324,7 +324,7 @@ const Home = ({ navigation }) => {
 
   const refresh = useCallback(() => {
     onRefresh();
-  }, []);
+  }, [onRefresh]);
 
   return (
     <View style={{ ...styles.backLayer }}>
@@ -451,7 +451,7 @@ const Home = ({ navigation }) => {
               </Animated.View>
             )}
 
-            <Animated.View
+            {/* <Animated.View
               entering={FadeIn.duration(600)}
               exiting={FadeOut}
               style={{
@@ -476,7 +476,7 @@ const Home = ({ navigation }) => {
               </Text>
               <Spacer space={8} />
               <Story />
-            </Animated.View>
+            </Animated.View> */}
 
             <Animated.View
               entering={FadeIn.duration(600)}

@@ -1,13 +1,15 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import getString from "../../../localization";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
 import WorkerRepository from "../../../repository/workerRepository";
+import AddServiceView from "../../components/AddServiceView";
 import showAlert from "../../components/ShowAlert";
 
 const useHomeViewModel = () => {
-  const { isLoading, dispatch: setIsLoading } = useLoadingContext();
+  const { dispatch: setIsLoading } = useLoadingContext();
   const { user } = useAuthContext()
   const [state, setState] = useState({
     workers: null,
@@ -62,8 +64,6 @@ const useHomeViewModel = () => {
     }
     setIsLoading({ isLoading: false });
   };
-
-
 
 
 
