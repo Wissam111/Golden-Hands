@@ -6,10 +6,11 @@ import { FlatList } from "react-native-gesture-handler";
 import AppointmentView from "./AppointmentView";
 import moment from "moment";
 import AppointmentsInterval from "./AppointmentsInterval";
+import getString from "../../localization";
 const AppointmentsSheet = (props) => {
   const { appointments, handleShowStatusSheet, handleShowAppoint, compineDT } =
     props;
-  const snapPoints = useMemo(() => ["50%", "100%"], []);
+  const snapPoints = useMemo(() => ["50%", "90%"], []);
   const bottomSheetRef = useRef(null);
 
   const [appointmentsIntervals, setAppointmentsInterval] = useState([]);
@@ -71,7 +72,7 @@ const AppointmentsSheet = (props) => {
           className="flex-row items-center justify-center p-2"
           style={{ width: "100%" }}
         >
-          <Text className="font-bold text-lg">Appointments</Text>
+          <Text className="font-bold text-lg">{getString.t('appointments')}</Text>
           <TouchableOpacity
             className="absolute left-0 pl-1"
             onPress={handleShowAppoint}
@@ -102,7 +103,7 @@ const AppointmentsSheet = (props) => {
         />
       ) : (
         <Text className="text-xl text-center text-red-600 mt-10">
-          No Appointments on this day
+          {getString.t('no_appointment_at_this_day')}
         </Text>
       )}
     </BottomSheet>

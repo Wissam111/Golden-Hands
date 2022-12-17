@@ -33,6 +33,12 @@ const useUserAppointmentsViewModel = () => {
         setLoading({ isLoading: true })
         try {
             const data = await appointmentRepository.unbook(id)
+            setState((prev)=>{
+                return {
+                    ...prev , 
+                    appointments: prev.appointments.filter(item => item._id !== id)
+                }
+            })
         } catch (e) {
             showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
@@ -52,6 +58,7 @@ const useUserAppointmentsViewModel = () => {
             })
 
         } catch (e) {
+            console.log('rateAppointment' , e);
             showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
         setLoading({ isLoading: false })

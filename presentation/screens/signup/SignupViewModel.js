@@ -157,7 +157,7 @@ const useSignupViewModel = () => {
 
             showAlert(getString.t('image_uploaded_successfuly'), null)
         } catch (e) {
-            console.log(e);
+            console.log('uploadImage',e);
             showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
         setLoading({ isLoading: false })

@@ -41,6 +41,7 @@ const UsersList = ({ navigation }) => {
                         <View style={{ borderRadius: 12, padding: 8, backgroundColor: '#f9f9f9', alignItems: 'flex-start' }}>
                             <Text style={{ ...globalStyles.font }}>{item.firstName} {item.lastName}</Text>
                             <Text style={{ ...globalStyles.font }}>{item.phone}</Text>
+                            <Text style={{ ...globalStyles.font }}>{item.role}</Text>
                         </View>
 
                     </TouchableOpacity>

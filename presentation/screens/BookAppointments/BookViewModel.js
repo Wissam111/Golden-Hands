@@ -29,6 +29,7 @@ const BookViewModel = () => {
   /*------- fetching workers from the server ---------- */
 
   const getWorkers = async () => {
+    setIsLoading({ isLoading: true })
     try {
       const { workers } = await workerRepository.getWorkers();
       setState((prev) => {
@@ -37,17 +38,7 @@ const BookViewModel = () => {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const getAppointments = async () => {
-    try {
-      const { appointments } = await appointmentRepository.getAppointments();
-      setState((prev) => {
-        return { ...prev, appointments: appointments };
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    setIsLoading({ isLoading: false })
   };
 
   const handleBook = async () => {

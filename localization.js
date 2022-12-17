@@ -90,7 +90,10 @@ const getString = new I18n({
         wax: 'Wax',
         'hair cut':'Hair Cut' ,
         massage : 'Massage',
-        'face cut': 'Face Cut'
+        'face cut': 'Face Cut',
+        all:'All',
+        no_appointment_at_this_day:'No appointments at this day',
+        search:'Search'
 
 
 
@@ -184,18 +187,10 @@ const getString = new I18n({
         wax: 'ואקס',
         'hair cut':'תספורת' ,
         massage : 'מסאג׳',
-        'face cut': 'זקן'
-
-
-
-
-
-
-
-
-
-
-
+        'face cut': 'זקן',
+        all:'הכל',
+        no_appointment_at_this_day:'אין תורים ביום זה',
+        search:'חיפוש'
 
     },
 });
