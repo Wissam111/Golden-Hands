@@ -8,15 +8,18 @@ import moment from "moment";
 const DashBoardModel = () => {
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
-  let startDate = moment();
+  var utcDate = moment.utc().format();
+  var startDate = moment.utc(utcDate).local();
+  var local = moment.utc(utcDate).local().format();
   const [state, setState] = useState({
     appointments: [],
+
     dateInterval: [
-      startDate,
-      startDate.clone().add(1, "days"),
-      startDate.clone().add(2, "days"),
-      startDate.clone().add(3, "days"),
-      startDate.clone().add(4, "days"),
+      local,
+      moment(local).add(1, "days").format(),
+      moment(local).add(2, "days").format(),
+      moment(local).add(3, "days").format(),
+      moment(local).add(4, "days").format(),
     ],
     worker: user,
     workerServices: [],
@@ -40,7 +43,7 @@ const DashBoardModel = () => {
 
       let appoints = appointments.filter(
         (appoint) =>
-          _date == moment(appoint.start_time).format("L") &&
+          _date == moment(appoint.start_time).utc().format("L") &&
           appoint?.worker?._id == user._id
       );
       setState((prev) => {

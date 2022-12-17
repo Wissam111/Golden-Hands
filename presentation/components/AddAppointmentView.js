@@ -1,16 +1,43 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform, Text } from "react-native";
 import React, { useState } from "react";
 import DefaultButton from "./DefaultButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-
+import moment from "moment";
 /*------- Component represent's Add Working Appointment for the barber ---------- */
 
 const AddAppointmentView = (props) => {
   const { handlePostAppoint } = props;
+  const isAndroid = Platform.OS === "android";
+
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-
+  const [showStart, setShowStart] = useState(!isAndroid);
+  const [showEnd, setShowEnd] = useState(!isAndroid);
+  const handleStartTime = (event, value) => {
+    if (isAndroid) {
+      if (event.type == "set") {
+        setStartTime(value);
+        setShowStart(false);
+      } else {
+        setShowStart(false);
+      }
+    } else {
+      setStartTime(value);
+    }
+  };
+  const handleEndTime = (event, value) => {
+    if (isAndroid) {
+      if (event.type == "set") {
+        setEndTime(value);
+        setShowEnd(false);
+      } else {
+        setShowEnd(false);
+      }
+    } else {
+      setEndTime(value);
+    }
+  };
   return (
     <View
       className="absolute bg-white  rounded-lg justify-between p-4"
@@ -18,23 +45,43 @@ const AddAppointmentView = (props) => {
     >
       <View className="space-y-5 mt-4">
         <View style={styles.datePicker}>
-          <DateTimePicker
-            value={startTime}
-            mode={"time"}
-            is24Hour={true}
-            onChange={(event, value) => setStartTime(value)}
-          />
+          {showStart && (
+            <DateTimePicker
+              value={startTime}
+              mode={"time"}
+              is24Hour={true}
+              onChange={(event, value) => handleStartTime(event, value)}
+            />
+          )}
+          {isAndroid && (
+            <Text className="ml-2">{moment(startTime).format("LT")}</Text>
+          )}
 
-          <Ionicons name="time-outline" size={24} color="black" />
+          <Ionicons
+            name="time-outline"
+            size={24}
+            color="black"
+            onPress={() => setShowStart(true)}
+          />
         </View>
         <View style={styles.datePicker}>
-          <DateTimePicker
-            value={endTime}
-            mode={"time"}
-            is24Hour={true}
-            onChange={(event, value) => setEndTime(value)}
+          {showEnd && (
+            <DateTimePicker
+              value={endTime}
+              mode={"time"}
+              is24Hour={true}
+              onChange={(event, value) => handleEndTime(event, value)}
+            />
+          )}
+          {isAndroid && (
+            <Text className="ml-2">{moment(endTime).format("LT")}</Text>
+          )}
+          <MaterialCommunityIcons
+            name="timelapse"
+            size={24}
+            color="black"
+            onPress={() => setShowEnd(true)}
           />
-          <MaterialCommunityIcons name="timelapse" size={24} color="black" />
         </View>
       </View>
 
