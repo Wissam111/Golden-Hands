@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import DefaultButton from "./DefaultButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import moment from "moment";
 import { fontLarge, fontMeduim, fontSmall, globalStyles } from "../styles/global";
 import Spacer from "./Spacer";
 import getString from "../../localization";
@@ -11,9 +12,36 @@ import getString from "../../localization";
 
 const AddAppointmentView = (props) => {
   const { handlePostAppoint } = props;
+  const isAndroid = Platform.OS === "android";
+
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-
+  const [showStart, setShowStart] = useState(!isAndroid);
+  const [showEnd, setShowEnd] = useState(!isAndroid);
+  const handleStartTime = (event, value) => {
+    if (isAndroid) {
+      if (event.type == "set") {
+        setStartTime(value);
+        setShowStart(false);
+      } else {
+        setShowStart(false);
+      }
+    } else {
+      setStartTime(value);
+    }
+  };
+  const handleEndTime = (event, value) => {
+    if (isAndroid) {
+      if (event.type == "set") {
+        setEndTime(value);
+        setShowEnd(false);
+      } else {
+        setShowEnd(false);
+      }
+    } else {
+      setEndTime(value);
+    }
+  };
   return (
     <TouchableWithoutFeedback onPress={props.onClose}>
       <View
