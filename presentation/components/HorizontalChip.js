@@ -30,14 +30,14 @@ const HorizontalChip = ({
       >
         <Image
           style={styles.image}
-          source={{ uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
+          source={{ uri: imageUrl ? IMAGE_BASE_URL + imageUrl : null }}
           defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
           onLoadEnd={() => {
             setProgressBar(false);
           }}
         />
         <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator animating={progressBar} color='#000' size='small' />
+          <ActivityIndicator animating={progressBar && imageUrl != null} color='#000' size='small' />
         </View>
       </View>
 

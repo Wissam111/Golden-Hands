@@ -22,7 +22,6 @@ import { primaryColor } from "./presentation/styles/global";
 import { SignupContextProvider } from "./context/SignupContext";
 
 I18nManager.allowRTL(true);
-moment, locale("he");
 
 export default function App() {
   const [fontsLoaded] = useFonts({

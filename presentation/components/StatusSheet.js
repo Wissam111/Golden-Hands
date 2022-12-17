@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   StyleSheet,
   Alert,
@@ -9,8 +8,11 @@ import {
 import React, { useState, useMemo, useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { getIconByStatus } from "./AppointmentView";
+import getString from "../../localization";
+import Spacer from "./Spacer";
+import { backgroundColor, white } from "../styles/global";
 const StatusSheet = (props) => {
   const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment } =
     props;
@@ -38,23 +40,32 @@ const StatusSheet = (props) => {
   };
   return (
     <BottomSheet
+      containerStyle={{
+        elevation: 8,
+        shadowColor: 'black',
+        shadowRadius: 1,
+        shadowOpacity: 1,
+        shadowOffset: { width: .7, height: .7 },
+      }}
       ref={bottomSheetRef}
       index={1}
       snapPoints={snapPoints}
       enablePanDownToClose
-      onClose={() => handleShowStatusSheet(null, false)}
-    >
+      onClose={() => handleShowStatusSheet(null, false)}>
+
       <View className="flex-row p-4 justify-between">
+        <Text className="text-xl font-semibold">
+          {getString.t('change_status')}
+        </Text>
+
+
         <TouchableOpacity
           onPress={() =>
             confirmAlert("Are you sure you want to delete this item?")
-          }
-        >
+          }>
           <FontAwesome5 name="trash-alt" size={24} color="black" />
         </TouchableOpacity>
-        <Text className="text-xl font-semibold">
-          Change <Text className="text-gray-500">Status</Text>
-        </Text>
+
       </View>
 
       <View className="mt-8 flex-row flex-1 justify-between p-1">
@@ -92,9 +103,8 @@ const StatusSheet = (props) => {
         </View>
         <View className="pr-3">
           {
-            <FlatList
+            <BottomSheetFlatList
               data={statusList}
-              horizontal={false}
               renderItem={({ item, index }) => (
                 <TouchableOpacity
                   className="m-1 p-4 items-center rounded-md flex-row justify-between"
@@ -103,14 +113,12 @@ const StatusSheet = (props) => {
                       ? () => setSelectStatus(item)
                       : () => handleUpdateStatus(item)
                   }
-                  style={styles.statusCard}
-                >
+                  style={styles.statusCard}>
                   <View>
                     {getIconByStatus(item, getIconByStatus(item).color).icon}
                   </View>
-                  <Text className="text-base  font-semibold" key={index}>
-                    {item}{" "}
-                  </Text>
+                  <Spacer space={6} />
+                  <Text className="text-base  font-semibold" key={index}>{item}</Text>
                 </TouchableOpacity>
               )}
               showsVerticalScrollIndicator={false}
@@ -118,6 +126,45 @@ const StatusSheet = (props) => {
           }
         </View>
       </View>
+
+
+      {/* <BottomSheetFlatList
+        contentContainerStyle={{ padding: 8 }}
+        data={statusList}
+        ItemSeparatorComponent={(<Spacer space={4} />)}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            onPress={
+              item == "hold"
+                ? () => setSelectStatus(item)
+                : () => handleUpdateStatus(item)
+            }>
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: 16,
+              backgroundColor: white,
+              borderRadius: 8,
+              elevation: .2,
+              shadowColor: 'black',
+              shadowRadius: .7,
+              shadowOpacity: .1,
+              shadowOffset: { width: .5, height: .5 },
+            }}>
+              <View>
+                {getIconByStatus(item, getIconByStatus(item).color).icon}
+              </View>
+              <Spacer space={6} />
+              <Text style={{ flex: 1, textAlign: 'center' }} className="text-base  font-semibold" key={index}>{item}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        showsVerticalScrollIndicator={false}
+      /> */}
+
+
+
+
     </BottomSheet>
   );
 };
@@ -125,11 +172,10 @@ const styles = StyleSheet.create({
   statusCard: {
     shadowColor: "black",
     backgroundColor: "white",
-    elevation: 10,
+    elevation: .2,
     shadowOffset: { width: 1, height: 1 },
     shadowRadius: 2,
     shadowOpacity: 0.2,
-    width: 150,
   },
   dropdown1BtnStyle: {
     backgroundColor: "#FFF",

@@ -32,21 +32,21 @@ const DashBoardModel = () => {
   const workerRepository = WorkerRepository();
 
   /*-------- geting all appointments by date ---------- */
-  const getAppointments = async (date) => {
+  const getAppointments = async (date, search = '') => {
     setIsLoading({ isLoading: true });
     try {
-      const { appointments } = await appointmentRepository.getAppointments();
-      const _date = moment(date).format("L");
-
-      let appoints = appointments.filter(
-        (appoint) =>
-          _date == moment(appoint.start_time).format("L") &&
-          appoint?.worker?._id == user._id
-      );
+      const start_time = new Date(date)
+      start_time.setHours(0)
+      start_time.setMinutes(0)
+      start_time.setSeconds(0)
+      start_time.setMilliseconds(0)
+      const end_time = new Date(start_time)
+      end_time.setDate(start_time.getDate() + 1)
+      const { appointments } = await appointmentRepository.getAppointments({ end_time, start_time, workerId: user._id, search });
       setState((prev) => {
         return {
           ...prev,
-          appointments: appoints,
+          appointments: appointments,
         };
       });
     } catch (e) {
@@ -227,24 +227,11 @@ const DashBoardModel = () => {
       };
     });
   };
+  
   const handleSearch = (text) => {
-    if (state.allSelected) {
-      return;
-    }
-    let temp = [...state.appointments];
-    let tempSearched = temp.filter((appoint) => {
-      return (
-        appoint?.user?.phone.includes(text) ||
-        appoint?.user.firstName.toLowerCase().includes(text.toLowerCase())
-      );
-    });
-    setState((prev) => {
-      return {
-        ...prev,
-        appointments: tempSearched,
-      };
-    });
+    getAppointments(state.dateInterval[state.selectedDay] , text);
   };
+
   const handleShowServSheet = () => {
     setState((prev) => {
       return {

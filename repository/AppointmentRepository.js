@@ -8,8 +8,8 @@ const AppointmentRepository = () => {
   };
 
   // get all appointments
-  const getAppointments = async () => {
-    const data = await apiCall("appointments");
+  const getAppointments = async (queryParams) => {
+    const data = await apiCall("appointments" , 'GET' , null , queryParams);
     return data;
   };
 

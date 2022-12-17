@@ -12,6 +12,8 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
     const [progressBar, setProgressBar] = useState(true)
 
     const getServiceImage = () => {
+        if (!appointment.service)
+            return
         switch (appointment.service.title) {
             case 'Massage': return require('../../assets/imgs/massage.png')
             case 'Hair Cut': return require('../../assets/imgs/hair-cutting.png')
@@ -27,6 +29,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
             case 'in-progress': return '#FAE6C7'
             case 'didnt-come': return '#FAE6C7'
             case 'hold': return '#FAE6C7'
+            case 'free': return '#f9f9f9'
         }
     }
 
@@ -40,13 +43,14 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
                     <Image
                         defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
                         style={{ width: 56, height: 56, borderRadius: 36 }}
-                        source={{ uri: IMAGE_BASE_URL + image + '?time=' + new Date() }}
+                        source={{ uri: image ? IMAGE_BASE_URL + image : null }}
                         onLoadEnd={() => {
+                            console.log('on end');
                             setProgressBar(false)
                         }} />
 
                     <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator animating={progressBar} color='#000' size='small' />
+                        <ActivityIndicator animating={progressBar && image != null} color='#000' size='small' />
                     </View>
                 </View>
 

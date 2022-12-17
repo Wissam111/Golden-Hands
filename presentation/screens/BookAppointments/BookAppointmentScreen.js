@@ -34,6 +34,8 @@ const BookAppointmentScreen = () => {
     handleCloseConfirmation,
   } = BookViewModel();
   const navigation = useNavigation();
+  
+
   return (
     <View
       style={{ backgroundColor: '#f9f9f9' }}
@@ -50,19 +52,8 @@ const BookAppointmentScreen = () => {
         style={{
           borderBottomColor: "#D9D9D9",
           justifyContent: "space-between",
-        }}
-      >
-        {/* <TouchableOpacity
-            onPress={() =>
-              navigation.navigate({
-                name: "HomeScreen",
-              })
-            }
-          >
-            <Entypo name="arrow-with-circle-right" size={28} color="black" />
-          </TouchableOpacity> */}
-
-
+        }}>
+      
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <BackButton onPress={navigation.goBack} />
           <Spacer space={6} />
@@ -90,7 +81,7 @@ const BookAppointmentScreen = () => {
         />
       </View>
       {selectedWorker && (
-        <View style={{ alignItems: 'flex-start' }} className="m-2 p-1">
+        <View style={{ alignItems: 'flex-start' }} className="m-2">
           <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_day')}</Text>
           <ScrollView
             className="flex-row"
@@ -110,7 +101,7 @@ const BookAppointmentScreen = () => {
         </View>
       )}
       {selectedDay && (
-        <View style={{ alignItems: 'flex-start' }} className="m-2 p-1">
+        <View style={{ alignItems: 'flex-start' }} className="m-2">
           <Text className="text-xl  m-2 mb-5 font-medium">
             {getString.t('select_service')}
           </Text>
@@ -133,7 +124,7 @@ const BookAppointmentScreen = () => {
         </View>
       )}
       {selectedService && (
-        <View style={{ alignItems: 'flex-start' }} className="m-2 p-1">
+        <View style={{ alignItems: 'flex-start' }} className="m-2">
           <Text className="text-xl  m-2 mb-5 font-medium">
             {getString.t('select_hour')}
           </Text>

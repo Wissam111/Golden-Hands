@@ -10,6 +10,8 @@ import React, { useRef, useState } from "react";
 import DefaultButton from "./DefaultButton";
 import SelectDropdown from "react-native-select-dropdown";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import getString from "../../localization";
+import Spacer from "./Spacer";
 const AddServiceView = (props) => {
   const { worker, handlePostServ } = props;
   const priceInputRef = useRef(null);
@@ -18,21 +20,21 @@ const AddServiceView = (props) => {
   const [selectedPrice, setSelectedPrice] = useState("");
   const [showAddServ, setShowAddServ] = useState(false);
   return (
-    <View className="p-2 m-3 rounded-md" style={styles.shadow}>
+    <View className="p-3 m-2 rounded-md" style={styles.shadow}>
       <View className="flex-row justify-between items-center">
+        {!showAddServ && (
+          <Text className="font-bold text-lg">{getString.t('add_service')}</Text>
+        )}
+        <Spacer style={{ flex: 1 }} />
         <TouchableOpacity
-          className="mr-2 mb-5 mt-2"
           onPress={() => setShowAddServ(!showAddServ)}
         >
-          <AntDesign name="pluscircle" size={30} color="green" />
+          <AntDesign name="pluscircle" size={24} color="green" />
         </TouchableOpacity>
-        {!showAddServ && (
-          <Text className="font-bold mb-1 text-lg">Add Service</Text>
-        )}
       </View>
-
       {showAddServ && (
         <View>
+          <Spacer space={6} />
           <View className="flex-row justify-between items-center">
             <SelectDropdown
               data={services}
@@ -76,7 +78,7 @@ const AddServiceView = (props) => {
           </View>
           <View className="mt-5">
             <DefaultButton
-              text={"Add"}
+              text={getString.t('add')}
               onPress={() =>
                 handlePostServ({
                   workerId: worker._id,
@@ -95,19 +97,19 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: "black",
     backgroundColor: "white",
-    elevation: 8,
+    elevation: 2,
     shadowOffset: { width: .5, height: .5 },
     shadowRadius: 1.5,
     shadowOpacity: 0.3,
   },
   dropdown1BtnStyle: {
     backgroundColor: "#FFF",
-    borderRadius: 8,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: "#444",
   },
   dropdown1BtnTxtStyle: { color: "#444", textAlign: "left" },
-  dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
+  dropdown1DropdownStyle: { backgroundColor: "#EFEFEF", borderRadius: 16 },
   dropdown1RowStyle: {
     backgroundColor: "#EFEFEF",
     borderBottomColor: "#C5C5C5",

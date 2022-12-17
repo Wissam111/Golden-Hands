@@ -73,6 +73,7 @@ export const apiCall = async (
   queryParams,
   contentType = "application/json"
 ) => {
+  // console.log('apiCall' , url);
   const customURL = queryParams
     ? BASE_URL + url + serialize(queryParams)
     : BASE_URL + url;

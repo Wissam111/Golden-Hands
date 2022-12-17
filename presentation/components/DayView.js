@@ -5,26 +5,18 @@ const DayView = (props) => {
   const { id, date, handleSelectedDay, isSelected } = props;
   return (
     <TouchableOpacity
-      className={`${
-        isSelected ? `bg-[#F4EBD0]` : "bg-[#47566A]"
-      } rounded-md items-center pt-1`}
-      style={{ width: 58, height: 59 }}
-      onPress={() => handleSelectedDay(id)}
-    >
-      <Text
-        className={`${
-          isSelected ? "text-[#122620]" : "text-white"
-        } font-bold pb-1 text-lg`}
-      >
-        {moment(date).format("Do")}
-      </Text>
-      <Text
-        className={`  ${
-          isSelected ? "text-[#122620]" : "text-white"
-        }    text-sm  font-bold`}
-      >
-        {moment(date).format("dddd")}
-      </Text>
+      className={`${isSelected ? `bg-[#FF9502]` : "bg-[#47566A]"
+        } rounded-md items-center p-1`}
+      style={{ minWidth: 58, minHeight: 59 }}
+      onPress={() => handleSelectedDay(id)}>
+        <Text
+          className={`text-white font-bold text-lg`}>
+          {moment(date).format("Do")}
+        </Text>
+        <Text
+          className={`text-white text-sm  font-bold`}>
+          {moment(date).format("dddd")}
+        </Text>
     </TouchableOpacity>
   );
 };

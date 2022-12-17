@@ -17,14 +17,14 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
                         borderColor: '#f9f9f9',
                         ...imageStyle
                     }}
-                    source={{ uri: IMAGE_BASE_URL + imageUrl + '?time=' + new Date() }}
+                    source={{ uri: imageUrl ? IMAGE_BASE_URL + imageUrl : null }}
                     defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
                     onLoadEnd={() => {
                         setProgressBar(false)
                     }} />
 
                 <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                    <ActivityIndicator animating={progressBar} color='#000' size='large' />
+                    <ActivityIndicator animating={progressBar && imageUrl != null} color='#000' size='large' />
                 </View>
             </TouchableOpacity>
             <View style={styles.chip}>

@@ -78,22 +78,32 @@ const getString = new I18n({
         block: 'Block',
         unblock: 'Unblock',
         mark_as_customer: 'Mark as customer',
-        actions:'Actions',
+        actions: 'Actions',
         rate_us: 'rate us',
         book_appointment: 'Book Appointment',
-        select_day:'Select Day',
+        select_day: 'Select Day',
         select_worker: 'Select Worker',
-        select_service:'Select Service',
+        select_service: 'Select Service',
         select_hour: 'Select Hour',
         appointment_info: 'Appointment Info',
         confirm_and_book: 'Confirm and Book',
         wax: 'Wax',
-        'hair cut':'Hair Cut' ,
-        massage : 'Massage',
+        'hair cut': 'Hair Cut',
+        massage: 'Massage',
         'face cut': 'Face Cut',
-        all:'All',
-        no_appointment_at_this_day:'No appointments at this day',
-        search:'Search'
+        all: 'All',
+        no_appointment_at_this_day: 'No appointments at this day',
+        search: 'Search',
+        free_appointment: 'Free Appointment',
+        create: 'Create',
+        create_appointment: 'Create Appointment',
+        start_time: 'Start Time',
+        end_time: 'End Time',
+        manage_your_services: 'Manage Your Services',
+        price: 'Price',
+        add_service: 'Add Service',
+        add: 'Add',
+        change_status: 'Change Status'
 
 
 
@@ -175,22 +185,39 @@ const getString = new I18n({
         block: 'חסום',
         unblock: 'בטל חסימה',
         mark_as_customer: 'סמן כלקוח',
-        actions:'פעולות',
+        actions: 'פעולות',
         rate_us: 'דרג אותנו',
         book_appointment: 'הזמן תור',
-        select_day:'בחר יום',
+        select_day: 'בחר יום',
         select_worker: 'בחר עובד',
-        select_service:'בחר שירות',
+        select_service: 'בחר שירות',
         select_hour: 'בחר שעה',
         appointment_info: 'פרטי תור',
         confirm_and_book: 'אשר והזמן',
         wax: 'ואקס',
-        'hair cut':'תספורת' ,
-        massage : 'מסאג׳',
+        'hair cut': 'תספורת',
+        massage: 'מסאג׳',
         'face cut': 'זקן',
-        all:'הכל',
-        no_appointment_at_this_day:'אין תורים ביום זה',
-        search:'חיפוש'
+        all: 'הכל',
+        no_appointment_at_this_day: 'אין תורים ביום זה',
+        search: 'חיפוש',
+        free_appointment: 'תור פנוי',
+        create: 'צור',
+        create_appointment: 'יצירת תור',
+        start_time: 'זמן התחלה',
+        end_time: 'זמן סיום',
+        manage_your_services: 'נהל השירותים שלך',
+        price: 'מחיר',
+        add_service: 'הוסף שירות',
+        add: 'הוסף',
+        change_status: 'עדכון מצב'
+
+
+
+
+
+
+
 
     },
 });

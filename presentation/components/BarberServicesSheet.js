@@ -6,6 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 
 import AddServiceView from "./AddServiceView";
+import getString from "../../localization";
 
 const BarberServicesSheet = (props) => {
   const {
@@ -43,15 +44,19 @@ const BarberServicesSheet = (props) => {
       onClose={handleShowServSheet}
     >
       <Text className="p-3 text-center text-xl font-semibold">
-        Manage your services
+        {getString.t('manage_your_services')}
       </Text>
       <ScrollView contentContainerStyle={{ padding: 7 }}>
         <View>
           {workerServices.map((serv) => (
             <View
               key={serv._id}
-              className="flex-row justify-between m-2 items-center   p-3 rounded-md"
+              className="flex-row justify-between m-2 items-center p-3 rounded-md"
               style={styles.shadow}>
+              <View className="mr-2">
+                <Text style={{ alignSelf: 'flex-start' }} className="font-bold mb-1">{getString.t(serv.title.toLowerCase())}</Text>
+                <Text className="font-bold">{getString.t('price') + " " + serv.price + "₪"}</Text>
+              </View>
               <TouchableOpacity
                 onPress={() =>
                   confirmAlert(
@@ -62,10 +67,6 @@ const BarberServicesSheet = (props) => {
               >
                 <AntDesign name="minuscircle" size={22} color="red" />
               </TouchableOpacity>
-              <View className="mr-2">
-                <Text className="font-bold mb-1">{serv.title}</Text>
-                <Text className="font-bold">{"Price ש" + serv.price}</Text>
-              </View>
             </View>
           ))}
         </View>
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   shadow: {
     shadowColor: "black",
     backgroundColor: "white",
-    elevation: 8,
+    elevation: 2,
     shadowOffset: { width: .5, height: .5 },
     shadowRadius: 1.5,
     shadowOpacity: 0.3,

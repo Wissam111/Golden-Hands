@@ -21,7 +21,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useRef, useMemo } from "react";
 import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut, SlideInRight } from "react-native-reanimated";
-import { duration } from "moment";
 
 const Option = ({ text, icon, onPress }) => {
     return (
@@ -182,8 +181,7 @@ const Profile = ({ navigation, route }) => {
 
                     <Animated.View
                         entering={FadeIn.duration(600)}
-                        exiting={FadeOut}
-                    >
+                        exiting={FadeOut}>
                         <View style={{ backgroundColor: surfaceColor, paddingVertical: 16, paddingHorizontal: 8, marginHorizontal: 6, borderRadius: 12 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <AntDesign name="idcard" size={24} color={primaryColor} />
