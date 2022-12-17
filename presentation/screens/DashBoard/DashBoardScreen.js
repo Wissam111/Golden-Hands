@@ -85,29 +85,20 @@ const DashBoardScreen = () => {
               />
             ))}
           </View>
-          <View className="flex-row items-center space-x-2 pb-1 mx-4 mt-2">
-            <View className="flex-row flex-1 space-x-2  bg-gray-200 p-3 rounded-full">
-              <EvilIcons name="search" size={27} color="gray" />
-              <TextInput
-                placeholder={getString.t('search')}
-                keyboardType="default"
-                onChangeText={(text) => handleSearch(text)}
-              />
-            </View>
-          </View>
-          <View  className="flex-row items-center space-x-2  p-2 justify-center mt-2">
+        
+          <View className="flex-row items-center space-x-2  p-2 justify-center mt-2">
             <TouchableOpacity
-              className={`${allSelected ? "bg-[#F4EBD0]" : "bg-[#F5F5F5]"
+              className={`${allSelected ? "bg-[#FF9502]" : "bg-[#F5F5F5]"
                 } rounded-full`}
-              style={{ paddingHorizontal: 60 , paddingVertical: 6 }}
+              style={{ paddingHorizontal: 60, paddingVertical: 6 }}
               onPress={handleSelectAll}>
               <Text className="text-center mt-2 font-medium">{getString.t('all')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              className={`${!allSelected ? "bg-[#F4EBD0]" : "bg-[#F5F5F5]"
+              className={`${!allSelected ? "bg-[#FF9502]" : "bg-[#F5F5F5]"
                 } rounded-full`}
-              style={{ paddingHorizontal: 16 , paddingVertical: 6}}
+              style={{ paddingHorizontal: 16, paddingVertical: 6 }}
               onPress={() => handleSelectBooked()}>
               <Text className="text-center mt-2 font-medium">
                 {getString.t('in-progress')}
@@ -121,6 +112,7 @@ const DashBoardScreen = () => {
           handleShowStatusSheet={handleShowStatusSheet}
           handleShowAppoint={handleShowAppoint}
           compineDT={compineDT}
+          handleSearch={handleSearch}
         />
         {showServSheet && (
           <BarberServicesSheet
@@ -143,6 +135,7 @@ const DashBoardScreen = () => {
           <AddAppointmentView
             date={dateInterval[selectedDay]}
             handlePostAppoint={handlePostAppoint}
+            onClose={handleShowAppoint}
           />
         )}
       </View>
