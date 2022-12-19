@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Image, View, Text } from "react-native";
 import Spacer from "../components/Spacer";
-import { globalStyles, orange1, primaryColor, white } from "../styles/global";
+import { backgroundColor, globalStyles, orange1, orange2, primaryColor, white } from "../styles/global";
 import Animated, { FadeIn, FadeInRight } from 'react-native-reanimated';
 import getString from "../../localization";
 
@@ -20,12 +20,15 @@ const Splash = ({ navigation }) => {
     })
 
     return (
-        <View style={{ flex: 1, backgroundColor: primaryColor, justifyContent: 'center', alignItems: 'center' }}>
-            <AnimatedComponent entering={FadeInRight}>
+        <View style={{ flex: 1,flexDirection:'row' ,backgroundColor: primaryColor, justifyContent: 'center', alignItems: 'center' }}>
+            <View style ={{position:'absolute',backgroundColor: orange2 , height:30 , width: '100%'}}/>
+            <AnimatedComponent style = {{backgroundColor: orange1 , borderRadius: 100 , padding: 20}} entering={FadeInRight}>
                 <Image source={require('../../assets/imgs/barber-logo.png')} />
                 <Spacer space={6} />
-                <Text style={{ ...globalStyles.font, textAlign: 'center', fontFamily: 'poppins-bold', color: orange1 }}>Golden Hands</Text>
+                <Text style={{ ...globalStyles.font, textAlign: 'center', fontFamily: 'poppins-bold', color: white }}>Golden Hands</Text>
             </AnimatedComponent>
+            
+
         </View>
     );
 }

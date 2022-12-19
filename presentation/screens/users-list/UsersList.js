@@ -3,7 +3,7 @@ import { View, FlatList, TextInput, RefreshControl, Text } from "react-native";
 import getString from "../../../localization";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
-import { fontLarge, fontMeduim, fontXLarge, globalStyles, green, orange1, orange2, primaryColor, white } from "../../styles/global";
+import { fontMeduim, fontXLarge, globalStyles, green, orange1, orange2, primaryColor, white } from "../../styles/global";
 import useUsersListViewModel from "./UsersListViewModel";
 import { EvilIcons } from "@expo/vector-icons";
 import UserCard from "../../components/UserCard";
@@ -41,7 +41,7 @@ const UsersList = ({ navigation }) => {
                 <Spacer space={6} />
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: '#fff', ...globalStyles.font, fontSize: fontMeduim}}>{getString.t('all')}</Text>
+                    <Text style={{ color: '#fff', ...globalStyles.font, fontSize: fontMeduim }}>{getString.t('all')}</Text>
                     <Spacer space={6} />
                     <Text style={{ color: orange2, ...globalStyles.font, fontSize: fontXLarge }}>{count}</Text>
 
@@ -54,7 +54,7 @@ const UsersList = ({ navigation }) => {
 
                 <Spacer space={6} />
 
-                <View style = {{marginHorizontal: 2}} className="flex-row items-center bg-gray-200 rounded-full">
+                <View style={{ marginHorizontal: 2 }} className="flex-row items-center bg-gray-200 rounded-full">
                     <EvilIcons name="search" size={27} color="gray" />
                     <TextInput
                         style={{ flex: 1, padding: Platform.OS === 'android' ? 8 : 12, ...globalStyles.txtDirection }}
