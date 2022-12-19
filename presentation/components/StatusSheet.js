@@ -14,7 +14,7 @@ import getString from "../../localization";
 import Spacer from "./Spacer";
 import { backgroundColor, white } from "../styles/global";
 const StatusSheet = (props) => {
-  const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment } =
+  const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment , appointment } =
     props;
   const [selectedStatus, setSelectStatus] = useState(null);
   const snapPoints = useMemo(() => ["25%", "50%"], []);
@@ -126,7 +126,6 @@ const StatusSheet = (props) => {
           }
         </View>
       </View>
-
 
       {/* <BottomSheetFlatList
         contentContainerStyle={{ padding: 8 }}

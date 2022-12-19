@@ -34,7 +34,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
     }
 
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress} disabled = {onPress == null}>
             <View style={{
                 backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
             }}>
@@ -45,7 +45,6 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
                         style={{ width: 56, height: 56, borderRadius: 36 }}
                         source={{ uri: image ? IMAGE_BASE_URL + image : null }}
                         onLoadEnd={() => {
-                            console.log('on end');
                             setProgressBar(false)
                         }} />
 

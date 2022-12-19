@@ -1,4 +1,4 @@
-import { Image, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, UIManager, View } from "react-native";
+import { Image, Platform, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, UIManager, View } from "react-native";
 import Title from "../../components/Title";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Spacer from "../../components/Spacer";
@@ -18,7 +18,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import BackButton from "../../components/BackButton";
 import { dialPhoneNumber } from "../../../core/linking";
 import { FontAwesome } from '@expo/vector-icons';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useRef, useMemo } from "react";
 import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut, SlideInRight } from "react-native-reanimated";
 
@@ -68,7 +68,7 @@ const ProfileOptionsBottomSheet = ({ user, call, markAsBarber, block, show, onCl
             onClose={onClose}
             enablePanDownToClose>
 
-            <View style={{ paddingHorizontal: 8, paddingVertical: 16 }}>
+            <BottomSheetView style={{ paddingHorizontal: 8, paddingVertical: 16 }}>
                 <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: semiLarge }}>{getString.t('actions')}</Text>
                 <Spacer space={12} />
                 <Option onPress={call} text={getString.t('call')} icon={<AntDesign name="phone" size={24} color={green} />} />
@@ -76,7 +76,7 @@ const ProfileOptionsBottomSheet = ({ user, call, markAsBarber, block, show, onCl
                 <Option onPress={markAsBarber} text={user && user.role === 'customer' ? getString.t('mark_as_barber') : getString.t('mark_as_customer')} icon={<MaterialIcons name="work" size={24} color={orange2} />} />
                 <Spacer space={4} />
                 <Option onPress={block} text={user && user.isBlocked ? getString.t('unblock') : getString.t('block')} icon={<MaterialIcons name="block" size={24} color={user && user.isBlocked ? 'black' : red} />} />
-            </View>
+            </BottomSheetView>
         </BottomSheet>
     )
 }
@@ -85,7 +85,7 @@ const ProfileOptionsBottomSheet = ({ user, call, markAsBarber, block, show, onCl
 
 const Profile = ({ navigation, route }) => {
     let { user } = useAuthContext()
-    const { getUserProfile, user: fetchedUser, appointmentCount, paid, rating, preferredWorkers, markAsBarber, block } = useProfileViewModel()
+    const { getUserProfile, user: fetchedUser, refreshing, appointmentCount, paid, rating, preferredWorkers, onRefresh, markAsBarber, block } = useProfileViewModel()
     const isFocused = useIsFocused();
     const [show, setShow] = useState(false)
 
@@ -125,7 +125,18 @@ const Profile = ({ navigation, route }) => {
 
 
 
-            <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: primaryColor, flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        progressBackgroundColor="#fff"
+                        tintColor="#fff"
+                    />
+                }
+                showsVerticalScrollIndicator={false}
+                style={{ backgroundColor: primaryColor, flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}>
 
                 <View style={{ backgroundColor: backgroundColor }}>
                     <View style={{
@@ -157,7 +168,7 @@ const Profile = ({ navigation, route }) => {
                                 text={user ? `${user.firstName} ${user.lastName}` : ''}
                                 imageStyle={{ width: 180, height: 180 }}
                                 imageUrl={user ? user.image : null}
-                                onClickImage={() => { if (!route.params) navigation.navigate('ImageUpload', { title: getString.t('upload_image'), buttonText: getString.t('upload'), backButton: true }) }}
+                                onClickImage={!route.params ? () => { navigation.navigate('ImageUpload', { title: getString.t('upload_image'), buttonText: getString.t('upload'), backButton: true }) } : null}
                             />
                         </Animated.View>
                         <Spacer space={12} />

@@ -20,16 +20,25 @@ const BookViewModel = () => {
     groupedAppoints: [],
     appointsByday: [],
   });
+  const [refreshing, setRefresh] = useState(false)
   const navigation = useNavigation();
   const workerRepository = WorkerRepository();
   const appointmentRepository = AppointmentRepository();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
   const { user } = useAuthContext();
 
+
+
+  const onRefresh = async () => {
+    setRefresh(true)
+    await getWorkers(true)
+    setRefresh(false)
+  }
+
   /*------- fetching workers from the server ---------- */
 
-  const getWorkers = async () => {
-    setIsLoading({ isLoading: true })
+  const getWorkers = async (isRefreshing) => {
+    if (!isRefreshing) setIsLoading({ isLoading: true })
     try {
       const { workers } = await workerRepository.getWorkers();
       setState((prev) => {
@@ -170,6 +179,8 @@ const BookViewModel = () => {
 
   return {
     ...state,
+    refreshing,
+    onRefresh,
     handleSelectWorker,
     handleSelectDay,
     handleSelectService,

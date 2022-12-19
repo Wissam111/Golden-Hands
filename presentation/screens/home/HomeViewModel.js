@@ -11,26 +11,19 @@ import showAlert from "../../components/ShowAlert";
 const useHomeViewModel = () => {
   const { dispatch: setIsLoading } = useLoadingContext();
   const { user } = useAuthContext()
-  const [state, setState] = useState({
-    workers: null,
-    isLoading: false,
-    refreshing: false,
-    appointment: null,
-  });
+  const [workers, setWorkers] = useState(null)
+  const [refreshing, setRefreshing] = useState(false)
+  const [appointment, setAppointment] = useState(null)
 
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
   const onRefresh = async () => {
-    setState((prev) => {
-      return { ...prev, refreshing: true };
-    });
+    setRefreshing(true)
     await getWorkers(true);
     if (user)
       await getAppointment(true);
-    setState((prev) => {
-      return { ...prev, refreshing: false };
-    });
+    setRefreshing(false)
   };
 
 
@@ -39,9 +32,7 @@ const useHomeViewModel = () => {
     if (!isRefreshing) setIsLoading({ isLoading: true });
     try {
       const { workers } = await workerRepository.getWorkers();
-      setState((prev) => {
-        return { ...prev, workers: workers };
-      });
+      setWorkers(workers)
     } catch (e) {
       showAlert(getString.t('error'), getString.t('something_went_wrong'))
     }
@@ -56,9 +47,7 @@ const useHomeViewModel = () => {
     if (!isRefreshing) setIsLoading({ isLoading: true });
     try {
       const { appointment } = await appointmentRepository.getAppointment();
-      setState((prev) => {
-        return { ...prev, appointment: appointment };
-      });
+      setAppointment(appointment)
     } catch (e) {
       showAlert(getString.t('error'), getString.t('something_went_wrong'))
     }
@@ -68,7 +57,7 @@ const useHomeViewModel = () => {
 
 
 
-  return { ...state, getWorkers, getAppointment, onRefresh };
+  return { appointment, refreshing, workers, getWorkers, getAppointment, onRefresh };
 };
 
 export default useHomeViewModel;

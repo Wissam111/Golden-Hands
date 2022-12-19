@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Text, View, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, SafeAreaView, TouchableOpacity, RefreshControl } from "react-native";
 import getString from "../../../localization";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
@@ -11,10 +11,11 @@ import { useIsFocused } from "@react-navigation/native";
 import Rating from "../../components/Rating";
 import AppointmentCard from "../../components/AppointmentCard";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import CancelAppointmentBottomSheet from "../../components/CancelAppointmentBottomSheet";
 
 
 const UserAppointments = () => {
-    const { appointments, getUserAppointments, unbook, rateAppointment } = useUserAppointmentsViewModel()
+    const { appointments, refresh, cancelAppointment, cancelSheet, onRefresh, setCancelSheetState, getUserAppointments, unbook, rateAppointment } = useUserAppointmentsViewModel()
     const isFocused = useIsFocused();
 
     useEffect(() => {
@@ -31,43 +32,51 @@ const UserAppointments = () => {
             </View>
 
             <Spacer space={16} />
+            <View
+                style={{
+                    borderTopStartRadius: 26,
+                    borderTopEndRadius: 26,
+                    flex: 1,
+                    overflow: "hidden",
+                }}>
+                <FlatList
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refresh}
+                            onRefresh={onRefresh}
+                            progressBackgroundColor="#fff"
+                            tintColor="#000"
+                        />
+                    }
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ flexGrow: 1, padding: 8, paddingTop: 16, paddingBottom: 20 , backgroundColor: white}}
+                    ItemSeparatorComponent={<Spacer space={4} />}
+                    style={{ flex: 1, backgroundColor: white, borderTopEndRadius: 26, borderTopStartRadius: 26 }}
+                    data={appointments}
+                    keyExtractor={(item) => item._id}
+                    renderItem={({ item, index }) => (
+                        <View style={{ alignItems: 'center' }}>
+                            <View>
+                                <Text style={{ ...globalStyles.font, fontSize: fontSmall, alignSelf: 'flex-end', color: gray1 }}>{moment(item.start_time).format('DD/MM/yyyy')}</Text>
 
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1, padding: 8, paddingTop: 16, paddingBottom: 20 }}
-                ItemSeparatorComponent={<Spacer space={4} />}
-                style={{ flex: 1, backgroundColor: white, borderTopEndRadius: 26, borderTopStartRadius: 26 }}
-                data={appointments}
-                keyExtractor={(item) => item._id}
-                renderItem={({ item, index }) => (
-                    <View style={{ alignItems: 'center' }}>
-                        <View>
+                                <AppointmentCard
+                                    onPress={item.status === 'in-progress' ? () => { setCancelSheetState(true, item) } : null}
+                                    appointment={item} image={item.worker.image}
+                                    text={`${item.worker.firstName} ${item.worker.lastName}`} />
 
 
-                            <Text style={{ ...globalStyles.font, fontSize: fontSmall, alignSelf: 'flex-end', color: gray1 }}>{moment(item.start_time).format('DD/MM/yyyy')}</Text>
+                                <View style={{ alignSelf: 'flex-start' }}>
+                                    {item.status === 'done' &&
+                                        <Rating rating={item.rating} showRatingMsg={item.rating == null} from={5} onClick={(stars) => { rateAppointment(item._id, stars, index) }} />
+                                    }
+                                </View>
 
-                            <View style={{ flexDirection: 'row' }}>
-                                {item.status === 'in-progress' &&
-                                    <TouchableOpacity onPress={() => { unbook(item._id) }}>
-                                        <View style={{ backgroundColor: red, borderRadius: 38, height: "100%", paddingEnd: 50, width: 100, start: -50, position: 'absolute' , justifyContent:'center' }} >
-                                            <MaterialCommunityIcons name="cancel" size={24} color="black" />
-                                        </View>
-                                    </TouchableOpacity>
-                                }
-                                <AppointmentCard appointment={item} image={item.worker.image} text={`${item.worker.firstName} ${item.worker.lastName}`} />
                             </View>
-
-                            <View style={{ alignSelf: 'flex-start' }}>
-                                {item.status === 'done' &&
-                                    <Rating rating={item.rating} showRatingMsg={item.rating == null} from={5} onClick={(stars) => { rateAppointment(item._id, stars, index) }} />
-                                }
-                            </View>
-
                         </View>
-                    </View>
-                )} />
+                    )} />
+            </View>
 
-
+            <CancelAppointmentBottomSheet isVisible={cancelSheet} onCancel={() => { unbook() }} onClose={() => { setCancelSheetState(false) }} />
         </View>
     );
 }

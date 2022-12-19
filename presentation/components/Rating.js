@@ -20,7 +20,7 @@ const Rating = ({ style, rating, from, onClick , showRatingMsg}) => {
 
     for (let i = 0; i < ceilRate; i++) {
         ratingView.push(
-            <TouchableOpacity key={i} onPress={() => { if (onClick) onClick(i + 1) }}>
+            <TouchableOpacity key={i} disabled = {onClick == null} onPress={() => { if (onClick) onClick(i + 1) }}>
                 <AntDesign name="star" size={20} color={orange1} />
             </TouchableOpacity>
         )
@@ -28,7 +28,7 @@ const Rating = ({ style, rating, from, onClick , showRatingMsg}) => {
 
     for (let i = ceilRate; i < from; i++) {
         ratingView.push(
-            <TouchableOpacity key={i} onPress={() => { if (onClick) onClick(i + 1) }}>
+            <TouchableOpacity key={i} disabled = {onClick == null} onPress={() => { if (onClick) onClick(i + 1) }}>
                 <AntDesign name="staro" size={20} color={orange1} />
             </TouchableOpacity>)
     }

@@ -9,7 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
-import { globalStyles } from "../styles/global";
+import { fontMeduim, globalStyles } from "../styles/global";
 
 const HorizontalChip = ({
   style,
@@ -22,6 +22,7 @@ const HorizontalChip = ({
   const [progressBar, setProgressBar] = useState(true);
   return (
     <TouchableOpacity
+      disabled={onPress == null}
       style={{ ...styles.container, justifyContent: "flex-start", ...style }}
       onPress={onPress ? () => onPress(user) : () => { }}
     >
@@ -46,7 +47,7 @@ const HorizontalChip = ({
         className={isSelected ? `bg-[#FF9B02]` : "bg-[#f5f5f5]"}
       >
         <Text
-          style={globalStyles.font}
+          style={{...globalStyles.font , fontSize: fontMeduim}}
           className={`${isSelected ? "text-white" : "text-black"}`}
         >
           {text}

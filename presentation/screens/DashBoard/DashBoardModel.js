@@ -8,18 +8,16 @@ import moment from "moment";
 const DashBoardModel = () => {
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
-  var utcDate = moment.utc().format();
-  var startDate = moment.utc(utcDate).local();
-  var local = moment.utc(utcDate).local().format();
+  let startDate = moment();
   const [state, setState] = useState({
     appointments: [],
 
     dateInterval: [
-      local,
-      moment(local).add(1, "days").format(),
-      moment(local).add(2, "days").format(),
-      moment(local).add(3, "days").format(),
-      moment(local).add(4, "days").format(),
+      startDate,
+      startDate.clone().add(1, "days"),
+      startDate.clone().add(2, "days"),
+      startDate.clone().add(3, "days"),
+      startDate.clone().add(4, "days"),
     ],
     worker: user,
     workerServices: [],
@@ -77,7 +75,7 @@ const DashBoardModel = () => {
     setIsLoading({ isLoading: true });
     let message;
     const appointObj = {
-      appointmentId: state.currentAppoint,
+      appointmentId: state.currentAppoint._id,
       status: status,
       service: service,
     };
@@ -153,7 +151,7 @@ const DashBoardModel = () => {
     let messg;
     try {
       const data = await appointmentRepository.deleteAppointment(
-        state.currentAppoint
+        state.currentAppoint._id
       );
       messg = data.message;
       getAppointments(date);
@@ -206,9 +204,9 @@ const DashBoardModel = () => {
     getAppointments(state.dateInterval[dayId]);
   };
 
-  const handleShowStatusSheet = (appointId, action) => {
+  const handleShowStatusSheet = (appointment, action) => {
     setState((prev) => {
-      return { ...prev, currentAppoint: appointId, showStatusSheet: action };
+      return { ...prev, currentAppoint: appointment, showStatusSheet: action };
     });
   };
 
@@ -232,7 +230,7 @@ const DashBoardModel = () => {
   };
 
   const handleSearch = (text) => {
-    getAppointments(state.dateInterval[state.selectedDay] , text);
+    getAppointments(state.dateInterval[state.selectedDay], text);
   };
 
   const handleShowServSheet = () => {

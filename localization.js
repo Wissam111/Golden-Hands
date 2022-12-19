@@ -103,7 +103,10 @@ const getString = new I18n({
         price: 'Price',
         add_service: 'Add Service',
         add: 'Add',
-        change_status: 'Change Status'
+        change_status: 'Change Status',
+        cancel_appointment: 'Cancel Appointment',
+        cancel_appointment_info: 'After canceling your appointment, other users may be able to book it',
+        end_reached: 'End Reached'
 
 
 
@@ -210,7 +213,13 @@ const getString = new I18n({
         price: 'מחיר',
         add_service: 'הוסף שירות',
         add: 'הוסף',
-        change_status: 'עדכון מצב'
+        change_status: 'עדכון מצב',
+        cancel_appointment: 'ביטול תור',
+        cancel_appointment_info: 'שים לב, אחרי ביטול התור משתמשים אחרים יוכלו להזמין אותו',
+        end_reached: 'הגעת לסוף'
+
+
+
 
 
 

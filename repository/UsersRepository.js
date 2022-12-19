@@ -26,11 +26,12 @@ const UserRepository = () => {
 
     /**
      * get all users from the database
+     * queryParams: query , currentPage , pagesize , sort
      * @param {*} id 
      * @returns 
      */
-    const getUsers = async (id) => {
-        const data = await apiCall(`users`)
+    const getUsers = async (qureyParams) => {
+        const data = await apiCall(`users` , 'GET' , null , qureyParams)
         return data
     }
 

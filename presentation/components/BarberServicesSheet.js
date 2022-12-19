@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 
 import React, { useMemo, useRef, useState } from "react";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { AntDesign } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
 
 import AddServiceView from "./AddServiceView";
 import getString from "../../localization";
+import { useEffect } from "react";
 
 const BarberServicesSheet = (props) => {
   const {
@@ -16,8 +16,9 @@ const BarberServicesSheet = (props) => {
     handlePostServ,
     handleDeleteServ,
   } = props;
-  const snapPoints = useMemo(() => ["30%", "67%"], []);
+  const snapPoints = useMemo(() => ["60%"], []);
   const bottomSheetRef = useRef(null);
+
 
   const confirmAlert = (message, servId) => {
     Alert.alert("", message, [
@@ -38,7 +39,7 @@ const BarberServicesSheet = (props) => {
         shadowOffset: { width: .7, height: .7 },
       }}
       ref={bottomSheetRef}
-      index={1}
+      index={0}
       snapPoints={snapPoints}
       enablePanDownToClose
       onClose={handleShowServSheet}
@@ -46,7 +47,9 @@ const BarberServicesSheet = (props) => {
       <Text className="p-3 text-center text-xl font-semibold">
         {getString.t('manage_your_services')}
       </Text>
-      <ScrollView contentContainerStyle={{ padding: 7 }}>
+      <BottomSheetScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 7 }}>
         <View>
           {workerServices.map((serv) => (
             <View
@@ -71,7 +74,7 @@ const BarberServicesSheet = (props) => {
           ))}
         </View>
         <AddServiceView handlePostServ={handlePostServ} worker={worker} />
-      </ScrollView>
+      </BottomSheetScrollView>
     </BottomSheet>
   );
 };

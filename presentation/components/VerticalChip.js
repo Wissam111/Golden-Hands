@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity } from "react-native";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
-import { backgroundColor, globalStyles } from "../styles/global";
+import { backgroundColor, fontMeduim, fontSmall, globalStyles } from "../styles/global";
 import Spacer from "./Spacer";
 
 
@@ -10,7 +10,7 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
     return (
         <View style={{ ...style, ...styles.container }}>
 
-            <TouchableOpacity style={{ ...styles.image, ...imageStyle }} onPress={onClickImage}>
+            <TouchableOpacity style={{ ...styles.image, ...imageStyle }} onPress={onClickImage} disabled={onClickImage == null}>
                 <Image
                     style={{
                         width: 120, height: 120, borderRadius: 100, borderWidth: 2,
@@ -33,7 +33,7 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
                     < Spacer space={6} />
                 </>
                 }
-                <Text style={{ ...globalStyles.font, textAlign: 'center' }}>{text}</Text>
+                <Text style={{ ...globalStyles.font, fontSize: fontMeduim, textAlign: 'center' }}>{text}</Text>
             </View>
         </View>
     );

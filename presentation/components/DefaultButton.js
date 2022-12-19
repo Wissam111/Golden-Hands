@@ -14,6 +14,7 @@ const DefaultButton = ({ style, text, onPress, color }) => {
         style={{
           ...styles.button,
           backgroundColor: color ? color : primaryColor,
+          ...style 
         }}
       >
         <Text style={styles.text}>{text}</Text>

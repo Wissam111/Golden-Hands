@@ -33,6 +33,7 @@ const DashBoardScreen = () => {
     showServSheet,
     showAddAppoint,
     workerServices,
+    currentAppoint,
     handleDateRight,
     handleDateLeft,
     handleSelectedDay,
@@ -85,7 +86,7 @@ const DashBoardScreen = () => {
               />
             ))}
           </View>
-        
+
           <View className="flex-row items-center space-x-2  p-2 justify-center mt-2">
             <TouchableOpacity
               className={`${allSelected ? "bg-[#FF9502]" : "bg-[#F5F5F5]"
@@ -129,6 +130,7 @@ const DashBoardScreen = () => {
             handleUpdateStatus={handleUpdateStatus}
             handleShowStatusSheet={handleShowStatusSheet}
             handleDeleteAppointment={handleDeleteAppointment}
+            appointment={currentAppoint}
           />
         )}
         {showAddAppoint && (

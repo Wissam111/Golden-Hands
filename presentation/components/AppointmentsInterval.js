@@ -45,7 +45,7 @@ const AppointmentsInterval = (props) => {
         {interval.appointments.map((appoint) => (
           <View key={appoint._id}>
             <AppointmentCard
-              onPress={() => { handleShowStatusSheet(appoint._id, true) }}
+              onPress={appoint.status !== 'done' ? () => { handleShowStatusSheet(appoint, true) } : null}
               appointment={appoint}
               text={appoint.customer ? `${appoint.customer.firstName} ${appoint.customer.lastName}` : getString.t('free_appointment')}
               image={appoint.customer?.image} />

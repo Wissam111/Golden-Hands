@@ -9,11 +9,26 @@ const useUserAppointmentsViewModel = () => {
     const [state, setState] = useState({
         appointments: null
     })
+    const [refresh, setRefresh] = useState(false)
+    const [cancelSheet, setCancelSheet] = useState(false)
+    const [cancelAppointment, setCancelAppointment] = useState(null)
     const { dispatch: setLoading } = useLoadingContext()
     const appointmentRepository = AppointmentRepository()
 
-    const getUserAppointments = async () => {
-        setLoading({ isLoading: true })
+
+    const setCancelSheetState = async (state, cancelAppointment) => {
+        setCancelAppointment(cancelAppointment)
+        setCancelSheet(state)
+    }
+
+    const onRefresh = async () => {
+        setRefresh(true)
+        await getUserAppointments(true)
+        setRefresh(false)
+    }
+
+    const getUserAppointments = async (isRefreshing) => {
+        if (!isRefreshing) setLoading({ isLoading: true })
         try {
             const data = await appointmentRepository.getUserAppointments()
             setState(prev => {
@@ -29,19 +44,23 @@ const useUserAppointmentsViewModel = () => {
     }
 
 
-    const unbook = async (id) => {
+    const unbook = async () => {
+        if (!cancelAppointment) return
+
         setLoading({ isLoading: true })
         try {
-            const data = await appointmentRepository.unbook(id)
-            setState((prev)=>{
+            const data = await appointmentRepository.unbook(cancelAppointment._id)
+            setState((prev) => {
                 return {
-                    ...prev , 
-                    appointments: prev.appointments.filter(item => item._id !== id)
+                    ...prev,
+                    appointments: prev.appointments.filter(item => item._id !== cancelAppointment._id)
                 }
             })
         } catch (e) {
             showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
+        setCancelSheet(false)
+        setCancelAppointment(null)
         setLoading({ isLoading: false })
     }
 
@@ -58,14 +77,14 @@ const useUserAppointmentsViewModel = () => {
             })
 
         } catch (e) {
-            console.log('rateAppointment' , e);
+            console.log('rateAppointment', e);
             showAlert(getString.t('error'), getString.t('something_went_wrong'))
         }
         setLoading({ isLoading: false })
     }
 
 
-    return { ...state, getUserAppointments, unbook, rateAppointment }
+    return { ...state, refresh, onRefresh, cancelAppointment, cancelSheet, getUserAppointments, unbook, rateAppointment, setCancelSheetState }
 }
 
 export default useUserAppointmentsViewModel;

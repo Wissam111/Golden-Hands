@@ -14,13 +14,20 @@ const useProfileViewModel = () => {
         paid: null,
         preferredWorkers: null,
         rating: null,
-        user: null
+        user: null,
     })
+    const [refreshing, setRefresh] = useState(false);
 
+
+    const onRefresh = async () => {
+        setRefresh(true)
+        await getUserProfile(null, true)
+        setRefresh(false)
+    }
 
     // if received a userId then we want to get the info for another user (not the loggedin one)
-    const getUserProfile = async (userId) => {
-        setIsLoading({ isLoading: true })
+    const getUserProfile = async (userId, refreshing) => {
+        if (!refreshing) setIsLoading({ isLoading: true })
 
         try {
             const data = await userRepository.getUser(userId ? userId : user._id)
@@ -98,7 +105,7 @@ const useProfileViewModel = () => {
         setIsLoading({ isLoading: false })
     }
 
-    return { ...state, getUserProfile, markAsBarber, block }
+    return { ...state, refreshing, onRefresh, getUserProfile, markAsBarber, block }
 }
 
 export default useProfileViewModel;

@@ -67,46 +67,7 @@ const GeustHeader = () => {
   );
 };
 
-const Time = ({ startTime, endTime }) => {
-  return (
-    <View style={{ alignItems: "center", position: "relative", top: -24 }}>
-      <Text style={{ color: white, ...globalStyles.font }}>
-        {moment(startTime).format("HH:mm")}
-      </Text>
-      <Spacer space={6} />
-      <View
-        style={{
-          height: 16,
-          width: 1,
-          borderRadius: 100,
-          backgroundColor: backgroundColor,
-        }}
-      />
-      <Spacer space={6} />
-      <View
-        style={{
-          height: 16,
-          width: 1,
-          backgroundColor: backgroundColor,
-          borderRadius: 100,
-        }}
-      />
-      <Spacer space={6} />
-      <View
-        style={{
-          height: 16,
-          width: 1,
-          backgroundColor: backgroundColor,
-          borderRadius: 100,
-        }}
-      />
-      <Spacer space={6} />
-      <Text style={{ color: white, ...globalStyles.font }}>
-        {moment(endTime).format("HH:mm")}
-      </Text>
-    </View>
-  );
-};
+
 
 const LocationView = () => {
   return (
@@ -235,78 +196,12 @@ const AppointmentStatus = ({ appointment }) => {
   );
 };
 
-const Story = () => {
-  return (
-    <ScrollView
-      showsHorizontalScrollIndicator={false}
-      horizontal
-      contentContainerStyle={{ padding: 8 }}
-    >
-      <View>
-        <Image
-          style={{
-            width: 160,
-            height: 200,
-            borderRadius: 36,
-            borderWidth: 2,
-            borderColor: gray1,
-          }}
-          source={require("../../../assets/imgs/tarik.jpg")}
-        />
-        <View style={{ position: "relative", top: -26 }}>
-          <VerticalChip
-            imageStyle={{ width: 60, height: 60 }}
-            text={"tarik husin"}
-          />
-        </View>
-      </View>
-      <Spacer space={6} />
-      <View>
-        <Image
-          style={{
-            width: 160,
-            height: 200,
-            borderRadius: 36,
-            borderWidth: 2,
-            borderColor: gray1,
-          }}
-          source={require("../../../assets/imgs/tarik.jpg")}
-        />
-        <View style={{ position: "relative", top: -26 }}>
-          <VerticalChip
-            imageStyle={{ width: 60, height: 60 }}
-            text={"tarik husin"}
-          />
-        </View>
-      </View>
-      <Spacer space={6} />
-      <View>
-        <Image
-          style={{
-            width: 160,
-            height: 200,
-            borderRadius: 36,
-            borderWidth: 2,
-            borderColor: gray1,
-          }}
-          source={require("../../../assets/imgs/tarik.jpg")}
-        />
-        <View style={{ position: "relative", top: -26 }}>
-          <VerticalChip
-            imageStyle={{ width: 60, height: 60 }}
-            text={"tarik husin"}
-          />
-        </View>
-      </View>
-    </ScrollView>
-  );
-};
+
 
 const Home = ({ navigation }) => {
   const isFocused = useIsFocused();
   const { user } = useAuthContext();
   const {
-    isLoading,
     refreshing,
     workers,
     appointment,
@@ -395,7 +290,6 @@ const Home = ({ navigation }) => {
               {user ? (
                 <AppointmentStatus appointment={appointment} />
               ) : (
-                // <LoggedInHeader appointment={appointment} />
                 <GeustHeader />
               )}
             </View>
@@ -451,32 +345,6 @@ const Home = ({ navigation }) => {
               </Animated.View>
             )}
 
-            {/* <Animated.View
-              entering={FadeIn.duration(600)}
-              exiting={FadeOut}
-              style={{
-                backgroundColor: surfaceColor,
-                paddingVertical: 12,
-                paddingBottom: 20,
-                marginVertical: 4,
-                borderRadius: 20,
-              }}
-            >
-              <Text
-                style={{
-                  paddingHorizontal: 8,
-                  ...globalStyles.font,
-                  ...styles.margin,
-                  ...globalStyles.txtDirection,
-                  fontSize: semiLarge,
-                  fontFamily: "poppins-bold",
-                }}
-              >
-                Stories
-              </Text>
-              <Spacer space={8} />
-              <Story />
-            </Animated.View> */}
 
             <Animated.View
               entering={FadeIn.duration(600)}
