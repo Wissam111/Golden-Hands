@@ -20,6 +20,8 @@ import { I18nManager } from "react-native";
 import { AndroidSafeAreaStyle } from "./presentation/styles/AndroidSafeArea";
 import { primaryColor } from "./presentation/styles/global";
 import { SignupContextProvider } from "./context/SignupContext";
+import { DialogContextProvider } from "./context/DialogContext";
+import Dialog from "./presentation/components/Dialog";
 
 I18nManager.allowRTL(true);
 
@@ -33,16 +35,19 @@ export default function App() {
       <View style={{ backgroundColor: primaryColor, flex: 1 }}>
         <SafeAreaView />
         <StatusBar barStyle="light-content" />
-        <LoadingContextProvider>
-          <AuthContextProvider>
-            <SignupContextProvider>
-              <TailwindProvider>
-                <Navigation />
-                <Loader />
-              </TailwindProvider>
-            </SignupContextProvider>
-          </AuthContextProvider>
-        </LoadingContextProvider>
+        <DialogContextProvider>
+          <LoadingContextProvider>
+            <AuthContextProvider>
+              <SignupContextProvider>
+                <TailwindProvider>
+                  <Navigation />
+                  <Loader />
+                  <Dialog />
+                </TailwindProvider>
+              </SignupContextProvider>
+            </AuthContextProvider>
+          </LoadingContextProvider>
+        </DialogContextProvider>
       </View>
     );
   }

@@ -160,17 +160,17 @@ const BookAppointmentScreen = () => {
             </View>
           )
         }
-        {
-          selectedHour && (
-            <AppointmentConfirmationSheet
-              id={selectedHour}
-              appointsByday={appointsByday}
-              handleCloseConfirmation={handleCloseConfirmation}
-              handleBook={handleBook}
-            />
-          )
-        }
       </ScrollView>
+      {
+        selectedHour && (
+          <AppointmentConfirmationSheet
+            id={selectedHour}
+            appointsByday={appointsByday}
+            handleCloseConfirmation={handleCloseConfirmation}
+            handleBook={handleBook}
+          />
+        )
+      }
     </View >
   );
 };

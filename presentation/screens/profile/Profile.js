@@ -138,13 +138,19 @@ const Profile = ({ navigation, route }) => {
                 style={{ backgroundColor: primaryColor, flex: 1 }}
                 contentContainerStyle={{ flexGrow: 1 }}>
 
-                <View style={{ backgroundColor: backgroundColor }}>
+                <View style={{ backgroundColor: backgroundColor , zIndex: 2 }}>
                     <View style={{
                         backgroundColor: primaryColor,
                         padding: 8,
                         borderBottomEndRadius: 26,
                         borderBottomStartRadius: 26,
-                        minHeight: '30%'
+                        minHeight: '30%',
+                        elevation: .3,
+                        shadowColor: 'black',
+                        shadowRadius: 10,
+                        shadowOpacity: .8,
+                        shadowOffset: { width: .7, height: .7 },
+                        zIndex: 2
                     }}>
 
                         <Spacer space={12} />
@@ -176,7 +182,7 @@ const Profile = ({ navigation, route }) => {
                     </View>
                 </View>
 
-                <View style={{ backgroundColor: backgroundColor, height: '100%' }}>
+                <View style={{ backgroundColor: backgroundColor, height: '100%', zIndex: 1 }}>
                     {route.params && user && !user.superUser &&
                         <>
                             <Spacer space={6} />

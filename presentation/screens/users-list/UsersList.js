@@ -3,14 +3,14 @@ import { View, FlatList, TextInput, RefreshControl, Text } from "react-native";
 import getString from "../../../localization";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
-import { fontLarge, fontMeduim, fontXLarge, globalStyles, green, orange1, primaryColor, white } from "../../styles/global";
+import { fontLarge, fontMeduim, fontXLarge, globalStyles, green, orange1, orange2, primaryColor, white } from "../../styles/global";
 import useUsersListViewModel from "./UsersListViewModel";
 import { EvilIcons } from "@expo/vector-icons";
 import UserCard from "../../components/UserCard";
 import DefaultButton from "../../components/DefaultButton";
 
 const UsersList = ({ navigation }) => {
-    const { users, count, refreshing, reachedEnd, setSearchState, onRefresh, nextPage, getUsers } = useUsersListViewModel()
+    const { users, count, newUsersCount, refreshing, reachedEnd, setSearchState, onRefresh, nextPage, getUsers } = useUsersListViewModel()
 
     useEffect(() => {
         getUsers()
@@ -41,14 +41,20 @@ const UsersList = ({ navigation }) => {
                 <Spacer space={6} />
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: '#fff', ...globalStyles.font, }}>{getString.t('users')}</Text>
+                    <Text style={{ color: '#fff', ...globalStyles.font, fontSize: fontMeduim}}>{getString.t('all')}</Text>
                     <Spacer space={6} />
-                    <Text style={{ color: green, ...globalStyles.font, fontSize: fontXLarge }}>{count}</Text>
+                    <Text style={{ color: orange2, ...globalStyles.font, fontSize: fontXLarge }}>{count}</Text>
+
+                    <Spacer space={24} />
+
+                    <Text style={{ color: '#fff', ...globalStyles.font, fontSize: fontMeduim }}>{getString.t('recent')}</Text>
+                    <Spacer space={6} />
+                    <Text style={{ color: green, ...globalStyles.font, fontSize: fontXLarge }}>{newUsersCount}</Text>
                 </View>
 
                 <Spacer space={6} />
 
-                <View className="flex-row items-center bg-gray-200 rounded-full">
+                <View style = {{marginHorizontal: 2}} className="flex-row items-center bg-gray-200 rounded-full">
                     <EvilIcons name="search" size={27} color="gray" />
                     <TextInput
                         style={{ flex: 1, padding: Platform.OS === 'android' ? 8 : 12, ...globalStyles.txtDirection }}
@@ -60,9 +66,6 @@ const UsersList = ({ navigation }) => {
                         <DefaultButton style={{ borderRadius: 26, flex: 1 }} color={orange1} text={getString.t('search')} onPress={() => { getUsers() }} />
                     </View>
                 </View>
-
-
-
 
             </View>
 

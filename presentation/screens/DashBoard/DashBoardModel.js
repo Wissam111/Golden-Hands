@@ -5,9 +5,11 @@ import AppointmentRepository from "../../../repository/AppointmentRepository";
 import WorkerRepository from "../../../repository/workerRepository";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import moment from "moment";
+import useDialogContext from "../../../hooks/useDialogContext";
 const DashBoardModel = () => {
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
+  const { dispatch:showDialog } = useDialogContext()
   let startDate = moment();
   const [state, setState] = useState({
     appointments: [],
@@ -105,7 +107,11 @@ const DashBoardModel = () => {
       console.log(e);
       messg = e.message;
     }
-    showAlert(messg);
+    showDialog({
+      isVisible: true,
+      title:'Service',
+      message: messg,
+    })
     setIsLoading({ isLoading: false });
   };
   /*--------  deleting service for a worker ---------- */
@@ -119,7 +125,11 @@ const DashBoardModel = () => {
     } catch (e) {
       messg = e.message;
     }
-    showAlert(messg);
+    showDialog({
+      isVisible: true,
+      title:'Service',
+      message: messg,
+    })
     setIsLoading({ isLoading: false });
   };
 
@@ -141,7 +151,10 @@ const DashBoardModel = () => {
     } catch (e) {
       messg = e.message;
     }
-    showAlert(messg);
+    showDialog({
+      isVisible: true,
+      message: messg,
+    })
     setIsLoading({ isLoading: false });
   };
   /*--------  deleting an appointment for a worker ---------- */

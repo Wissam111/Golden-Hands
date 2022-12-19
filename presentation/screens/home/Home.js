@@ -49,6 +49,8 @@ import { useRef } from "react";
 import { IMAGE_BASE_URL } from "../../../network/apiCall";
 import AppointmentCard from "../../components/AppointmentCard";
 import useLoadingContext from "../../../hooks/useLoadingContext";
+import Dialog from "../../components/Dialog";
+import useDialogContext from "../../../hooks/useDialogContext";
 
 const GeustHeader = () => {
   return (
@@ -255,8 +257,7 @@ const Home = ({ navigation }) => {
           borderTopEndRadius: 26,
           flex: 1,
           overflow: "hidden",
-        }}
-      >
+        }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.scroll}
@@ -267,12 +268,13 @@ const Home = ({ navigation }) => {
               progressBackgroundColor="#fff"
               tintColor="#fff"
             />
-          }
-        >
+          }>
+
+
+
           <LinearGradient
             style={styles.gradient}
-            colors={["#FF9502", "#FD7501"]}
-          >
+            colors={["#FF9502", "#FD7501"]}>
             <View style={styles.appointmentStatus}>
               <Animated.View entering={FadeIn.duration(600)} exiting={FadeOut}>
                 <BorderButton

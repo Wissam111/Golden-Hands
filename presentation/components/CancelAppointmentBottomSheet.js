@@ -51,13 +51,6 @@ const CancelAppointmentBottomSheet = ({ isVisible, onClose, onCancel }) => {
               }}
         
             containerStyle={{
-
-                // backgroundColor: 'white', 
-                // elevation: 10,
-                // shadowColor: 'black',
-                // shadowRadius: 1.5,
-                // shadowOpacity: .3,
-                // shadowOffset: { width: .5, height: .5 },
                 marginHorizontal: 24,
             }}
             contentContainerStyle={{

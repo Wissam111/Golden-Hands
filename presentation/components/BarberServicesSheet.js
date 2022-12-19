@@ -6,7 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 import AddServiceView from "./AddServiceView";
 import getString from "../../localization";
-import { useEffect } from "react";
+import useDialogContext from "../../hooks/useDialogContext";
 
 const BarberServicesSheet = (props) => {
   const {
@@ -16,19 +16,12 @@ const BarberServicesSheet = (props) => {
     handlePostServ,
     handleDeleteServ,
   } = props;
-  const snapPoints = useMemo(() => ["60%"], []);
+  const snapPoints = useMemo(() => ["67%"], []);
   const bottomSheetRef = useRef(null);
+  const { dispatch: showDialog } = useDialogContext()
 
 
-  const confirmAlert = (message, servId) => {
-    Alert.alert("", message, [
-      { text: "confirm", onPress: () => handleDeleteServ(servId) },
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-      },
-    ]);
-  };
+
   return (
     <BottomSheet
       containerStyle={{
@@ -62,20 +55,22 @@ const BarberServicesSheet = (props) => {
               </View>
               <TouchableOpacity
                 onPress={() =>
-                  confirmAlert(
-                    "Are you sure you want to delete this item?",
-                    serv._id
-                  )
+                  showDialog({
+                    isVisible: true,
+                    title: getString.t('service'),
+                    message: "Are you sure you want to delete this item?",
+                    onDone: () => { handleDeleteServ(serv._id) }
+                  })
                 }
               >
-                <AntDesign name="minuscircle" size={22} color="red" />
-              </TouchableOpacity>
+              <AntDesign name="minuscircle" size={22} color="red" />
+            </TouchableOpacity>
             </View>
           ))}
-        </View>
-        <AddServiceView handlePostServ={handlePostServ} worker={worker} />
-      </BottomSheetScrollView>
-    </BottomSheet>
+      </View>
+      <AddServiceView handlePostServ={handlePostServ} worker={worker} />
+    </BottomSheetScrollView>
+    </BottomSheet >
   );
 };
 

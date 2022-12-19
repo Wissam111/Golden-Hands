@@ -10,7 +10,8 @@ const useUsersListViewModel = () => {
     const { isLoading } = useLoadingContext()
     const [state, setState] = useState({
         users: null,
-        count: null
+        count: null,
+        newUsersCount: null
     })
     const [currentPage, setCurrentPage] = useState(1)
     const [reachedEnd, setReachedEnd] = useState(false)
@@ -32,7 +33,8 @@ const useUsersListViewModel = () => {
             const data = await userRepository.getUsers({ search, pagesize: PAGE_SIZE, currentPage: 1 })
             setState({
                 users: data.users,
-                count: data.count
+                count: data.count,
+                newUsersCount: data.newUsersCount
             })
             setReachedEnd(false)
             setCurrentPage(1)

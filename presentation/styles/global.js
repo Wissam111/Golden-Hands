@@ -29,6 +29,7 @@ export const fontXLarge = Platform.OS === 'android' ? 30 : 32
 export const fontLarge = Platform.OS === 'android' ? 20 : 22
 export const semiLarge = Platform.OS === 'android' ? 18 : 20
 export const fontMeduim = Platform.OS === 'android' ? 14 : 16
+export const fontMeduim2 = Platform.OS === 'android' ? 12 : 14
 export const fontSmall = Platform.OS === 'android' ? 10 : 12
 
 

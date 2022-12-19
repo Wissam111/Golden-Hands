@@ -5,19 +5,19 @@ import {
   Text,
   Platform,
 } from "react-native";
-import { globalStyles, primaryColor } from "../styles/global";
+import { globalStyles, primaryColor, white } from "../styles/global";
 
-const DefaultButton = ({ style, text, onPress, color }) => {
+const DefaultButton = ({ style, text, onPress, color, textColor }) => {
   return (
     <TouchableOpacity style={{ ...style }} onPress={onPress}>
       <View
         style={{
           ...styles.button,
           backgroundColor: color ? color : primaryColor,
-          ...style 
+          ...style
         }}
       >
-        <Text style={styles.text}>{text}</Text>
+        <Text style={{ ...styles.text, color: textColor ? textColor : white }}>{text}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -6,10 +6,12 @@ import DefaultButton from "./DefaultButton";
 import showAlert from "./ShowAlert";
 import Spacer from "./Spacer";
 import { useDrawerStatus } from '@react-navigation/drawer';
+import useDialogContext from "../../hooks/useDialogContext";
 
 
 
 const CustomDrawer = (props) => {
+    const { dispatch: showDialog } = useDialogContext()
     const { user, dispatch } = useAuthContext()
     return (
         <View style={{ flex: 1, backgroundColor: '#fefefe', borderRadius: 20, position: 'relative' }}>
@@ -27,11 +29,16 @@ const CustomDrawer = (props) => {
                 {user &&
                     <View style={{ paddingBottom: 20, paddingHorizontal: 8 }}>
                         <DefaultButton text={getString.t('logout')} onPress={() => {
-                            showAlert(getString.t('logout'), getString.t('are_you_sure_logout'), null, () => {
-                                dispatch({
-                                    type: 'LOGOUT'
-                                })
-                                props.navigation.closeDrawer()
+                            showDialog({
+                                isVisible: true,
+                                title: getString.t('logout'),
+                                message: getString.t('are_you_sure_logout'),
+                                onDone: () => {
+                                    dispatch({
+                                        type: 'LOGOUT'
+                                    })
+                                    props.navigation.closeDrawer()
+                                }
                             })
                         }} />
                     </View>}

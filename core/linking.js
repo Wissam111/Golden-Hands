@@ -29,8 +29,8 @@ export const openWaze = () => {
 }
 
 
-export const openWhatsapp = () => {
-    const whatsapplink = 'https://api.whatsapp.com/send?phone=+9720525409948&text=hello world'
+export const openWhatsapp = (phone) => {
+    const whatsapplink = `https://api.whatsapp.com/send?phone=+972${phone}`
     const scheme = Platform.select({ ios: whatsapplink, android: whatsapplink });
     const url = Platform.select({
         ios: scheme,

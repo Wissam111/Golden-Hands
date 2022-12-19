@@ -1,11 +1,11 @@
 import { Text, ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
-import { backgroundColor, globalStyles, gray1, green, white } from "../styles/global";
+import { backgroundColor, globalStyles, gray1, green, lightBlack, white } from "../styles/global";
 import { AntDesign } from '@expo/vector-icons';
-import { EvilIcons } from "@expo/vector-icons";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import Spacer from "./Spacer";
 import { useState } from "react";
-import { dialPhoneNumber } from "../../core/linking";
+import { dialPhoneNumber, openWhatsapp } from "../../core/linking";
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const UserCard = ({ user, onClick }) => {
@@ -40,8 +40,14 @@ const UserCard = ({ user, onClick }) => {
                 <Spacer style={{ flex: 1 }} />
 
 
+                <TouchableOpacity onPress={() => { openWhatsapp(user.phone) }}>
+                    <FontAwesome name="whatsapp" size={24} color={green} />
+                </TouchableOpacity>
+
+                <Spacer space={6} />
+
                 <TouchableOpacity onPress={() => { dialPhoneNumber(user.phone) }}>
-                    <AntDesign name="phone" size={24} color={green} />
+                    <AntDesign name="phone" size={24} color={lightBlack} />
                 </TouchableOpacity>
 
                 <Spacer space={6} />

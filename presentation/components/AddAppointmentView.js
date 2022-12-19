@@ -1,17 +1,17 @@
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, Text, TouchableWithoutFeedback, Modal } from "react-native";
 import React, { useState } from "react";
 import DefaultButton from "./DefaultButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import moment from "moment";
-import { fontLarge, fontMeduim, fontSmall, globalStyles } from "../styles/global";
+import { fontLarge, fontMeduim, fontSmall, globalStyles, white } from "../styles/global";
 import Spacer from "./Spacer";
 import getString from "../../localization";
 
 /*------- Component represent's Add Working Appointment for the barber ---------- */
 
 const AddAppointmentView = (props) => {
-  const { handlePostAppoint } = props;
+  const { handlePostAppoint, onClose } = props;
   const isAndroid = Platform.OS === "android";
 
   const [startTime, setStartTime] = useState(new Date());
@@ -43,7 +43,7 @@ const AddAppointmentView = (props) => {
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={props.onClose}>
+    <TouchableWithoutFeedback onPress={onClose}>
       <View
         style={{
           position: 'absolute',
@@ -77,7 +77,7 @@ const AddAppointmentView = (props) => {
             <Spacer space={12} />
 
 
-            <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font , fontSize: fontSmall}}>{getString.t('start_time')}</Text>
+            <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('start_time')}</Text>
             <View style={styles.datePicker}>
               <DateTimePicker
                 value={startTime}
@@ -90,7 +90,7 @@ const AddAppointmentView = (props) => {
 
             <Spacer space={8} />
 
-            <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font , fontSize: fontSmall}}>{getString.t('end_time')}</Text>
+            <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('end_time')}</Text>
             <View style={styles.datePicker}>
               <DateTimePicker
                 value={endTime}
