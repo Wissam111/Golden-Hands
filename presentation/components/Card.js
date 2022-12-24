@@ -18,12 +18,12 @@ const Card = (props) => {
         </Text>
 
         {price && (
-            <Text
-              style={{ textAlign: 'center', color: isSelected ? 'black' : orange2, ...globalStyles.txtDirection }}
-              className={`font-semibold  ${isSelected ? "black" : "text-[#FFD700]"
-                }`}>
-              {price} ₪
-            </Text>
+          <Text
+            style={{ textAlign: 'center', color: isSelected ? 'black' : orange2, ...globalStyles.txtDirection }}
+            className={`font-semibold  ${isSelected ? "black" : "text-[#FFD700]"
+              }`}>
+            {price} ₪
+          </Text>
         )}
       </TouchableOpacity>
 
@@ -41,8 +41,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowRadius: 2,
     shadowOpacity: 0.1,
-    width: 120,
-    height: 42,
+    minWidth: 120,
+    minHeight: 42,
+    padding: 8
   },
 });
 export default Card;

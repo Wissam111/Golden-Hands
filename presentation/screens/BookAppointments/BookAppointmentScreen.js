@@ -105,10 +105,10 @@ const BookAppointmentScreen = () => {
                     title={moment(item.date).calendar(null, {
                       sameDay: `[${getString.t('today')}]`,
                       nextDay: `[${getString.t('tomorrow')}]`,
-                      nextWeek: 'DD MMM yyyy',
-                      lastDay: 'DD MMM yyyy',
-                      lastWeek: 'DD MMM yyyy',
-                      sameElse: 'DD MMM yyyy',
+                      nextWeek: 'dddd[\n]DD MMM yyyy',
+                      lastDay: 'dddd[\n]DD MMM yyyy',
+                      lastWeek: 'dddd[\n]DD MMM yyyy',
+                      sameElse: 'dddd[\n]DD MMM yyyy',
                     })}
                     handlePress={handleSelectDay}
                     isSelected={selectedDay === item.date}
