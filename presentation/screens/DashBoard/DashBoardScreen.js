@@ -22,7 +22,7 @@ import getString from "../../../localization";
 
 /*------- represent's worker Dashboard Screen ---------- */
 
-const DashBoardScreen = () => {
+const DashBoardScreen = ({ navigation }) => {
   const {
     appointments,
     worker,
@@ -73,8 +73,7 @@ const DashBoardScreen = () => {
           <CalendarView
             dateInterval={dateInterval}
             handleDateRight={handleDateRight}
-            handleDateLeft={handleDateLeft}
-          />
+            handleDateLeft={handleDateLeft}/>
           <View className="flex-row space-x-9 p-4 items-center justify-between">
             {dateInterval.map((date, index) => (
               <DayView
@@ -127,6 +126,7 @@ const DashBoardScreen = () => {
 
         {showStatusSheet && (
           <StatusSheet
+            navigateToProfile={(id) => {navigation.navigate('ProfileScreen', { userId: id })}}
             handleUpdateStatus={handleUpdateStatus}
             handleShowStatusSheet={handleShowStatusSheet}
             handleDeleteAppointment={handleDeleteAppointment}

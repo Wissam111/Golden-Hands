@@ -16,19 +16,16 @@ const Splash = ({ navigation }) => {
                 index: 0,
                 routes: [{ name: 'DrawerNavigation' }],
             });
-        }, 1000)
+        }, 2000)
     })
 
     return (
         <View style={{ flex: 1,flexDirection:'row' ,backgroundColor: primaryColor, justifyContent: 'center', alignItems: 'center' }}>
-            <View style ={{position:'absolute',backgroundColor: orange2 , height:30 , width: '100%'}}/>
             <AnimatedComponent style = {{backgroundColor: orange1 , borderRadius: 100 , padding: 20}} entering={FadeInRight}>
                 <Image source={require('../../assets/imgs/barber-logo.png')} />
                 <Spacer space={6} />
                 <Text style={{ ...globalStyles.font, textAlign: 'center', fontFamily: 'poppins-bold', color: white }}>Golden Hands</Text>
             </AnimatedComponent>
-            
-
         </View>
     );
 }

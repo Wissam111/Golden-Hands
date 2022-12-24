@@ -111,7 +111,13 @@ const getString = new I18n({
         yes: 'Yes',
         no: 'No',
         service:'Service',
-        message:'Message'
+        message:'Message',
+        free: 'Free' ,
+        hold: 'Hold' , 
+        'didnt_come': 'Did\'nt come' , 
+        delete: 'Delete' , 
+        hold_by_worker: 'Hold by worker'
+
 
 
 
@@ -226,7 +232,13 @@ const getString = new I18n({
         yes: 'כן',
         no: 'לא',
         service:'שירות',
-        message:'הודעה'
+        message:'הודעה' , 
+        free: 'פנוי' ,
+        hold: 'שמור' , 
+        'didnt-come': 'לא הגיע' , 
+        delete: 'מחק' , 
+        hold_by_worker: 'נשמר ע״י העובד'
+
 
 
 

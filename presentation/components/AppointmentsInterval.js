@@ -7,8 +7,23 @@ import Spacer from "./Spacer";
 import getString from "../../localization";
 import { fontSmall } from "../styles/global";
 import Rating from "./Rating";
+
+
+
 const AppointmentsInterval = (props) => {
   const { interval, handleShowStatusSheet } = props;
+
+  const getAppointmentCardName = (appointment) => {
+    if (appointment.customer) {
+      return `${appointment.customer.firstName} ${appointment.customer.lastName}`
+    }
+
+    if (appointment.status === 'hold') {
+      return getString.t('hold_by_worker')
+    }
+    return getString.t('free_appointment')
+  }
+
   return (
     <View style={{ flexDirection: 'row' }} className="p-2 mb-4 relative flex-1">
 
@@ -45,9 +60,9 @@ const AppointmentsInterval = (props) => {
         {interval.appointments.map((appoint) => (
           <View key={appoint._id}>
             <AppointmentCard
-              onPress={appoint.status !== 'done' ? () => { handleShowStatusSheet(appoint, true) } : null}
+              onPress={() => { handleShowStatusSheet(appoint, true) }}
               appointment={appoint}
-              text={appoint.customer ? `${appoint.customer.firstName} ${appoint.customer.lastName}` : getString.t('free_appointment')}
+              text={getAppointmentCardName(appoint)}
               image={appoint.customer?.image} />
 
             <View style={{ alignSelf: 'flex-start' }}>
@@ -58,7 +73,8 @@ const AppointmentsInterval = (props) => {
 
             <Spacer space={6} />
           </View>
-        ))}
+        ))
+        }
       </View>
 
     </View>

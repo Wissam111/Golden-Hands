@@ -51,7 +51,7 @@ const useUsersListViewModel = () => {
         setLoading({ isLoading: true })
         try {
             const data = await userRepository.getUsers({ search, pagesize: PAGE_SIZE, currentPage: currentPage + 1 })
-            if (data.users && data.users.length) {
+            if (data.users) {
                 setState((prev) => {
                     return {
                         ...prev,
@@ -59,8 +59,10 @@ const useUsersListViewModel = () => {
                     }
                 })
                 setCurrentPage(currentPage + 1)
-            } else {
-                setReachedEnd(true)
+                if (data.users.length < PAGE_SIZE) {
+                    setReachedEnd(true)
+                }
+
             }
         } catch (e) {
             console.log(e);

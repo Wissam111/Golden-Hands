@@ -103,8 +103,21 @@ const UsersListNavigation = () => {
   return (
     <UsersListStack.Navigator screenOptions={{ headerShown: false }}>
       <UsersListStack.Screen name="UsersListScreen" component={UsersList} />
-      <ProfileStack.Screen name="ProfileScreen" component={Profile} />
+      <UsersListStack.Screen name="ProfileScreen" component={Profile} />
     </UsersListStack.Navigator>
+  );
+};
+
+
+
+const DashboardStack = createNativeStackNavigator();
+
+const DashboardNavigation = () => {
+  return (
+    <DashboardStack.Navigator screenOptions={{ headerShown: false }}>
+      <DashboardStack.Screen name="DashBoardScreen" component={DashBoardScreen} />
+      <ProfileStack.Screen name="ProfileScreen" component={Profile} />
+    </DashboardStack.Navigator>
   );
 };
 
@@ -191,8 +204,8 @@ const DrawerNavigation = () => {
       {user && user.role === "barber" && (
         <Drawer.Group>
           <Drawer.Screen
-            name="DashBoardScreen"
-            component={DashBoardScreen}
+            name="DashBoardScreenNavition"
+            component={DashboardNavigation}
             options={{
               drawerIcon: ({ focused, size }) => (
                 <MaterialIcons
