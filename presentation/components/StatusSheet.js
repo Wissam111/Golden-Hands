@@ -316,7 +316,7 @@ const StatusSheet = (props) => {
 
           <Spacer space={24} />
 
-          {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'done' || appointment.status === 'canceled') &&
+          {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'canceled') &&
             <DefaultButton onPress={() => { handleUpdateStatus('done') }} color={green} text={getString.t('done')} style={{ borderRadius: 24 }} />
           }
           <Spacer space={20} />

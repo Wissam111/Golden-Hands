@@ -67,7 +67,10 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
 
                 <Spacer space={26} style={{ flex: 1 }} />
 
-                {appointment.status !== 'free' && <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />}
+
+                <Image
+                    key={getServiceImage()}
+                    style={{ width: 46, height: 46, }} source={getServiceImage()} />
                 <Spacer space={8} />
             </View >
         </TouchableOpacity>

@@ -1,5 +1,4 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState, Alert } from "react";
+import  { useEffect, useState } from "react";
 
 import WorkerRepository from "../../../repository/workerRepository";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
@@ -10,15 +9,13 @@ import useLoadingContext from "../../../hooks/useLoadingContext";
 
 const useBookViewModel = () => {
   const [state, setState] = useState({
-    workers: [],
-    appointments: [],
+    workers: null,
+    availableAppointments: null,
+    workingDates: null,
     selectedWorker: null,
     selectedDay: null,
     selectedService: null,
-    selectedHour: null,
-    workerAppointments: [],
-    groupedAppoints: [],
-    appointsByday: [],
+    selectedAppointment: null,
   });
   const [refreshing, setRefresh] = useState(false)
   const navigation = useNavigation();
@@ -42,7 +39,7 @@ const useBookViewModel = () => {
     try {
       const { workers } = await workerRepository.getWorkers();
       setState((prev) => {
-        return { ...prev, workers: workers };
+        return { workers: workers };
       });
     } catch (e) {
       console.log(e);
@@ -52,7 +49,7 @@ const useBookViewModel = () => {
 
   const handleBook = async () => {
     const appointObj = {
-      appointmentId: state.selectedHour,
+      appointmentId: state.selectedAppointment._id,
       userId: user._id,
       service: state.selectedService._id,
     };
@@ -75,100 +72,92 @@ const useBookViewModel = () => {
   };
 
   /*-------- Fetching all free appointments from the current date ---------- */
-  const getAvailableAppointment = async (workerId) => {
-    const format = "yyyy-MM-DDTHH:mm:ssZZ";
-    const startD = moment().format(format);
-    let appointObj = {
-      workerId: workerId,
-      fromDate: startD,
-    };
-    setIsLoading({ isLoading: true });
-    let appoints;
-    try {
-      const { availableAppointments } =
-        await appointmentRepository.getAvailableAppointment(appointObj);
-      appoints = availableAppointments;
-    } catch (e) {
-      console.log(e);
-    }
-    setIsLoading({ isLoading: false });
-    return appoints;
-  };
 
-  /*-------- grouping worker appointments by day ---------- */
-
-  const groupAppointsByDay = async (worker) => {
-    setState((prev) => {
-      return {
-        ...prev,
-        groupedAppoints: [],
-      };
-    });
-    let appointments = await getAvailableAppointment(worker._id);
-    const groupedAppoints = appointments.reduce((groups, appoint) => {
-      const date = new Date(appoint.start_time).getDay() + 1;
-      if (!groups[date]) {
-        groups[date] = [];
-      }
-      groups[date].push(appoint);
-      return groups;
-    }, {});
-    setState((prev) => {
-      return {
-        ...prev,
-        groupedAppoints: groupedAppoints,
-      };
-    });
-  };
-
-  const handleSelectWorker = (worker) => {
+  const handleSelectWorker = async (worker) => {
     setState((prev) => {
       return {
         ...prev,
         selectedWorker: worker,
         selectedDay: null,
         selectedService: null,
-        selectedHour: null,
+        selectedAppointment: null,
+        availableAppointments: null
       };
     });
-    groupAppointsByDay(worker);
-  };
-  const handleSelectDay = (key) => {
-    let _appointsByDay = state.groupedAppoints[key];
+
+    setIsLoading({ isLoading: true });
+
+    const data = await workerRepository.getWorkingDates(worker._id, new Date())
+
     setState((prev) => {
       return {
         ...prev,
-        selectedDay: key,
-        appointsByday: _appointsByDay,
+        workingDates: data.workingDates
+      };
+    });
+
+    setIsLoading({ isLoading: false });
+  };
+  const handleSelectDay = async (selectedDate) => {
+    setState((prev) => {
+      return {
+        ...prev,
+        selectedDay: selectedDate.date,
         selectedService: null,
-        selectedHour: null,
+        selectedAppointment: null,
+        availableAppointments: null
       };
     });
   };
 
-  const handleSelectService = (service) => {
+
+
+  const handleSelectService = async (service) => {
     setState((prev) => {
       return {
         ...prev,
         selectedService: service,
-        selectedHour: null,
+        selectedAppointment: null,
       };
     });
-  };
-  const handleSelectHour = (id) => {
+
+    setIsLoading({ isLoading: true });
+
+    const availableAppointmentsResult = await appointmentRepository.getAvailableAppointment({
+      workerId: state.selectedWorker._id,
+      fromDate: moment().format('yyyy-MM-DDTHH:mm:ssZZ'),
+      workingDate: state.selectedDay
+    })
+
+
     setState((prev) => {
       return {
         ...prev,
-        selectedHour: id,
+        selectedService: service,
+        selectedAppointment: null,
+        availableAppointments: availableAppointmentsResult.availableAppointments
+      };
+    });
+
+    setIsLoading({ isLoading: false });
+  };
+
+
+
+  const handleSelectAppointment = (selectedAppointment) => {
+    setState((prev) => {
+      return {
+        ...prev,
+        selectedAppointment: selectedAppointment,
       };
     });
   };
 
-  const handleCloseConfirmation = () => {
+  const handleCloseConfirmation = async () => {
     setState((prev) => {
       return {
         ...prev,
-        selectedHour: null,
+        selectedAppointment: null,
       };
     });
   };
@@ -184,7 +173,7 @@ const useBookViewModel = () => {
     handleSelectWorker,
     handleSelectDay,
     handleSelectService,
-    handleSelectHour,
+    handleSelectAppointment,
     handleBook,
     handleCloseConfirmation,
   };

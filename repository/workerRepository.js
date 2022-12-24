@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import { apiCall } from "../network/apiCall";
 
 const WorkerRepository = () => {
@@ -34,6 +35,13 @@ const WorkerRepository = () => {
   };
 
 
+  const getWorkingDates = async (workerId, fromDate) => {
+    const data = await apiCall(`workers/working-dates`, 'GET', null, { workerId: workerId, fromDate: fromDate,  timezone: moment(new Date()).format('ZZ') });
+    return data;
+  }
+
+
+
   /**
    * create a new service
    * @param {*} servObj 
@@ -60,6 +68,7 @@ const WorkerRepository = () => {
     getWorkerServices,
     postService,
     deleteService,
+    getWorkingDates
   }
 }
 

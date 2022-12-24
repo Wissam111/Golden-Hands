@@ -7,8 +7,7 @@ import getString from "../../localization";
 import Spacer from "./Spacer";
 import { fontMeduim, globalStyles, gray1, lightBlack } from "../styles/global";
 const AppointmentConfirmationSheet = (props) => {
-  const { appointsByday, selectedService, handleCloseConfirmation, handleBook } = props;
-  const appointment = appointsByday.find((appoint) => appoint._id == props.id);
+  const { appointment, selectedService, handleCloseConfirmation, handleBook } = props;
   const snapPoints = useMemo(() => ['CONTENT_HEIGHT'], []);
   const bottomSheetRef = useRef(null);
 
