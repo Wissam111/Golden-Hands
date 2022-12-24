@@ -12,6 +12,7 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
 
             <TouchableOpacity style={{ ...styles.image, ...imageStyle }} onPress={onClickImage} disabled={onClickImage == null}>
                 <Image
+                    key={imageUrl}
                     style={{
                         width: 120, height: 120, borderRadius: 100, borderWidth: 2,
                         borderColor: '#f9f9f9',

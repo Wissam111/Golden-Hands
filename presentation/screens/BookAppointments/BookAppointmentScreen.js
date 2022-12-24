@@ -71,9 +71,10 @@ const BookAppointmentScreen = () => {
             tintColor="#000"
           />
         }>
-        <View style={{ alignItems: 'flex-start' }} className="m-1 ">
+        <View style={{ alignItems: 'flex-start' }}>
           <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_worker')}</Text>
           <FlatList
+            contentContainerStyle={{ padding: 8 }}
             data={workers}
             keyExtractor={(item) => item._id}
             horizontal
@@ -91,18 +92,26 @@ const BookAppointmentScreen = () => {
         </View>
         {
           selectedWorker && (
-            <View style={{ alignItems: 'flex-start' }} className="m-2">
+            <View style={{ alignItems: 'flex-start' }} >
               <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_day')}</Text>
               <ScrollView
                 className="flex-row"
                 horizontal
                 showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ padding: 8 }}
               >
                 {Object.entries(groupedAppoints).map(([key, appoints]) => (
                   <Card
                     key={key}
                     id={key}
-                    title={moment(appoints[0].start_time).format("ll")}
+                    title={moment(appoints[0].start_time).calendar(null, {
+                      sameDay: `[${getString.t('today')}]`,
+                      nextDay: `[${getString.t('tomorrow')}]`,
+                      nextWeek: 'DD MMM yyyy',
+                      lastDay: 'Do',
+                      lastWeek: 'Do',
+                      sameElse: 'DD'
+                    })}
                     handlePress={handleSelectDay}
                     isSelected={selectedDay == key}
                   />
@@ -113,21 +122,22 @@ const BookAppointmentScreen = () => {
         }
         {
           selectedDay && (
-            <View style={{ alignItems: 'flex-start' }} className="m-2">
+            <View style={{ alignItems: 'flex-start' }}>
               <Text className="text-xl  m-2 mb-5 font-medium">
                 {getString.t('select_service')}
               </Text>
               <FlatList
+                contentContainerStyle={{ padding: 8 }}
                 data={selectedWorker?.services}
                 keyExtractor={(item) => item._id}
                 horizontal
                 renderItem={({ item }) => (
                   <Card
                     cardContent={item}
-                    id={item._id}
+                    id={item}
                     title={getString.t(item.title.toLowerCase())}
                     handlePress={handleSelectService}
-                    isSelected={selectedService == item._id}
+                    isSelected={selectedService?._id === item._id}
                     price={item.price}
                   />
                 )}
@@ -138,11 +148,12 @@ const BookAppointmentScreen = () => {
         }
         {
           selectedService && (
-            <View style={{ alignItems: 'flex-start' }} className="m-2">
+            <View style={{ alignItems: 'flex-start' }}>
               <Text className="text-xl  m-2 mb-5 font-medium">
                 {getString.t('select_hour')}
               </Text>
               <FlatList
+                contentContainerStyle={{ padding: 8 }}
                 data={appointsByday}
                 keyExtractor={(item) => item._id}
                 horizontal
@@ -168,6 +179,7 @@ const BookAppointmentScreen = () => {
             appointsByday={appointsByday}
             handleCloseConfirmation={handleCloseConfirmation}
             handleBook={handleBook}
+            selectedService={selectedService}
           />
         )
       }

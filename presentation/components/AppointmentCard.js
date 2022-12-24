@@ -13,7 +13,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
 
     const getServiceImage = () => {
         if (!appointment.service)
-            return
+            return null
         switch (appointment.service.title) {
             case 'Massage': return require('../../assets/imgs/massage.png')
             case 'Hair Cut': return require('../../assets/imgs/hair-cutting.png')
@@ -27,20 +27,21 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
             case 'done': return '#D9F0D4'
             case 'canceled': return '#F4D6D6'
             case 'in-progress': return '#FAE6C7'
-            case 'didnt-come': return '#FAE6C7'
+            case 'didnt-come': return '#F4EED6'
             case 'hold': return '#FAE6C7'
             case 'free': return '#f9f9f9'
         }
     }
 
     return (
-        <TouchableOpacity onPress={onPress} disabled = {onPress == null}>
+        <TouchableOpacity onPress={onPress} disabled={onPress == null}>
             <View style={{
                 backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
             }}>
 
                 <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1 }}>
                     <Image
+                        key={image}
                         defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
                         style={{ width: 56, height: 56, borderRadius: 36 }}
                         source={{ uri: image ? IMAGE_BASE_URL + image : null }}
@@ -66,7 +67,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
 
                 <Spacer space={26} style={{ flex: 1 }} />
 
-                <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />
+                {appointment.status !== 'free' && <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />}
                 <Spacer space={8} />
             </View >
         </TouchableOpacity>

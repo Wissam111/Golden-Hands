@@ -47,22 +47,23 @@ const useUsersListViewModel = () => {
 
 
     const nextPage = async () => {
-        if (reachedEnd) return
+        if (reachedEnd || isLoading) return
+        console.log('nextPage');
         setLoading({ isLoading: true })
         try {
             const data = await userRepository.getUsers({ search, pagesize: PAGE_SIZE, currentPage: currentPage + 1 })
             if (data.users) {
                 setState((prev) => {
                     return {
-                        ...prev,
-                        users: state.users.concat(data.users)
+                        count: prev.count,
+                        newUsersCount: prev.newUsersCount,
+                        users: prev.users.concat(data.users)
                     }
                 })
                 setCurrentPage(currentPage + 1)
                 if (data.users.length < PAGE_SIZE) {
                     setReachedEnd(true)
                 }
-
             }
         } catch (e) {
             console.log(e);

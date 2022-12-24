@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 
-const BookViewModel = () => {
+const useBookViewModel = () => {
   const [state, setState] = useState({
     workers: [],
     appointments: [],
@@ -54,7 +54,7 @@ const BookViewModel = () => {
     const appointObj = {
       appointmentId: state.selectedHour,
       userId: user._id,
-      service: state.selectedService,
+      service: state.selectedService._id,
     };
     let messg;
     try {
@@ -146,11 +146,11 @@ const BookViewModel = () => {
     });
   };
 
-  const handleSelectService = (id) => {
+  const handleSelectService = (service) => {
     setState((prev) => {
       return {
         ...prev,
-        selectedService: id,
+        selectedService: service,
         selectedHour: null,
       };
     });
@@ -190,4 +190,4 @@ const BookViewModel = () => {
   };
 };
 
-export default BookViewModel;
+export default useBookViewModel;

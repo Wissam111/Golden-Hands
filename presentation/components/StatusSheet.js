@@ -21,6 +21,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { dialPhoneNumber, openWhatsapp } from "../../core/linking";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
+import moment from "moment";
 
 const StatusSheet = (props) => {
   const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment, appointment, navigateToProfile } =
@@ -206,10 +207,13 @@ const StatusSheet = (props) => {
           elevation: 4,
         }}>
 
+          <Text style={{ ...globalStyles.font, fontSize: fontSmall, alignSelf: 'flex-start' }}>{moment(appointment.start_time).format('HH:mm')} - {moment(appointment.end_time).format('HH:mm')}</Text>
+          <Spacer space={6} />
+
           <View style={{ flex: 1 }}>
 
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-              {(appointment.status === 'free' || appointment.status === 'canceled') &&
+              {(appointment.status === 'free' || appointment.status === 'canceled' || appointment.status === 'didnt-come') &&
                 <TouchableOpacity style={{ flex: 1 }} onPress={() => { setSelectStatus('hold') }}>
                   < View style={{ ...styles.statusOp, flex: 3 }}>
                     <Image style={{ width: 20, height: 20 }} source={require('../../assets/imgs/time-management.png')} />
@@ -219,9 +223,8 @@ const StatusSheet = (props) => {
                 </TouchableOpacity>
               }
 
-              <Spacer space={4} />
 
-              {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'canceled') &&
+              {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'done' || appointment.status === 'didnt-come') &&
                 <TouchableOpacity style={{ flex: 1 }} onPress={() => { handleUpdateStatus('canceled') }}>
                   <View style={{ ...styles.statusOp, backgroundColor: '#F4D6D6', borderWidth: 0 }}>
                     <Image style={{ width: 20, height: 20 }} source={require('../../assets/imgs/close.png')} />
@@ -232,40 +235,42 @@ const StatusSheet = (props) => {
               }
             </View>
 
-            <Spacer space={6} />
 
 
 
             <View className="rounded-full" style={{ width: 50 }}>
               {selectedStatus && (
-                <SelectDropdown
-                  data={services}
-                  onSelect={(selectedItem, index) => {
-                    handleUpdateStatus(selectedStatus, selectedItem);
-                  }}
-                  defaultButtonText={"Select Service"}
-                  buttonTextAfterSelection={(selectedItem, index) => {
-                    return selectedItem;
-                  }}
-                  rowTextForSelection={(item, index) => {
-                    return item;
-                  }}
-                  buttonStyle={styles.dropdown1BtnStyle}
-                  buttonTextStyle={styles.dropdown1BtnTxtStyle}
-                  renderDropdownIcon={(isOpened) => {
-                    return (
-                      <FontAwesome
-                        name={isOpened ? "chevron-up" : "chevron-down"}
-                        color={"#444"}
-                        size={18}
-                      />
-                    );
-                  }}
-                  dropdownIconPosition={"right"}
-                  dropdownStyle={styles.dropdown1DropdownStyle}
-                  rowStyle={styles.dropdown1RowStyle}
-                  rowTextStyle={styles.dropdown1RowTxtStyle}
-                />
+                <>
+                  <Spacer space={6} />
+                  <SelectDropdown
+                    data={services}
+                    onSelect={(selectedItem, index) => {
+                      handleUpdateStatus(selectedStatus, selectedItem);
+                    }}
+                    defaultButtonText={"Select Service"}
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                      return selectedItem;
+                    }}
+                    rowTextForSelection={(item, index) => {
+                      return item;
+                    }}
+                    buttonStyle={styles.dropdown1BtnStyle}
+                    buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                    renderDropdownIcon={(isOpened) => {
+                      return (
+                        <FontAwesome
+                          name={isOpened ? "chevron-up" : "chevron-down"}
+                          color={"#444"}
+                          size={18}
+                        />
+                      );
+                    }}
+                    dropdownIconPosition={"right"}
+                    dropdownStyle={styles.dropdown1DropdownStyle}
+                    rowStyle={styles.dropdown1RowStyle}
+                    rowTextStyle={styles.dropdown1RowTxtStyle}
+                  />
+                </>
               )}
             </View>
 
@@ -273,8 +278,8 @@ const StatusSheet = (props) => {
             <Spacer space={6} />
 
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {(appointment.status === 'in-progress' || appointment.status === 'hold') &&
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+              {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'canceled' || appointment.status === 'done') &&
                 < TouchableOpacity style={{ flex: 1 }} onPress={() => { handleUpdateStatus('didnt-come') }}>
                   <View style={{ ...styles.statusOp, flex: 1 }}>
                     <FontAwesome5 name="walking" size={24} color="black" />
@@ -284,9 +289,8 @@ const StatusSheet = (props) => {
                 </TouchableOpacity>
 
               }
-              <Spacer space={6} />
 
-              {(appointment.status === 'in-progress' || appointment.status === 'canceled' || appointment.status === 'hold') &&
+              {(appointment.status === 'in-progress' || appointment.status === 'canceled' || appointment.status === 'didnt-come' || appointment.status === 'hold') &&
                 <TouchableOpacity style={{ flex: 1 }} onPress={() => { handleUpdateStatus('free') }}>
                   <View style={{ ...styles.statusOp }}>
                     <Image style={{ width: 20, height: 20 }} source={require('../../assets/imgs/appointment-free.png')} />
@@ -312,7 +316,7 @@ const StatusSheet = (props) => {
 
           <Spacer space={24} />
 
-          {(appointment.status === 'in-progress' || appointment.status === 'hold') &&
+          {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'done' || appointment.status === 'canceled') &&
             <DefaultButton onPress={() => { handleUpdateStatus('done') }} color={green} text={getString.t('done')} style={{ borderRadius: 24 }} />
           }
           <Spacer space={20} />
@@ -379,7 +383,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: gray1,
-    flex: 1
+    flex: 1,
+    margin: 2
   },
   statusCard: {
     shadowColor: "black",

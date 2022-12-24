@@ -116,7 +116,11 @@ const getString = new I18n({
         hold: 'Hold' , 
         'didnt_come': 'Did\'nt come' , 
         delete: 'Delete' , 
-        hold_by_worker: 'Hold by worker'
+        hold_by_worker: 'Hold by worker',
+        today: 'Today',
+        tomorrow:'Tomorrow',
+        with:'With',
+        for:'For'
 
 
 
@@ -237,19 +241,11 @@ const getString = new I18n({
         hold: 'שמור' , 
         'didnt-come': 'לא הגיע' , 
         delete: 'מחק' , 
-        hold_by_worker: 'נשמר ע״י העובד'
-
-
-
-
-
-
-
-
-
-
-
-
+        hold_by_worker: 'נשמר ע״י העובד',
+        today: 'היום',
+        tomorrow:'מחר',
+        with:'עם',
+        for:'עבור'
 
 
 

@@ -1,4 +1,4 @@
-import { Text, ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
+import { Text, ActivityIndicator, Image, TouchableOpacity, View, Pressable } from "react-native";
 import { backgroundColor, globalStyles, gray1, green, lightBlack, white } from "../styles/global";
 import { AntDesign } from '@expo/vector-icons';
 import { IMAGE_BASE_URL } from "../../network/apiCall";
@@ -12,7 +12,7 @@ const UserCard = ({ user, onClick }) => {
     const [progressBar, setProgressBar] = useState(true)
 
     return (
-        <TouchableOpacity onPress={onClick}>
+        <Pressable onPress={onClick}>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: 100, borderBottomWidth: 1, borderBottomColor: backgroundColor }}>
 
@@ -55,7 +55,7 @@ const UserCard = ({ user, onClick }) => {
 
 
 
-        </TouchableOpacity>
+        </Pressable>
     );
 }
 

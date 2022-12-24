@@ -30,6 +30,7 @@ const HorizontalChip = ({
         style={{ zIndex: 2, justifyContent: "center", alignItems: "center" }}
       >
         <Image
+          key={imageUrl}
           style={styles.image}
           source={{ uri: imageUrl ? IMAGE_BASE_URL + imageUrl : null }}
           defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
@@ -47,7 +48,7 @@ const HorizontalChip = ({
         className={isSelected ? `bg-[#FF9B02]` : "bg-[#f5f5f5]"}
       >
         <Text
-          style={{...globalStyles.font , fontSize: fontMeduim}}
+          style={{ ...globalStyles.font, fontSize: fontMeduim }}
           className={`${isSelected ? "text-white" : "text-black"}`}
         >
           {text}
