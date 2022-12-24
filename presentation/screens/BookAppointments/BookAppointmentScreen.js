@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, TouchableOpacity, RefreshControl } from "react-native";
+import { View, Text, RefreshControl } from "react-native";
 import React from "react";
 import HorizontalChip from "../../components/HorizontalChip";
 import { useNavigation } from "@react-navigation/native";
@@ -7,31 +7,30 @@ import Card from "../../components/Card";
 import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmationSheet from "../../components/AppointmentConfirmationSheet";
-import { Entypo } from "@expo/vector-icons";
 import Loader from "../../components/Loader";
 import Title from "../../components/Title";
 import BackButton from "../../components/BackButton";
 import Spacer from "../../components/Spacer";
 import getString from "../../../localization";
-import { backgroundColor, globalStyles } from "../../styles/global";
+
 
 /*------- represent's book appointments Screen ---------- */
 
 const BookAppointmentScreen = () => {
   const {
     refreshing,
+    availableAppointments,
     workers,
+    workingDates,
     selectedWorker,
     selectedDay,
     selectedService,
-    selectedHour,
-    groupedAppoints,
+    selectedAppointment,
     onRefresh,
     handleSelectWorker,
     handleSelectDay,
     handleSelectService,
-    handleSelectHour,
-    appointsByday,
+    handleSelectAppointment,
     handleBook,
     handleCloseConfirmation,
   } = BookViewModel();
@@ -94,29 +93,29 @@ const BookAppointmentScreen = () => {
           selectedWorker && (
             <View style={{ alignItems: 'flex-start' }} >
               <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_day')}</Text>
-              <ScrollView
-                className="flex-row"
-                horizontal
-                showsHorizontalScrollIndicator={false}
+              <FlatList
                 contentContainerStyle={{ padding: 8 }}
-              >
-                {Object.entries(groupedAppoints).map(([key, appoints]) => (
+                data={workingDates}
+                keyExtractor={(item) => item.date}
+                horizontal
+                renderItem={({ item }) => (
                   <Card
-                    key={key}
-                    id={key}
-                    title={moment(appoints[0].start_time).calendar(null, {
+                    cardContent={item}
+                    id={item}
+                    title={moment(item.date).calendar(null, {
                       sameDay: `[${getString.t('today')}]`,
                       nextDay: `[${getString.t('tomorrow')}]`,
                       nextWeek: 'DD MMM yyyy',
-                      lastDay: 'Do',
-                      lastWeek: 'Do',
-                      sameElse: 'DD'
+                      lastDay: 'DD MMM yyyy',
+                      lastWeek: 'DD MMM yyyy',
+                      sameElse: 'DD MMM yyyy',
                     })}
                     handlePress={handleSelectDay}
-                    isSelected={selectedDay == key}
+                    isSelected={selectedDay === item.date}
                   />
-                ))}
-              </ScrollView>
+                )}
+                showsHorizontalScrollIndicator={false}
+              />
             </View>
           )
         }
@@ -154,16 +153,16 @@ const BookAppointmentScreen = () => {
               </Text>
               <FlatList
                 contentContainerStyle={{ padding: 8 }}
-                data={appointsByday}
+                data={availableAppointments}
                 keyExtractor={(item) => item._id}
                 horizontal
                 renderItem={({ item }) => (
                   <Card
                     cardContent={item}
-                    id={item._id}
+                    id={item}
                     title={moment(item.start_time).format("LT")}
-                    handlePress={handleSelectHour}
-                    isSelected={selectedHour == item._id}
+                    handlePress={handleSelectAppointment}
+                    isSelected={selectedAppointment?._id === item._id}
                   />
                 )}
                 showsHorizontalScrollIndicator={false}
@@ -173,10 +172,10 @@ const BookAppointmentScreen = () => {
         }
       </ScrollView>
       {
-        selectedHour && (
+        selectedAppointment && (
           <AppointmentConfirmationSheet
-            id={selectedHour}
-            appointsByday={appointsByday}
+            id={selectedAppointment}
+            appointment={selectedAppointment}
             handleCloseConfirmation={handleCloseConfirmation}
             handleBook={handleBook}
             selectedService={selectedService}
