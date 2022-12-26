@@ -5,14 +5,14 @@ import DashedLine from "react-native-dashed-line";
 import AppointmentCard from "./AppointmentCard";
 import Spacer from "./Spacer";
 import getString from "../../localization";
-import { fontSmall } from "../styles/global";
+import { fontSmall, globalStyles, green } from "../styles/global";
 import Rating from "./Rating";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
 
 
 const AppointmentsInterval = (props) => {
-  const { interval, handleShowStatusSheet } = props;
+  const { interval, handleShowStatusSheet, closestAppointment } = props;
 
   const getAppointmentCardName = (appointment) => {
     if (appointment.customer) {
@@ -63,7 +63,16 @@ const AppointmentsInterval = (props) => {
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={<Spacer space={6} />}
         renderItem={({ item }) => (
-          <View style ={{alignItems:'flex-start'}}>
+          <View style={{ alignItems: 'flex-start', }}>
+            {closestAppointment?._id === item._id &&
+              <View style={{ width: '100%' }}>
+                <Text style={{ ...globalStyles.font, fontSize: fontSmall , fontFamily: 'poppins-bold'}}>{getString.t('current')}</Text>
+                <Spacer space={2} />
+                <View style={{ width: '100%', height: 2, backgroundColor: green, opacity: 0.3, borderRadius: 20 }} />
+                <Spacer space={4} />
+              </View>
+            }
+
             <AppointmentCard
               onPress={() => { handleShowStatusSheet(item, true) }}
               appointment={item}

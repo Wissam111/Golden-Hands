@@ -74,7 +74,7 @@ const AppointmentConfirmationSheet = (props) => {
         <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />
 
         <Spacer space={16} />
-        <DefaultButton style={{ alignSelf: 'stretch' }} buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 12 : 14 }} text={getString.t('confirm_and_book')} onPress={handleBook} />
+        <DefaultButton style={{ alignSelf: 'stretch' }} buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }} text={getString.t('confirm_and_book')} onPress={handleBook} />
         <Spacer space={30} />
       </BottomSheetView>
     </BottomSheet>

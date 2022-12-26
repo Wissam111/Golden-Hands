@@ -7,8 +7,11 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  Dimensions,
+  StatusBar,
+  Platform,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HorizontalChip from "../../components/HorizontalChip";
 import CalendarView from "../../components/CalendarView";
 import DayView from "../../components/DayView";
@@ -20,12 +23,17 @@ import { EvilIcons } from "@expo/vector-icons";
 import AddAppointmentView from "../../components/AddAppointmentView";
 import getString from "../../../localization";
 import { useIsFocused } from "@react-navigation/native";
-
+import Constants from 'expo-constants';
 /*------- represent's worker Dashboard Screen ---------- */
 
 const DashBoardScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
+  const [h, setH] = useState(1)
+  const [h2, setH2] = useState(1)
+  const STATUS_BAR_HIEGHT = Platform.OS === 'android' ? StatusBar.currentHeight : Constants.statusBarHeight
+
   const {
+    numberOfActiveCustomers,
     appointments,
     worker,
     dateInterval,
@@ -63,9 +71,20 @@ const DashBoardScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="bg-[#1D1B1B] flex-1 relative">
-        <View>
-          <View className="flex-row items-center mt-4">
+        <View
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout
+            setH(Dimensions.get('window').height - height - Constants.statusBarHeight)
+          }}>
+
+          <View
+            onLayout={(event) => {
+              const { height } = event.nativeEvent.layout
+              setH2(Dimensions.get('window').height - height - Constants.statusBarHeight - 20)
+            }}
+            className="flex-row items-center mt-4">
             <View className="ml-4">
+              <SafeAreaView />
               <HorizontalChip
                 text={worker.firstName + " " + worker.lastName}
                 imageUrl={worker.image}
@@ -80,6 +99,7 @@ const DashBoardScreen = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
+
           <CalendarView
             dateInterval={dateInterval}
             handleDateRight={handleDateRight}
@@ -94,29 +114,15 @@ const DashBoardScreen = ({ navigation }) => {
               />
             ))}
           </View>
-
-          <View className="flex-row items-center space-x-2  p-2 justify-center mt-2">
-            <TouchableOpacity
-              className={`${allSelected ? "bg-[#FF9502]" : "bg-[#F5F5F5]"
-                } rounded-full`}
-              style={{ paddingHorizontal: 60, paddingVertical: 6 }}
-              onPress={handleSelectAll}>
-              <Text className="text-center mt-2 font-medium">{getString.t('all')}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className={`${!allSelected ? "bg-[#FF9502]" : "bg-[#F5F5F5]"
-                } rounded-full`}
-              style={{ paddingHorizontal: 16, paddingVertical: 6 }}
-              onPress={() => handleSelectBooked()}>
-              <Text className="text-center mt-2 font-medium">
-                {getString.t('in-progress')}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
 
         <AppointmentsSheet
+          numberOfActiveCustomers={numberOfActiveCustomers}
+          height={h}
+          height2={h2}
+          handleSelectAll={handleSelectAll}
+          handleSelectBooked={handleSelectBooked}
+          allSelected={allSelected}
           selectedDay={selectedDay}
           appointments={appointments}
           handleShowStatusSheet={handleShowStatusSheet}
@@ -124,6 +130,7 @@ const DashBoardScreen = ({ navigation }) => {
           compineDT={compineDT}
           handleSearch={handleSearch}
         />
+
         {showServSheet && (
           <BarberServicesSheet
             worker={worker}

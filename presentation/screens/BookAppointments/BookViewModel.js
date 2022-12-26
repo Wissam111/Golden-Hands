@@ -169,6 +169,7 @@ const useBookViewModel = () => {
   return {
     ...state,
     refreshing,
+    isLoading,
     onRefresh,
     handleSelectWorker,
     handleSelectDay,

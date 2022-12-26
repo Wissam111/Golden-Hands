@@ -26,6 +26,7 @@ const BookAppointmentScreen = () => {
     selectedDay,
     selectedService,
     selectedAppointment,
+    isLoading,
     onRefresh,
     handleSelectWorker,
     handleSelectDay,
@@ -82,7 +83,7 @@ const BookAppointmentScreen = () => {
                 text={item.firstName + " " + item.lastName}
                 imageUrl={item.image}
                 user={item}
-                onPress={handleSelectWorker}
+                onPress={()=> { if(!isLoading) handleSelectWorker(item)}}
                 isSelected={selectedWorker?._id == item._id}
               />
             )}
@@ -135,7 +136,7 @@ const BookAppointmentScreen = () => {
                     cardContent={item}
                     id={item}
                     title={getString.t(item.title.toLowerCase())}
-                    handlePress={handleSelectService}
+                    handlePress={()=>{if(!isLoading) handleSelectService(item)}}
                     isSelected={selectedService?._id === item._id}
                     price={item.price}
                   />

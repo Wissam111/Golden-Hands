@@ -41,7 +41,7 @@ const AddServiceView = (props) => {
 
       {showAddServ && (
         <View style={{}}>
-          <Spacer space={6} />
+          <Spacer space={16} />
           <View style={{ justifyContent: 'center', alignItems: 'space-around', flexDirection: 'row' }}>
 
             <View>

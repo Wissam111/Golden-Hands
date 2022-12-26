@@ -28,6 +28,7 @@ const useDashBoardModel = () => {
     allSelected: true,
     showServSheet: false,
     showAddAppoint: false,
+    numberOfActiveCustomers: null
   });
 
   const appointmentRepository = AppointmentRepository();
@@ -45,12 +46,13 @@ const useDashBoardModel = () => {
       start_time.setMilliseconds(0)
       const end_time = new Date(start_time)
       end_time.setDate(start_time.getDate() + 1)
-      const { appointments } = await appointmentRepository.getAppointments({ end_time, start_time, workerId: user._id, search });
+      const { appointments, numberOfActiveCustomers } = await appointmentRepository.getAppointments({ end_time, start_time, workerId: user._id, search });
 
       setState((prev) => {
         return {
           ...prev,
           appointments: appointments,
+          numberOfActiveCustomers: numberOfActiveCustomers
         };
       });
     } catch (e) {
