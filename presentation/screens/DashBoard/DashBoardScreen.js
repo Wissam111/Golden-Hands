@@ -69,6 +69,9 @@ const DashBoardScreen = ({ navigation }) => {
     }
   }, [isFocused, selectedDay , allSelected])
 
+  useEffect(()=>{
+  },[appointments])
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="bg-[#1D1B1B] flex-1 relative">

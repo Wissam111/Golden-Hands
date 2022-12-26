@@ -75,8 +75,8 @@ export const apiCall = async (
 ) => {
   // console.log('apiCall' , url);
   const customURL = queryParams
-    ? BASE_URL + url + serialize(queryParams)
-    : BASE_URL + url;
+    ? BASE_URL_DEV + url + serialize(queryParams)
+    : BASE_URL_DEV + url;
   let bbody;
   if (body) {
     if (contentType === "multipart/form-data") {

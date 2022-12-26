@@ -1,12 +1,16 @@
 import { View, Text, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useAuthContext from "../../../hooks/useAuthContext";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
 import WorkerRepository from "../../../repository/workerRepository";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import moment from "moment";
 import useDialogContext from "../../../hooks/useDialogContext";
+import io from 'socket.io-client'
+import { useIsFocused } from "@react-navigation/native";
+
 const useDashBoardModel = () => {
+  const isFocused = useIsFocused();
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
   const { dispatch: showDialog } = useDialogContext()
@@ -34,6 +38,76 @@ const useDashBoardModel = () => {
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
+  const onSocketChange = useCallback((data) => {
+    console.log(data);
+    switch (data.operationType) {
+      case 'update':
+        setState((prev) => {
+          let numberOfActiveCustomers = 0
+          const up = prev.appointments.map(item => {
+            let obj = item
+            if (item._id === data.documentKey._id) {
+              obj = {
+                ...item,
+                ...data.updateDescription.updatedFields
+              }
+            }
+            if (obj.status === 'in-progress' || obj.status === 'done' || obj.status === 'hold') {
+              numberOfActiveCustomers++
+            }
+            return obj
+          })
+          return {
+            ...prev,
+            appointments: up,
+            numberOfActiveCustomers: numberOfActiveCustomers
+          }
+        })
+        break
+
+
+
+      case 'delete':
+        setState((prev) => {
+          const up = prev.appointments.filter(item => {
+            return item._id !== data.documentKey._id
+          })
+          return {
+            ...prev,
+            appointments: up
+          }
+        })
+        break
+
+
+      case 'insert':
+        setState((prev) => {
+          prev.appointments.push(data.fullDocument)
+          prev.appointments.sort((a, b) => {
+            new Date(a) <= new Date(b)
+          })
+
+          return {
+            ...prev,
+            appointments: [...prev.appointments]
+          }
+        })
+        break
+    }
+  }, [])
+
+  useEffect(() => {
+    const socket = io('http://10.113.4.219:4000/socket/appointments')
+    socket.on('change', (data) => {
+      // console.log(data);
+      onSocketChange(data)
+    })
+
+    return function cleanup() {
+      console.log('clean');
+      socket.close()
+    };
+  }, [isFocused])
 
   /*-------- geting all appointments by date ---------- */
   const getAppointments = async (search = '') => {
@@ -97,7 +171,6 @@ const useDashBoardModel = () => {
       const data = await appointmentRepository.updateAppointmentStatus(
         appointObj
       );
-      getAppointments();
       message = data.message;
     } catch (e) {
       console.log(e);
@@ -158,7 +231,6 @@ const useDashBoardModel = () => {
     try {
       const data = duration ? await appointmentRepository.createRangeAppointment(appointObj) : await appointmentRepository.PostAppointment(appointObj);
       messg = data.message;
-      getAppointments();
       handleShowAppoint();
     } catch (e) {
       messg = e.message;
@@ -178,7 +250,6 @@ const useDashBoardModel = () => {
         state.currentAppoint._id
       );
       messg = data.message;
-      getAppointments();
     } catch (e) {
       messg = e.message;
     }
