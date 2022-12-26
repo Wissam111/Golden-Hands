@@ -3,7 +3,7 @@ import getString from "../localization";
 import showAlert from "../presentation/components/ShowAlert";
 
 export const BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com/api/";
-export const BASE_URL_DEV = "http://10.9.6.126:4000/api/";
+export const BASE_URL_DEV = "http://10.113.4.219:4000/api/";
 export const IMAGE_BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com/imgs/";
 
 
@@ -23,7 +23,7 @@ returns =>  ?name = tarik & age = 24
 const serialize = function (obj) {
   var str = [];
   for (var p in obj)
-    if (obj.hasOwnProperty(p)) {
+    if (obj[p] && obj.hasOwnProperty(p)) {
       str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     }
   return "?" + str.join("&");

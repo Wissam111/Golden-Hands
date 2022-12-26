@@ -44,6 +44,7 @@ const DashBoardScreen = ({ navigation }) => {
     showAddAppoint,
     workerServices,
     currentAppoint,
+    isLoading,
     getAppointments,
     handleDateRight,
     handleDateLeft,
@@ -63,10 +64,10 @@ const DashBoardScreen = ({ navigation }) => {
   } = DashBoardModel();
 
   useEffect(() => {
-    if (isFocused && selectedDay) {
-      getAppointments()
+    if (isFocused && selectedDay && !isLoading) {
+      getAppointments('' )
     }
-  }, [isFocused, selectedDay])
+  }, [isFocused, selectedDay , allSelected])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

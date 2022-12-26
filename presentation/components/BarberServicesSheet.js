@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView } from "react-native";
 
 import React, { useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
@@ -7,6 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import AddServiceView from "./AddServiceView";
 import getString from "../../localization";
 import useDialogContext from "../../hooks/useDialogContext";
+import Spacer from "./Spacer";
 
 const BarberServicesSheet = (props) => {
   const {
@@ -40,6 +41,7 @@ const BarberServicesSheet = (props) => {
         {getString.t('manage_your_services')}
       </Text>
       <BottomSheetScrollView
+        showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: 7 }}>
         <View>
@@ -62,13 +64,16 @@ const BarberServicesSheet = (props) => {
                   })
                 }
               >
-              <AntDesign name="minuscircle" size={22} color="red" />
-            </TouchableOpacity>
+                <AntDesign name="minuscircle" size={22} color="red" />
+              </TouchableOpacity>
             </View>
           ))}
-      </View>
-      <AddServiceView handlePostServ={handlePostServ} worker={worker} />
-    </BottomSheetScrollView>
+        </View>
+        <AddServiceView handlePostServ={handlePostServ} worker={worker} />
+        <Spacer space={12} />
+      </BottomSheetScrollView>
+      <SafeAreaView />
+
     </BottomSheet >
   );
 };

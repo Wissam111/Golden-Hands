@@ -62,11 +62,12 @@ const AppointmentsInterval = (props) => {
         data={interval.appointments}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={<Spacer space={6} />}
+        style={{ flex: 1 }}
         renderItem={({ item }) => (
-          <View style={{ alignItems: 'flex-start', }}>
+          <View style={{ alignItems: 'flex-start' }}>
             {closestAppointment?._id === item._id &&
               <View style={{ width: '100%' }}>
-                <Text style={{ ...globalStyles.font, fontSize: fontSmall , fontFamily: 'poppins-bold'}}>{getString.t('current')}</Text>
+                <Text style={{ ...globalStyles.font, color: '#000', fontSize: fontSmall, ...globalStyles.txtDirection, fontFamily: 'poppins-bold' }}>{getString.t('current')}</Text>
                 <Spacer space={2} />
                 <View style={{ width: '100%', height: 2, backgroundColor: green, opacity: 0.3, borderRadius: 20 }} />
                 <Spacer space={4} />

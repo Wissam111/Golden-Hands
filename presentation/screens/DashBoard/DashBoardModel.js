@@ -37,6 +37,7 @@ const useDashBoardModel = () => {
 
   /*-------- geting all appointments by date ---------- */
   const getAppointments = async (search = '') => {
+    if (isLoading) return
     setIsLoading({ isLoading: true });
     try {
       const start_time = new Date(state.selectedDay)
@@ -46,7 +47,15 @@ const useDashBoardModel = () => {
       start_time.setMilliseconds(0)
       const end_time = new Date(start_time)
       end_time.setDate(start_time.getDate() + 1)
-      const { appointments, numberOfActiveCustomers } = await appointmentRepository.getAppointments({ end_time, start_time, workerId: user._id, search });
+
+
+      const { appointments, numberOfActiveCustomers } = await appointmentRepository.getAppointments({
+        end_time,
+        start_time,
+        workerId: user._id,
+        search,
+        status: state.allSelected ? null : 'in-progress'
+      });
 
       setState((prev) => {
         return {
@@ -204,25 +213,25 @@ const useDashBoardModel = () => {
     });
   }
 
-  const handleSelectedDay = (day) => {
+  const handleSelectedDay = async (day) => {
+    if (isLoading) return
     setState((prev) => {
-      return { ...prev, selectedDay: day, allSelected: true };
+      return { ...prev, selectedDay: day };
     });
   };
 
-  const handleShowStatusSheet = (appointment, action) => {
+  const handleShowStatusSheet = async (appointment, action) => {
     setState((prev) => {
       return { ...prev, currentAppoint: appointment, showStatusSheet: action };
     });
   };
 
-  const handleSelectAll = () => {
+  const handleSelectAll = async () => {
     setState((prev) => {
       return { ...prev, allSelected: true };
     });
-    getAppointments();
   };
-  const handleSelectBooked = () => {
+  const handleSelectBooked = async () => {
     let appoints = state.appointments.filter(
       (appoint) => appoint.status == "in-progress" || appoint.status == "hold"
     );
@@ -235,11 +244,11 @@ const useDashBoardModel = () => {
     });
   };
 
-  const handleSearch = (text) => {
+  const handleSearch = async (text) => {
     getAppointments(text);
   };
 
-  const handleShowServSheet = () => {
+  const handleShowServSheet = async () => {
     setState((prev) => {
       return {
         ...prev,
@@ -254,7 +263,7 @@ const useDashBoardModel = () => {
     return moment(d + ' ' + t)
   };
 
-  const handleShowAppoint = (action) => {
+  const handleShowAppoint = async (action) => {
     setState((prev) => {
       return {
         ...prev,
@@ -268,6 +277,7 @@ const useDashBoardModel = () => {
   }, []);
   return {
     ...state,
+    isLoading,
     getAppointments,
     handleDateRight,
     handleDateLeft,

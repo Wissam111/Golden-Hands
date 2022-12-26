@@ -6,7 +6,7 @@ import AppointmentsInterval from "./AppointmentsInterval";
 import getString from "../../localization";
 import Spacer from "./Spacer";
 import { EvilIcons } from "@expo/vector-icons";
-import { fontMeduim, fontSmall, globalStyles, lightBlack, white } from "../styles/global";
+import { blue, fontLarge, fontMeduim, fontSmall, globalStyles, lightBlack, orange2, white } from "../styles/global";
 import { Octicons } from '@expo/vector-icons';
 
 const AppointmentsSheet = (props) => {
@@ -128,11 +128,7 @@ const AppointmentsSheet = (props) => {
                 </TouchableOpacity>
               </View>
 
-              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ ...globalStyles.font, fontSize: fontMeduim }}>{getString.t('customers')}</Text>
-                <Spacer space={4} />
-                <Text style={{ ...globalStyles.font, fontSize: fontMeduim, fontFamily: 'poppins-bold' }}>{numberOfActiveCustomers}</Text>
-              </View>
+              <Text style={{ ...globalStyles.font, fontSize: fontMeduim , marginEnd: 8 , color: lightBlack}}>{getString.t('customers')}  <Text style={{ fontFamily: 'poppins-bold', fontSize: fontLarge , color: '#000' }}>{numberOfActiveCustomers}</Text></Text>
             </View>
             {
               appointments.length == 0 &&
