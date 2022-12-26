@@ -34,12 +34,12 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
     }
 
     return (
-        <TouchableOpacity onPress={onPress} disabled={onPress == null}>
+        <TouchableOpacity  onPress={onPress} disabled={onPress == null}>
             <View style={{
                 backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
             }}>
 
-                <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1 }}>
+                <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1, }}>
                     <Image
                         key={image}
                         defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
@@ -56,7 +56,8 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
 
                 <Spacer space={8} />
 
-                <View>
+
+                <View style={{ flexGrow: 1 }}>
                     <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontMeduim, fontFamily: 'poppins-bold' }}>{text}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Ionicons name="time-outline" size={18} color={gray1} />
@@ -65,13 +66,17 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
                     </View>
                 </View>
 
-                <Spacer space={26} style={{ flex: 1 }} />
+                <Spacer space={26} style={{ flexShrink: 1, flexWrap: 'wrap' }} />
 
+                {appointment.service &&
+                    <>
+                        <Image
+                            key={getServiceImage()}
+                            style={{ width: 46, height: 46, flexShrink: 1 }} source={getServiceImage()} />
+                        <Spacer space={8} />
+                    </>
+                }
 
-                <Image
-                    key={getServiceImage()}
-                    style={{ width: 46, height: 46, }} source={getServiceImage()} />
-                <Spacer space={8} />
             </View >
         </TouchableOpacity>
     )

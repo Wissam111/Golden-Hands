@@ -8,6 +8,7 @@ import getString from "../../localization";
 import Spacer from "./Spacer";
 import { EvilIcons } from "@expo/vector-icons";
 import { globalStyles } from "../styles/global";
+import AppointmentCard from "./AppointmentCard";
 
 const AppointmentsSheet = (props) => {
   const { handleSearch, appointments, handleShowStatusSheet, handleShowAppoint, compineDT } =
@@ -16,6 +17,17 @@ const AppointmentsSheet = (props) => {
   const bottomSheetRef = useRef(null);
 
   const [appointmentsIntervals, setAppointmentsInterval] = useState([]);
+
+  const getAppointmentCardName = (appointment) => {
+    if (appointment.customer) {
+      return `${appointment.customer.firstName} ${appointment.customer.lastName}`
+    }
+
+    if (appointment.status === 'hold') {
+      return getString.t('hold_by_worker')
+    }
+    return getString.t('free_appointment')
+  }
 
   const generateHoursInterval = () => {
     const times = [];
@@ -68,65 +80,65 @@ const AppointmentsSheet = (props) => {
   }, [appointments]);
 
   return (
-      <BottomSheet ref={bottomSheetRef} index={0} snapPoints={snapPoints}>
+    <BottomSheet ref={bottomSheetRef} index={0} snapPoints={snapPoints}>
 
-        <BottomSheetFlatList
-          style={{ flex: 1 }}
-          contentContainerStyle={{ padding: 8 }}
-          data={appointmentsIntervals}
-          horizontal={false}
-          renderItem={({ item, index }) =>
-            item.appointments.length > 0 && (
-              <View style={{ flex: 1 }}>
-                <AppointmentsInterval
+      <BottomSheetFlatList
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 8 }}
+        data={appointments}
+        horizontal={false}
+        ItemSeparatorComponent={<Spacer space={6} />}
+        renderItem={({ item, index }) =>
+            <View style={{ alignItems:'flex-start' }}>
+              {/* <AppointmentsInterval
                   interval={item}
                   handleShowStatusSheet={handleShowStatusSheet}
                   key={index}
-                />
-              </View>
-            )
-          }
-          ListHeaderComponent={
-            <View className="items-center">
-              <View
-                className="flex-row items-center justify-center p-2"
-                style={{ width: "100%" }}>
-                <Text className="font-bold text-lg">{getString.t('appointments')}</Text>
-                <TouchableOpacity
-                  className="absolute left-0 pl-1"
-                  onPress={handleShowAppoint}>
-                  <MaterialCommunityIcons
-                    name="view-grid-plus-outline"
-                    size={30}
-                    color="black"
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View className="flex-row items-center flex-1 bg-gray-200 rounded-full pb-1 mx-4 mt-2">
-                <Spacer space={2} />
-                <EvilIcons name="search" size={27} color="gray" />
-                <TextInput
-                  style={{ flex: 1, padding: Platform.OS === 'android' ? 8 : 12, ...globalStyles.txtDirection }}
-                  placeholder={getString.t('search') + '...'}
-                  keyboardType="text"
-                  onChangeText={(text) => handleSearch(text)}
-                />
-              </View>
-
-              {
-                appointments.length == 0 &&
-                <Text className="text-xl text-center text-red-600 mt-10">{getString.t('no_appointment_at_this_day')}</Text>
-              }
-              <Spacer space={16} />
+                /> */}
+              <AppointmentCard onPress={() => { handleShowStatusSheet(item, true) }} appointment={item} text={getAppointmentCardName(item)} />
             </View>
-          }
-          ListFooterComponent={<View style={{ height: 20 }} />}
-          showsVerticalScrollIndicator={false}
-        // keyExtractor={(item) => { return item._id }}
-        />
+        }
+        ListHeaderComponent={
+          <View className="items-center">
+            <View
+              className="flex-row items-center justify-center p-2"
+              style={{ width: "100%" }}>
+              <Text className="font-bold text-lg">{getString.t('appointments')}</Text>
+              <TouchableOpacity
+                className="absolute left-0 pl-1"
+                onPress={handleShowAppoint}>
+                <MaterialCommunityIcons
+                  name="view-grid-plus-outline"
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
 
-      </BottomSheet>
+            <View className="flex-row items-center flex-1 bg-gray-200 rounded-full pb-1 mx-4 mt-2">
+              <Spacer space={2} />
+              <EvilIcons name="search" size={27} color="gray" />
+              <TextInput
+                style={{ flex: 1, padding: Platform.OS === 'android' ? 8 : 12, ...globalStyles.txtDirection }}
+                placeholder={getString.t('search') + '...'}
+                keyboardType="text"
+                onChangeText={(text) => handleSearch(text)}
+              />
+            </View>
+
+            {
+              appointments.length == 0 &&
+              <Text className="text-xl text-center text-red-600 mt-10">{getString.t('no_appointment_at_this_day')}</Text>
+            }
+            <Spacer space={16} />
+          </View>
+        }
+        ListFooterComponent={<View style={{ height: 20 }} />}
+        showsVerticalScrollIndicator={false}
+      // keyExtractor={(item) => { return item._id }}
+      />
+
+    </BottomSheet>
   );
 };
 

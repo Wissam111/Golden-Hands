@@ -73,7 +73,7 @@ const BookAppointmentScreen = () => {
         <View style={{ alignItems: 'flex-start' }}>
           <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_worker')}</Text>
           <FlatList
-            contentContainerStyle={{ padding: 8 }}
+            contentContainerStyle={{ padding: 8, flexGrow: 1 }}
             data={workers}
             keyExtractor={(item) => item._id}
             horizontal
@@ -94,7 +94,7 @@ const BookAppointmentScreen = () => {
             <View style={{ alignItems: 'flex-start' }} >
               <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_day')}</Text>
               <FlatList
-                contentContainerStyle={{ padding: 8 }}
+                contentContainerStyle={{ padding: 8, flexGrow: 1 }}
                 data={workingDates}
                 keyExtractor={(item) => item.date}
                 horizontal
@@ -126,7 +126,7 @@ const BookAppointmentScreen = () => {
                 {getString.t('select_service')}
               </Text>
               <FlatList
-                contentContainerStyle={{ padding: 8 }}
+                contentContainerStyle={{ padding: 8, flexGrow: 1 }}
                 data={selectedWorker?.services}
                 keyExtractor={(item) => item._id}
                 horizontal
@@ -152,7 +152,7 @@ const BookAppointmentScreen = () => {
                 {getString.t('select_hour')}
               </Text>
               <FlatList
-                contentContainerStyle={{ padding: 8 }}
+                contentContainerStyle={{ padding: 8, flexGrow: 1 }}
                 data={availableAppointments}
                 keyExtractor={(item) => item._id}
                 horizontal

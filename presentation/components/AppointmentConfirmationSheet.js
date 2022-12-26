@@ -5,7 +5,7 @@ import BottomSheet, { BottomSheetView, useBottomSheetDynamicSnapPoints } from "@
 import DefaultButton from "./DefaultButton";
 import getString from "../../localization";
 import Spacer from "./Spacer";
-import { fontMeduim, globalStyles, gray1, lightBlack } from "../styles/global";
+import { fontMeduim, globalStyles, gray1, green, lightBlack, orange2 } from "../styles/global";
 const AppointmentConfirmationSheet = (props) => {
   const { appointment, selectedService, handleCloseConfirmation, handleBook } = props;
   const snapPoints = useMemo(() => ['CONTENT_HEIGHT'], []);
@@ -50,7 +50,7 @@ const AppointmentConfirmationSheet = (props) => {
         style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}
         onLayout={handleContentLayout}>
 
-        <Text className="text-xl font-bold">{getString.t('appointment_info')}</Text>
+        <Text style ={{color: '#000'}} className="text-xl font-bold">{getString.t('appointment_info')}</Text>
 
         <Spacer space={20} />
 

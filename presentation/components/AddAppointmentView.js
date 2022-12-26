@@ -96,7 +96,9 @@ const AddAppointmentView = (props) => {
                 value={endTime}
                 mode={"time"}
                 is24Hour={true}
-                onChange={(event, value) => setEndTime(value)}
+                onChange={(event, value) =>{
+                  // console.log(value , event);
+                  setEndTime(value)}}
               />
               <MaterialCommunityIcons name="timelapse" size={24} color="black" />
             </View>

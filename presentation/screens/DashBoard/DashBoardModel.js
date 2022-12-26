@@ -6,14 +6,13 @@ import WorkerRepository from "../../../repository/workerRepository";
 import useLoadingContext from "../../../hooks/useLoadingContext";
 import moment from "moment";
 import useDialogContext from "../../../hooks/useDialogContext";
-const DashBoardModel = () => {
+const useDashBoardModel = () => {
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
-  const { dispatch:showDialog } = useDialogContext()
+  const { dispatch: showDialog } = useDialogContext()
   let startDate = moment();
   const [state, setState] = useState({
-    appointments: [],
-
+    appointments: null,
     dateInterval: [
       startDate,
       startDate.clone().add(1, "days"),
@@ -46,6 +45,7 @@ const DashBoardModel = () => {
       const end_time = new Date(start_time)
       end_time.setDate(start_time.getDate() + 1)
       const { appointments } = await appointmentRepository.getAppointments({ end_time, start_time, workerId: user._id, search });
+
       setState((prev) => {
         return {
           ...prev,
@@ -109,7 +109,7 @@ const DashBoardModel = () => {
     }
     showDialog({
       isVisible: true,
-      title:'Service',
+      title: 'Service',
       message: messg,
     })
     setIsLoading({ isLoading: false });
@@ -127,7 +127,7 @@ const DashBoardModel = () => {
     }
     showDialog({
       isVisible: true,
-      title:'Service',
+      title: 'Service',
       message: messg,
     })
     setIsLoading({ isLoading: false });
@@ -136,6 +136,7 @@ const DashBoardModel = () => {
   /*--------  creating new appointment for a worker ---------- */
   const handlePostAppoint = async (startTime, endTime) => {
     let date = state.dateInterval[state.selectedDay];
+
     const appointObj = {
       worker: user._id,
       start_time: compineDT(date, startTime),
@@ -256,11 +257,9 @@ const DashBoardModel = () => {
   };
 
   const compineDT = (date, time) => {
-    let d = JSON.stringify(date);
-    let t = JSON.stringify(time);
-    let compineD = `${d.split("T")[0]}T${t.split("T")[1]}`;
-    const format = "yyyy-MM-DDTHH:mm:ssZZ";
-    return moment(compineD, format).format(format);
+    let d = moment(date).format('yyyy-MM-DD');
+    let t = moment(time).format('HH:mm');
+    return moment(d + ' ' + t)
   };
 
   const handleShowAppoint = (action) => {
@@ -297,4 +296,4 @@ const DashBoardModel = () => {
   };
 };
 
-export default DashBoardModel;
+export default useDashBoardModel;

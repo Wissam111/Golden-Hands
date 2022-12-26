@@ -44,6 +44,8 @@ const getUserProfile = async (dispatch, id) => {
     try {
         const { getUser } = UserRepository()
         const data = await getUser(id)
+        await AsyncStorage.setItem('user', JSON.stringify(data.user))
+        await AsyncStorage.setItem('user_image', data.user.image)
 
         dispatch({
             type: 'UPDATE_USER',
@@ -79,8 +81,9 @@ const getAuthDataFromLoaclStorage = async (dispatch) => {
             } : null
         })
 
-        if (user && !isTokenExpired)
+        if (user && !isTokenExpired){
             getUserProfile(dispatch, user._id)
+        }
     } catch (e) {
         console.log(e);
     }
