@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, TextInput, Text, TouchableWithoutFeedback, Keyboard, SafeAreaView } from "react-native";
+import { View, TextInput, Text, TouchableWithoutFeedback, Keyboard, SafeAreaView, Platform } from "react-native";
 import useAuthContext from "../../../hooks/useAuthContext";
 import getString from "../../../localization";
 import BackButton from "../../components/BackButton";
@@ -11,6 +11,7 @@ import Title from "../../components/Title";
 import { globalStyles } from "../../styles/global";
 import SignupViewModel from "./SignupViewModel";
 import { AntDesign } from '@expo/vector-icons';
+import Loader from "../../components/Loader";
 
 
 const SignupPhone = ({ navigation }) => {
@@ -29,6 +30,7 @@ const SignupPhone = ({ navigation }) => {
     return (
         <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
             <View style={{ padding: 8, flex: 1 }}>
+                <Loader />
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <BackButton onPress={navigation.goBack} />
                     <Spacer space={6} />
@@ -57,11 +59,14 @@ const SignupPhone = ({ navigation }) => {
                 </View>
                 <Spacer style={{ flex: 1 }} />
                 {!showCode &&
-                    <DefaultButton text={showCode ? getString.t('next') : getString.t('check_phone')} onPress={() => {
-                        if (!showCode) {
-                            sendAuthVerification()
-                        }
-                    }} />
+                    <DefaultButton
+                        buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }}
+                        text={showCode ? getString.t('next') : getString.t('check_phone')}
+                        onPress={() => {
+                            if (!showCode) {
+                                sendAuthVerification()
+                            }
+                        }} />
                 }
                 <SafeAreaView />
             </View>

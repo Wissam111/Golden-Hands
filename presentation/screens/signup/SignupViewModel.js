@@ -56,6 +56,7 @@ const useSignupViewModel = () => {
                 });
             }
         } catch (e) {
+            console.log(e);
             if (e.status === 400) {
                 showAlert(getString.t('error'), getString.t('user_with_this_number_exists'))
             }
@@ -98,6 +99,7 @@ const useSignupViewModel = () => {
             });
 
         } catch (e) {
+            console.log(e);
             if (e.status === 403) {
                 showAlert(getString.t('error'), getString.t('code_not_match'))
             }

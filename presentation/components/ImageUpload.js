@@ -70,18 +70,20 @@ const ImageUpload = ({ route, navigation }) => {
 
 
             <Spacer style={{ flex: 1 }} />
-            <DefaultButton text={buttonText ? buttonText : getString.t('next')} onPress={() => {
-                if (isLoading)
-                    return
-                if (!backButton)
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'SignupWelcome' }],
-                    })
-                else {
-                    uploadImage(image)
-                }
-            }} />
+            <DefaultButton
+                buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }}
+                text={buttonText ? buttonText : getString.t('next')} onPress={() => {
+                    if (isLoading)
+                        return
+                    if (!backButton)
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'SignupWelcome' }],
+                        })
+                    else {
+                        uploadImage(image)
+                    }
+                }} />
             <SafeAreaView />
         </View>
     );

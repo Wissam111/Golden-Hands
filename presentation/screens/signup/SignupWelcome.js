@@ -1,4 +1,4 @@
-import { Image, SafeAreaView, Text, View } from "react-native";
+import { Image, Platform, SafeAreaView, Text, View } from "react-native";
 import DefaultButton from "../../components/DefaultButton";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
@@ -26,7 +26,7 @@ const SignupWelcome = ({ navigation }) => {
 
 
             <Spacer style={{ flex: 1 }} />
-            <DefaultButton text={getString.t('done')} onPress={() => {
+            <DefaultButton buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }} text={getString.t('done')} onPress={() => {
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'HomeScreen' }],

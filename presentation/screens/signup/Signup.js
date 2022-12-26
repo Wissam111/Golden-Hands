@@ -1,4 +1,4 @@
-import { Keyboard, TextInput, SafeAreaView, Button, StyleSheet, Text, View, TouchableWithoutFeedback, TouchableOpacity, I18nManager } from "react-native";
+import { Keyboard, TextInput, SafeAreaView, Button, StyleSheet, Text, View, TouchableWithoutFeedback, TouchableOpacity, I18nManager, Platform } from "react-native";
 import useSignupContext from "../../../hooks/useSignupContext";
 import getString from "../../../localization";
 import BackButton from "../../components/BackButton";
@@ -83,7 +83,7 @@ const Signup = ({ navigation }) => {
 
                 <Spacer style={{ flex: 1 }} space={30} />
 
-                <DefaultButton text={getString.t('next')} onPress={navigateToSignupPhone} />
+                <DefaultButton buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }} text={getString.t('next')} onPress={navigateToSignupPhone} />
                 <SafeAreaView />
 
             </View>

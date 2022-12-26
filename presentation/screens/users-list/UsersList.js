@@ -63,7 +63,7 @@ const UsersList = ({ navigation }) => {
                         onChangeText={(text) => setSearchState(text)}
                     />
                     <View style={{ alignSelf: 'stretch' }}>
-                        <DefaultButton style={{ borderRadius: 26, flex: 1 }} color={orange1} text={getString.t('search')} onPress={() => { getUsers() }} />
+                        <DefaultButton style={{ borderRadius: 26, flex: 1 }} buttonStyles={{ flex: 1, borderRadius: 26 }} color={orange1} text={getString.t('search')} onPress={() => { getUsers() }} />
                     </View>
                 </View>
 

@@ -1,4 +1,4 @@
-import { View, Text, Button, SafeAreaView, TouchableWithoutFeedback, StyleSheet, Keyboard, TouchableOpacity } from "react-native";
+import { View, Text, Button, SafeAreaView, TouchableWithoutFeedback, StyleSheet, Keyboard, TouchableOpacity, Platform } from "react-native";
 import React, { useEffect } from "react";
 import LoginViewModel from "./LoginViewModel";
 import { backgroundColor, blue, globalStyles } from "../../styles/global";
@@ -26,18 +26,19 @@ const Login = ({ navigation }) => {
   }, [navigateToHome])
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style = {{justifyContent:'center' , flex:1 , backgroundColor:'rgba(0,0,0,0.4)' ,}}>
-        <Loader/>
+    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+      <View style={{ justifyContent: 'center', flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', }}>
+        <Loader />
         <View style={{
-          height:'70%', margin: 6, borderRadius: 20, padding: 8, backgroundColor: backgroundColor }}>
+          margin: 6, borderRadius: 20, padding: 8, backgroundColor: backgroundColor
+        }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <BackButton onPress={navigation.goBack} />
             <Spacer space={6} />
             <Title text={getString.t('login')} />
           </View>
 
-          <Spacer style={{ flex: 1 }} />
+          <Spacer space={26} />
 
           <View style={styles.container}>
             <View style={styles.topText}>
@@ -59,7 +60,7 @@ const Login = ({ navigation }) => {
 
                   <Spacer space={10} />
 
-                  <DefaultButton style={styles.button} text={getString.t('login')} onPress={sendAuthVerification} />
+                  <DefaultButton buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }} text={getString.t('login')} onPress={sendAuthVerification} />
 
                   <View style={styles.create}>
                     <Text style={{ marginEnd: 6 }}>{getString.t('dont_have_an_account')}</Text>
@@ -79,7 +80,7 @@ const Login = ({ navigation }) => {
             }
           </View>
 
-          <Spacer style={{ flex: 2 }} />
+          <Spacer space={36} />
 
 
           <SafeAreaView />
@@ -94,7 +95,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     zIndex: 3
   },
