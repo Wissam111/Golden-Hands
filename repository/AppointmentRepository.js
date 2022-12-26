@@ -9,7 +9,7 @@ const AppointmentRepository = () => {
 
   // get all appointments
   const getAppointments = async (queryParams) => {
-    const data = await apiCall("appointments" , 'GET' , null , queryParams);
+    const data = await apiCall("appointments", 'GET', null, queryParams);
     return data;
   };
 
@@ -65,6 +65,14 @@ const AppointmentRepository = () => {
     const data = await apiCall("appointments", "POST", appointObj);
     return data;
   };
+
+
+  // create a range appointments
+  const createRangeAppointment = async (appointObj) => {
+    const data = await apiCall("appointments/range-appointments", "POST", appointObj);
+    return data;
+  };
+
   // unbook a new appointment
   const unbook = async (appointmentId) => {
     const data = await apiCall("appointments/unbook", "POST", {
@@ -85,6 +93,7 @@ const AppointmentRepository = () => {
     rateAppointment,
     getAvailableAppointment,
     deleteAppointment,
+    createRangeAppointment
   };
 };
 

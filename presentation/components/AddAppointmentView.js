@@ -1,47 +1,24 @@
-import { View, StyleSheet, Text, TouchableWithoutFeedback, Modal } from "react-native";
+import { View, StyleSheet, Text, TouchableWithoutFeedback, Modal, Keyboard, Platform } from "react-native";
 import React, { useState } from "react";
 import DefaultButton from "./DefaultButton";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import moment from "moment";
-import { fontLarge, fontMeduim, fontSmall, globalStyles, white } from "../styles/global";
+import { fontLarge, fontMeduim, fontSmall, globalStyles, gray1, red, white } from "../styles/global";
 import Spacer from "./Spacer";
 import getString from "../../localization";
+import TextInputIcon from "./TextInputIcon";
 
 /*------- Component represent's Add Working Appointment for the barber ---------- */
 
 const AddAppointmentView = (props) => {
   const { handlePostAppoint, onClose } = props;
-  const isAndroid = Platform.OS === "android";
 
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
-  const [showStart, setShowStart] = useState(!isAndroid);
-  const [showEnd, setShowEnd] = useState(!isAndroid);
-  const handleStartTime = (event, value) => {
-    if (isAndroid) {
-      if (event.type == "set") {
-        setStartTime(value);
-        setShowStart(false);
-      } else {
-        setShowStart(false);
-      }
-    } else {
-      setStartTime(value);
-    }
-  };
-  const handleEndTime = (event, value) => {
-    if (isAndroid) {
-      if (event.type == "set") {
-        setEndTime(value);
-        setShowEnd(false);
-      } else {
-        setShowEnd(false);
-      }
-    } else {
-      setEndTime(value);
-    }
-  };
+  const [interval, setInterval] = useState(null);
+
+
   return (
     <TouchableWithoutFeedback onPress={onClose}>
       <View
@@ -55,62 +32,85 @@ const AddAppointmentView = (props) => {
           alignItems: 'center',
           zIndex: 1
         }}>
-        <View
-          onStartShouldSetResponder={(event) => true}
-          onTouchEnd={(e) => {
-            e.stopPropagation();
-          }}
-          className="absolute bg-white  rounded-lg justify-between p-4"
-          style={{
-            zIndex: 10,
-            width: '86%',
-            elevation: 4,
-            shadowColor: 'black',
-            shadowRadius: 2,
-            shadowOpacity: .4,
-            shadowOffset: { width: .5, height: .5 },
-          }}>
-          <View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View
+            onStartShouldSetResponder={(event) => true}
+            onTouchEnd={(e) => {
+              e.stopPropagation();
+            }}
+            className="absolute bg-white  rounded-lg justify-between p-4"
+            style={{
+              zIndex: 10,
+              width: '96%',
+              elevation: 4,
+              shadowColor: 'black',
+              shadowRadius: 2,
+              shadowOpacity: .4,
+              shadowOffset: { width: .5, height: .5 },
+            }}>
+            <View>
 
-            <Text style={{ ...globalStyles.font, fontSize: fontLarge, ...globalStyles.txtDirection }}>{getString.t('create_appointment')}</Text>
+              <Text style={{ ...globalStyles.font, fontSize: fontLarge, ...globalStyles.txtDirection }}>{getString.t('create_appointment')}</Text>
 
-            <Spacer space={12} />
+              <Spacer space={12} />
 
 
-            <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('start_time')}</Text>
-            <View style={styles.datePicker}>
-              <DateTimePicker
-                value={startTime}
-                mode={"time"}
-                is24Hour={true}
-                onChange={(event, value) => setStartTime(value)}
+              <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('start_time')}</Text>
+              <View style={styles.datePicker}>
+                <DateTimePicker
+                  value={startTime}
+                  mode={"time"}
+                  is24Hour={true}
+                  onChange={(event, value) => {
+                    setEndTime(value)
+                    setStartTime(value)
+                  }}
+                />
+                <Ionicons name="time-outline" size={24} color="black" />
+              </View>
+
+              <Spacer space={6} />
+
+              <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('end_time')}</Text>
+              <View style={styles.datePicker}>
+                <DateTimePicker
+                  value={endTime}
+                  mode={"time"}
+                  is24Hour={true}
+                  onChange={(event, value) => {
+                    setEndTime(value)
+                  }}
+                />
+                <MaterialCommunityIcons name="timelapse" size={24} color="black" />
+              </View>
+
+              <Spacer space={6} />
+
+              <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('duration_min')}</Text>
+              <TextInputIcon
+                iconStart={<MaterialCommunityIcons name="timer-sand-paused" size={24} color="black" />}
+                style={{ flex: 1, padding: 2, alignSelf: 'st' }}
+                onChangeText={(str) => {
+                  setInterval(str.length > 0 ? str : null)
+                }}
+                value={interval}
+                placeholder={getString.t('duration')}
+                keyboardType="numeric"
+                maxLength={5}
               />
-              <Ionicons name="time-outline" size={24} color="black" />
+              <Text style={{ ...globalStyles.font, fontSize: fontSmall, color: gray1, ...globalStyles.txtDirection }}>{getString.t('filling_this_duration')}</Text>
+
             </View>
 
-            <Spacer space={8} />
+            <Spacer space={24} />
 
-            <Text style={{ ...globalStyles.txtDirection, ...globalStyles.font, fontSize: fontSmall }}>{getString.t('end_time')}</Text>
-            <View style={styles.datePicker}>
-              <DateTimePicker
-                value={endTime}
-                mode={"time"}
-                is24Hour={true}
-                onChange={(event, value) =>{
-                  // console.log(value , event);
-                  setEndTime(value)}}
-              />
-              <MaterialCommunityIcons name="timelapse" size={24} color="black" />
-            </View>
+            <DefaultButton
+            buttonStyles={{paddingVertical: Platform.OS === 'android' ? 10 : 12}}
+              text={getString.t('create')}
+              onPress={() => handlePostAppoint(startTime, endTime, interval)}
+            />
           </View>
-
-          <Spacer space={24} />
-
-          <DefaultButton
-            text={getString.t('create')}
-            onPress={() => handlePostAppoint(startTime, endTime)}
-          />
-        </View>
+        </TouchableWithoutFeedback>
       </View>
     </TouchableWithoutFeedback>
   );

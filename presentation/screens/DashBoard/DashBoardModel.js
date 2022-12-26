@@ -135,16 +135,17 @@ const useDashBoardModel = () => {
   };
 
   /*--------  creating new appointment for a worker ---------- */
-  const handlePostAppoint = async (startTime, endTime) => {
+  const handlePostAppoint = async (startTime, endTime, duration) => {
     const appointObj = {
       worker: user._id,
-      start_time: compineDT(state.selectedDay, startTime),
-      end_time: compineDT(state.selectedDay, endTime),
+      start_time: compineDT(state.selectedDay, startTime).format('yyyy-MM-DDTHH:mm:ssZZ'),
+      end_time: compineDT(state.selectedDay, endTime).format('yyyy-MM-DDTHH:mm:ssZZ'),
+      duration: duration
     };
     setIsLoading({ isLoading: true });
     let messg;
     try {
-      const data = await appointmentRepository.PostAppointment(appointObj);
+      const data = duration ? await appointmentRepository.createRangeAppointment(appointObj) : await appointmentRepository.PostAppointment(appointObj);
       messg = data.message;
       getAppointments();
       handleShowAppoint();
@@ -181,7 +182,7 @@ const useDashBoardModel = () => {
   };
 
   const handleDateRight = () => {
-    let startDate = state.dateInterval[4].add(1 , 'days');
+    let startDate = state.dateInterval[4].add(1, 'days');
     let dates = [];
     for (let i = 0; i < 5; i++) {
       dates.push(startDate.clone().add(i, "days"));
@@ -191,7 +192,7 @@ const useDashBoardModel = () => {
     });
   };
   const handleDateLeft = () => {
-    let startDate = state.dateInterval[0].clone().subtract(5, "days"); 
+    let startDate = state.dateInterval[0].clone().subtract(5, "days");
     let dates = [];
     for (let i = 0; i < 5; i++) {
       dates.push(startDate.clone().add(i, "days"));

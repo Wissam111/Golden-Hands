@@ -11,7 +11,7 @@ import { globalStyles } from "../styles/global";
 import AppointmentCard from "./AppointmentCard";
 
 const AppointmentsSheet = (props) => {
-  const { handleSearch, appointments, handleShowStatusSheet, handleShowAppoint, compineDT } =
+  const { handleSearch, appointments, handleShowStatusSheet, handleShowAppoint, compineDT , selectedDay } =
     props;
   const snapPoints = useMemo(() => ["60%", "90%"], []);
   const bottomSheetRef = useRef(null);
@@ -36,19 +36,20 @@ const AppointmentsSheet = (props) => {
 
   const createIntervals = async () => {
     let intervals = await generateHoursInterval();
-    appointments.forEach((appointment) => {
 
+    appointments.forEach((appointment) => {
       let appointS = moment(compineDT(moment(), appointment.start_time));
 
       let interval = intervals.find((intev) => {
         let intervalS = moment(intev.start, "HH:mm");
-        let intervalE = moment(intev.end, "HH:mm")
+        let intervalE = intervalS.clone().add(2 , 'hours')
         return (
-          moment(appointS).isBetween(intervalS, intervalE, null, "[]")
+          appointS.isBetween(intervalS, intervalE, null, "[]")
         )
       })
       interval?.appointments.push(appointment);
     });
+
     setAppointmentsInterval(intervals.filter(interval => interval.appointments.length > 0));
   }
 

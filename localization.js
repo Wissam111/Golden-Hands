@@ -120,7 +120,11 @@ const getString = new I18n({
         today: 'Today',
         tomorrow:'Tomorrow',
         with:'With',
-        for:'For'
+        for:'For',
+        duration_min: 'Duration In Minutes',
+        duration: 'Duration',
+        filling_this_duration: 'Filling this input will create multipule appointments between start and end dates with the specified duration'
+
 
 
 
@@ -220,7 +224,7 @@ const getString = new I18n({
         no_appointment_at_this_day: 'אין תורים ביום זה',
         search: 'חיפוש',
         free_appointment: 'תור פנוי',
-        create: 'צור',
+        create: 'יצירה',
         create_appointment: 'יצירת תור',
         start_time: 'זמן התחלה',
         end_time: 'זמן סיום',
@@ -245,7 +249,12 @@ const getString = new I18n({
         today: 'היום',
         tomorrow:'מחר',
         with:'עם',
-        for:'עבור'
+        for:'עבור',
+        duration_min: 'משך זמן בדקות',
+        duration: 'משך זמן',
+        filling_this_duration: 'מליאת שדה זה יגרור הוספת מספר תורים מזמן ההתחלה עד הסיום עם משך זמן שצוין'
+
+
 
 
 

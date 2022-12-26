@@ -55,10 +55,10 @@ const DashBoardScreen = ({ navigation }) => {
   } = DashBoardModel();
 
   useEffect(() => {
-    if(isFocused && selectedDay){
+    if (isFocused && selectedDay) {
       getAppointments()
     }
-  }, [isFocused , selectedDay])
+  }, [isFocused, selectedDay])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -117,6 +117,7 @@ const DashBoardScreen = ({ navigation }) => {
         </View>
 
         <AppointmentsSheet
+          selectedDay={selectedDay}
           appointments={appointments}
           handleShowStatusSheet={handleShowStatusSheet}
           handleShowAppoint={handleShowAppoint}
