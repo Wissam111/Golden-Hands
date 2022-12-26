@@ -7,6 +7,7 @@ import {
   Image,
   ActivityIndicator,
   Modal,
+  Platform,
 } from "react-native";
 import React, { useState, useMemo, useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
@@ -316,7 +317,9 @@ const StatusSheet = (props) => {
           <Spacer space={24} />
 
           {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'canceled') &&
-            <DefaultButton onPress={() => { handleUpdateStatus('done') }} color={green} text={getString.t('done')} style={{ borderRadius: 24 }} />
+            <DefaultButton
+              buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }}
+              onPress={() => { handleUpdateStatus('done') }} color={green} text={getString.t('done')} style={{ borderRadius: 24 }} />
           }
           <Spacer space={20} />
         </BottomSheetView>
