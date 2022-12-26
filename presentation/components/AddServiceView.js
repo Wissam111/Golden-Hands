@@ -1,10 +1,10 @@
 import {
   View,
   Text,
-  FlatList,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import DefaultButton from "./DefaultButton";
@@ -12,73 +12,88 @@ import SelectDropdown from "react-native-select-dropdown";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import getString from "../../localization";
 import Spacer from "./Spacer";
+import { backgroundColor, fontMeduim, fontSmall, globalStyles, lightBlack, white } from "../styles/global";
+import TextInputIcon from "./TextInputIcon";
+import { MaterialIcons } from '@expo/vector-icons';
+
+
+
 const AddServiceView = (props) => {
   const { worker, handlePostServ } = props;
   const priceInputRef = useRef(null);
-  const services = ["Hair Cut", "Face Cut", "Wax", "Massage"];
+  const services = ['Hair Cut', 'Face Cut', 'Wax', 'Massage'];
   const [selectedServ, setSelectedServ] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
   const [showAddServ, setShowAddServ] = useState(false);
+
+
   return (
     <View className="p-3 m-2 rounded-md" style={styles.shadow}>
       <View className="flex-row justify-between items-center">
-        {!showAddServ && (
-          <Text className="font-bold text-lg">{getString.t('add_service')}</Text>
-        )}
+        <Text className="font-bold text-lg">{getString.t('add_service')}</Text>
         <Spacer style={{ flex: 1 }} />
         <TouchableOpacity
-          onPress={() => setShowAddServ(!showAddServ)}
-        >
+          onPress={() => setShowAddServ(!showAddServ)}>
           <AntDesign name="pluscircle" size={24} color="green" />
         </TouchableOpacity>
       </View>
+
+
       {showAddServ && (
-        <View>
+        <View style={{}}>
           <Spacer space={6} />
-          <View className="flex-row justify-between items-center">
-            <SelectDropdown
-              data={services}
-              onSelect={(selectedItem, index) => {
-                setSelectedServ(index);
-              }}
-              defaultButtonText={"Select Service"}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-              buttonStyle={styles.dropdown1BtnStyle}
-              buttonTextStyle={styles.dropdown1BtnTxtStyle}
-              renderDropdownIcon={(isOpened) => {
-                return (
-                  <FontAwesome
-                    name={isOpened ? "chevron-up" : "chevron-down"}
-                    color={"#444"}
-                    size={18}
-                  />
-                );
-              }}
-              dropdownIconPosition={"right"}
-              dropdownStyle={styles.dropdown1DropdownStyle}
-              rowStyle={styles.dropdown1RowStyle}
-              rowTextStyle={styles.dropdown1RowTxtStyle}
-            />
-            <TextInput
-              className="mr-2 rounded-md bg-[#F4EBD0] text-xl text-center text-[#1D1B1B] font-medium"
-              style={{
-                width: 70,
-                height: 60,
-              }}
-              ref={priceInputRef}
-              onChangeText={(txtPrc) => setSelectedPrice(txtPrc)}
+          <View style={{ justifyContent: 'center', alignItems: 'space-around', flexDirection: 'row' }}>
+
+            <View>
+              <SelectDropdown
+                data={services.map(item => getString.t(item.toLowerCase()))}
+                onSelect={(selectedItem, index) => {
+                  setSelectedServ(index);
+                }}
+                defaultButtonText={getString.t('select_service')}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+                renderDropdownIcon={(isOpened) => {
+                  return (
+                    <FontAwesome
+                      name={isOpened ? "chevron-up" : "chevron-down"}
+                      color={lightBlack}
+                      size={12}
+                    />
+                  );
+                }}
+                buttonStyle={styles.dropdown1BtnStyle}
+                buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                dropdownStyle={styles.dropdown1DropdownStyle}
+                rowStyle={styles.dropdown1RowStyle}
+                rowTextStyle={styles.dropdown1RowTxtStyle}
+                dropdownIconPosition={"right"}
+              />
+            </View>
+
+            <Spacer space={6} />
+
+            <TextInputIcon
+              style={{ flex: 1, padding: 2, alignSelf: 'st' }}
+              iconStart={<MaterialIcons name="attach-money" size={18} color="black" />}
+              onChangeText={(str) => { setSelectedPrice(str) }}
+              value={selectedPrice}
+              placeholder={getString.t('price')}
               keyboardType="numeric"
-              maxLength={10} //setting limit of input
+              maxLength={4}
             />
+
           </View>
+
+
           <View className="mt-5">
             <DefaultButton
               text={getString.t('add')}
+              buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 12 : 14 }}
               onPress={() =>
                 handlePostServ({
                   workerId: worker._id,
@@ -103,17 +118,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
   },
   dropdown1BtnStyle: {
-    backgroundColor: "#FFF",
-    borderRadius: 16,
+    flex: 1,
+    backgroundColor: white,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#444",
+    borderColor: "#333",
   },
-  dropdown1BtnTxtStyle: { color: "#444", textAlign: "left" },
-  dropdown1DropdownStyle: { backgroundColor: "#EFEFEF", borderRadius: 16 },
+  dropdown1BtnTxtStyle: {
+    textAlign: "left",
+    ...globalStyles.font,
+    fontSize: fontMeduim,
+  },
+  dropdown1DropdownStyle: { backgroundColor: backgroundColor , borderRadius: 8},
   dropdown1RowStyle: {
-    backgroundColor: "#EFEFEF",
+    backgroundColor: backgroundColor,
     borderBottomColor: "#C5C5C5",
   },
-  dropdown1RowTxtStyle: { color: "#444", textAlign: "left" },
+  dropdown1RowTxtStyle: { color: lightBlack, textAlign: "left" },
 });
 export default AddServiceView;

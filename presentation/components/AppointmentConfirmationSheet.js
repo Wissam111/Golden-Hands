@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Platform } from "react-native";
 import React, { useRef, useMemo } from "react";
 import moment from "moment";
 import BottomSheet, { BottomSheetView, useBottomSheetDynamicSnapPoints } from "@gorhom/bottom-sheet";
@@ -50,7 +50,7 @@ const AppointmentConfirmationSheet = (props) => {
         style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}
         onLayout={handleContentLayout}>
 
-        <Text style ={{color: '#000'}} className="text-xl font-bold">{getString.t('appointment_info')}</Text>
+        <Text style={{ color: '#000' }} className="text-xl font-bold">{getString.t('appointment_info')}</Text>
 
         <Spacer space={20} />
 
@@ -74,7 +74,7 @@ const AppointmentConfirmationSheet = (props) => {
         <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />
 
         <Spacer space={16} />
-        <DefaultButton style={{ alignSelf: 'stretch' }} text={getString.t('confirm_and_book')} onPress={handleBook} />
+        <DefaultButton style={{ alignSelf: 'stretch' }} buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 12 : 14 }} text={getString.t('confirm_and_book')} onPress={handleBook} />
         <Spacer space={30} />
       </BottomSheetView>
     </BottomSheet>

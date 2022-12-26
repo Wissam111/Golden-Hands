@@ -15,7 +15,7 @@ import BottomSheet, { BottomSheetFlatList, BottomSheetView, useBottomSheetDynami
 import { getIconByStatus } from "./AppointmentView";
 import getString from "../../localization";
 import Spacer from "./Spacer";
-import { backgroundColor, fontLarge, fontMeduim, fontSmall, globalStyles, gray1, green, white } from "../styles/global";
+import { backgroundColor, fontLarge, fontMeduim, fontSmall, globalStyles, gray1, green, lightBlack, white } from "../styles/global";
 import DefaultButton from "./DefaultButton";
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -24,7 +24,7 @@ import { IMAGE_BASE_URL } from "../../network/apiCall";
 import moment from "moment";
 
 const StatusSheet = (props) => {
-  const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment, appointment, navigateToProfile } =
+  const { handleUpdateStatus, handleShowStatusSheet, handleDeleteAppointment, services, appointment, navigateToProfile } =
     props;
   const [selectedStatus, setSelectStatus] = useState(null)
   const snapPoints = useMemo(() => ["10%", 'CONTENT_HEIGHT'], [])
@@ -46,7 +46,6 @@ const StatusSheet = (props) => {
     "hold",
   ]
 
-  const services = ["Hair Cut", "Face Cut", "Wax", "Massage"];
   const confirmAlert = (message) => {
     Alert.alert("", message, [
       { text: "confirm", onPress: () => handleDeleteAppointment() },
@@ -243,11 +242,11 @@ const StatusSheet = (props) => {
                 <>
                   <Spacer space={6} />
                   <SelectDropdown
-                    data={services}
+                    data={services.map(item => getString.t(item.title.toLowerCase()))}
                     onSelect={(selectedItem, index) => {
-                      handleUpdateStatus(selectedStatus, selectedItem);
+                      handleUpdateStatus(selectedStatus, services[index].title);
                     }}
-                    defaultButtonText={"Select Service"}
+                    defaultButtonText={getString.t('select_service')}
                     buttonTextAfterSelection={(selectedItem, index) => {
                       return selectedItem;
                     }}
@@ -326,51 +325,6 @@ const StatusSheet = (props) => {
 
 
 
-      {/* <Modal
-        animationType="fade"
-        transparent={true}
-        visible={true}>
-
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,.3)', padding: 8 }}>
-          <View style={{ backgroundColor: white, padding: 8, alignSelf: 'stretch', minHeight: 100, borderRadius: 12 }}>
-            <Text style={{ ...globalStyles.font, fontSize: fontMeduim }}>Hold Appointment</Text>
-
-            <Spacer space={8} />
-
-            <SelectDropdown
-              data={services}
-              onSelect={(selectedItem, index) => {
-                handleUpdateStatus(selectedStatus, selectedItem);
-              }}
-              defaultButtonText={"Select Service"}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-              buttonStyle={styles.dropdown1BtnStyle}
-              buttonTextStyle={styles.dropdown1BtnTxtStyle}
-              renderDropdownIcon={(isOpened) => {
-                return (
-                  <FontAwesome
-                    name={isOpened ? "chevron-up" : "chevron-down"}
-                    color={"#444"}
-                    size={18}
-                  />
-                );
-              }}
-              dropdownIconPosition={"right"}
-              dropdownStyle={styles.dropdown1DropdownStyle}
-              rowStyle={styles.dropdown1RowStyle}
-              rowTextStyle={styles.dropdown1RowTxtStyle}
-            />
-          </View>
-        </View>
-
-      </Modal> */}
-
-
     </BottomSheet >
   );
 };
@@ -395,18 +349,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
   },
   dropdown1BtnStyle: {
-    backgroundColor: "#FFF",
+    flex: 1,
+    backgroundColor: white,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#444",
+    borderColor: "#333",
   },
-  dropdown1BtnTxtStyle: { color: "#444", textAlign: "left" },
-  dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
+  dropdown1BtnTxtStyle: {
+    textAlign: "left",
+    ...globalStyles.font,
+    fontSize: fontMeduim,
+  },
+  dropdown1DropdownStyle: { backgroundColor: backgroundColor, borderRadius: 8 },
   dropdown1RowStyle: {
-    backgroundColor: "#EFEFEF",
+    backgroundColor: backgroundColor,
     borderBottomColor: "#C5C5C5",
   },
-  dropdown1RowTxtStyle: { color: "#444", textAlign: "left" },
+  dropdown1RowTxtStyle: { color: lightBlack, textAlign: "left" },
 });
+
 
 export default StatusSheet;

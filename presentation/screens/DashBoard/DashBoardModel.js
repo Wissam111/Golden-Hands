@@ -10,9 +10,9 @@ const useDashBoardModel = () => {
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
   const { dispatch: showDialog } = useDialogContext()
-  let startDate = moment();
+  let startDate = moment().startOf('day')
   const [state, setState] = useState({
-    appointments: null,
+    appointments: [],
     dateInterval: [
       startDate,
       startDate.clone().add(1, "days"),
@@ -22,7 +22,7 @@ const useDashBoardModel = () => {
     ],
     worker: user,
     workerServices: [],
-    selectedDay: null,
+    selectedDay: startDate,
     showStatusSheet: false,
     currentAppoint: null,
     allSelected: true,
@@ -33,11 +33,15 @@ const useDashBoardModel = () => {
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
+  useEffect(() => {
+    getAppointments()
+  }, [state.selectedDay])
+
   /*-------- geting all appointments by date ---------- */
-  const getAppointments = async (date, search = '') => {
+  const getAppointments = async (search = '') => {
     setIsLoading({ isLoading: true });
     try {
-      const start_time = new Date(date)
+      const start_time = new Date(state.selectedDay)
       start_time.setHours(0)
       start_time.setMinutes(0)
       start_time.setSeconds(0)
@@ -85,7 +89,7 @@ const useDashBoardModel = () => {
       const data = await appointmentRepository.updateAppointmentStatus(
         appointObj
       );
-      getAppointments(state.dateInterval[state.selectedDay]);
+      getAppointments();
       message = data.message;
     } catch (e) {
       console.log(e);
@@ -135,19 +139,17 @@ const useDashBoardModel = () => {
 
   /*--------  creating new appointment for a worker ---------- */
   const handlePostAppoint = async (startTime, endTime) => {
-    let date = state.dateInterval[state.selectedDay];
-
     const appointObj = {
       worker: user._id,
-      start_time: compineDT(date, startTime),
-      end_time: compineDT(date, endTime),
+      start_time: compineDT(state.selectedDay, startTime),
+      end_time: compineDT(state.selectedDay, endTime),
     };
     setIsLoading({ isLoading: true });
     let messg;
     try {
       const data = await appointmentRepository.PostAppointment(appointObj);
       messg = data.message;
-      getAppointments(date);
+      getAppointments();
       handleShowAppoint();
     } catch (e) {
       messg = e.message;
@@ -160,7 +162,6 @@ const useDashBoardModel = () => {
   };
   /*--------  deleting an appointment for a worker ---------- */
   const handleDeleteAppointment = async () => {
-    let date = state.dateInterval[state.selectedDay];
     setIsLoading({ isLoading: true });
     let messg;
     try {
@@ -168,7 +169,7 @@ const useDashBoardModel = () => {
         state.currentAppoint._id
       );
       messg = data.message;
-      getAppointments(date);
+      getAppointments();
     } catch (e) {
       messg = e.message;
     }
@@ -183,39 +184,30 @@ const useDashBoardModel = () => {
   };
 
   const handleDateRight = () => {
-    let currDate = state.dateInterval[4];
-    let dateInterval = [currDate];
-    let dayCounter = 1;
-    // [0 1 2 3 4]
-    for (let i = 1; i < 5; i++) {
-      let d = currDate.clone().add(dayCounter, "days");
-      dateInterval.push(d);
-      dayCounter++;
+    let startDate = state.dateInterval[4].add(1 , 'days');
+    let dates = [];
+    for (let i = 0; i < 5; i++) {
+      dates.push(startDate.clone().add(i, "days"));
     }
-    let sd = dateInterval[0].format("L") == startDate.format("L") ? 0 : null;
     setState((prev) => {
-      return { ...prev, selectedDay: sd, dateInterval: dateInterval };
+      return { ...prev, dateInterval: dates };
     });
   };
   const handleDateLeft = () => {
-    let currDate = state.dateInterval[0].clone().subtract(4, "days"); //the new endDate
-    let dateInterval = [currDate];
-    let dayCounter = 1;
-    for (let i = 0; i < 4; i++) {
-      let d = currDate.clone().add(dayCounter, "days");
-      dateInterval.push(d);
-      dayCounter++;
+    let startDate = state.dateInterval[0].clone().subtract(5, "days"); 
+    let dates = [];
+    for (let i = 0; i < 5; i++) {
+      dates.push(startDate.clone().add(i, "days"));
     }
-    let sd = dateInterval[0].format("L") == startDate.format("L") ? 0 : null;
     setState((prev) => {
-      return { ...prev, selectedDay: sd, dateInterval: dateInterval };
+      return { ...prev, dateInterval: dates };
     });
-  };
-  const handleSelectedDay = (dayId) => {
+  }
+
+  const handleSelectedDay = (day) => {
     setState((prev) => {
-      return { ...prev, selectedDay: dayId, allSelected: true };
+      return { ...prev, selectedDay: day, allSelected: true };
     });
-    getAppointments(state.dateInterval[dayId]);
   };
 
   const handleShowStatusSheet = (appointment, action) => {
@@ -228,7 +220,7 @@ const useDashBoardModel = () => {
     setState((prev) => {
       return { ...prev, allSelected: true };
     });
-    getAppointments(state.dateInterval[state.selectedDay]);
+    getAppointments();
   };
   const handleSelectBooked = () => {
     let appoints = state.appointments.filter(
@@ -244,7 +236,7 @@ const useDashBoardModel = () => {
   };
 
   const handleSearch = (text) => {
-    getAppointments(state.dateInterval[state.selectedDay], text);
+    getAppointments(text);
   };
 
   const handleShowServSheet = () => {
@@ -272,7 +264,6 @@ const useDashBoardModel = () => {
   };
 
   useEffect(() => {
-    handleSelectedDay(0);
     getWorkerServices();
   }, []);
   return {

@@ -95,7 +95,7 @@ const AppointmentsSheet = (props) => {
                   handleShowStatusSheet={handleShowStatusSheet}
                   key={index}
                 /> */}
-              <AppointmentCard onPress={() => { handleShowStatusSheet(item, true) }} appointment={item} text={getAppointmentCardName(item)} />
+              <AppointmentCard onPress={() => { handleShowStatusSheet(item, true) }} image={item.customer?.image} appointment={item} text={getAppointmentCardName(item)} />
             </View>
         }
         ListHeaderComponent={

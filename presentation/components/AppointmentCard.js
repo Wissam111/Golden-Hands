@@ -66,7 +66,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
                     </View>
                 </View>
 
-                <Spacer space={26} style={{ flexShrink: 1, flexWrap: 'wrap' }} />
+                <Spacer space={26} style={{ flexShrink: 1}} />
 
                 {appointment.service &&
                     <>

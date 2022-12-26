@@ -7,14 +7,14 @@ import {
 } from "react-native";
 import { globalStyles, primaryColor, white } from "../styles/global";
 
-const DefaultButton = ({ style, text, onPress, color, textColor }) => {
+const DefaultButton = ({ style, text, onPress, color, textColor, buttonStyles }) => {
   return (
     <TouchableOpacity style={{ ...style }} onPress={onPress}>
       <View
         style={{
           ...styles.button,
           backgroundColor: color ? color : primaryColor,
-          ...style
+          ...buttonStyles
         }}
       >
         <Text style={{ ...styles.text, color: textColor ? textColor : white }}>{text}</Text>

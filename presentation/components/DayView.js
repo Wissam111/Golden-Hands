@@ -3,13 +3,13 @@ import React from "react";
 import moment from "moment";
 import getString from "../../localization";
 const DayView = (props) => {
-  const { id, date, handleSelectedDay, isSelected } = props;
+  const { date, handleSelectedDay, isSelected } = props;
   return (
     <TouchableOpacity
       className={`${isSelected ? `bg-[#FF9502]` : "bg-[#47566A]"
         } rounded-md items-center p-1`}
       style={{ minWidth: 58, minHeight: 59 }}
-      onPress={() => handleSelectedDay(id)}>
+      onPress={() => handleSelectedDay(date)}>
       <Text
         className={`text-white font-bold text-lg`}>
         {moment(date).calendar(null, {

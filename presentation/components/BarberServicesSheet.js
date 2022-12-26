@@ -35,8 +35,7 @@ const BarberServicesSheet = (props) => {
       index={0}
       snapPoints={snapPoints}
       enablePanDownToClose
-      onClose={handleShowServSheet}
-    >
+      onClose={handleShowServSheet}>
       <Text className="p-3 text-center text-xl font-semibold">
         {getString.t('manage_your_services')}
       </Text>

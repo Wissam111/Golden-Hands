@@ -73,14 +73,13 @@ const DashBoardScreen = ({ navigation }) => {
           <CalendarView
             dateInterval={dateInterval}
             handleDateRight={handleDateRight}
-            handleDateLeft={handleDateLeft}/>
+            handleDateLeft={handleDateLeft} />
           <View className="flex-row space-x-9 p-4 items-center justify-between">
             {dateInterval.map((date, index) => (
               <DayView
                 key={index}
-                id={index}
                 date={date}
-                isSelected={index == selectedDay}
+                isSelected={date.isSame(selectedDay)}
                 handleSelectedDay={handleSelectedDay}
               />
             ))}
@@ -126,11 +125,12 @@ const DashBoardScreen = ({ navigation }) => {
 
         {showStatusSheet && (
           <StatusSheet
-            navigateToProfile={(id) => {navigation.navigate('ProfileScreen', { userId: id })}}
+            navigateToProfile={(id) => { navigation.navigate('ProfileScreen', { userId: id }) }}
             handleUpdateStatus={handleUpdateStatus}
             handleShowStatusSheet={handleShowStatusSheet}
             handleDeleteAppointment={handleDeleteAppointment}
             appointment={currentAppoint}
+            services={workerServices}
           />
         )}
         {showAddAppoint && (
