@@ -33,9 +33,6 @@ const useDashBoardModel = () => {
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
-  useEffect(() => {
-    getAppointments()
-  }, [state.selectedDay])
 
   /*-------- geting all appointments by date ---------- */
   const getAppointments = async (search = '') => {

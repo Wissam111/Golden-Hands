@@ -18,54 +18,27 @@ const AppointmentsSheet = (props) => {
 
   const [appointmentsIntervals, setAppointmentsInterval] = useState([]);
 
-  const getAppointmentCardName = (appointment) => {
-    if (appointment.customer) {
-      return `${appointment.customer.firstName} ${appointment.customer.lastName}`
-    }
 
-    if (appointment.status === 'hold') {
-      return getString.t('hold_by_worker')
+  const generateHoursInterval = async () => {
+    let currentDate = moment().startOf('day')
+    const tt = []
+    const numberOfIntervals = 24 / 2
+    for (let i = 0; i < numberOfIntervals; i++) {
+      tt.push({
+        start: currentDate.format('HH:mm'),
+        end: currentDate.add(2, 'hours').format('HH:mm'),
+        appointments: []
+      })
     }
-    return getString.t('free_appointment')
-  }
-
-  const generateHoursInterval = () => {
-    const times = [];
-    const interval = 120;
-    let startHourInMinute = 60;
-    let endHourInMinute = 60 * 24;
-    let timesIntervals = [];
-    for (let i = 0; startHourInMinute < 24 * 60; i++) {
-      if (startHourInMinute > endHourInMinute) break;
-      var hh = Math.floor(startHourInMinute / 60);
-      var mm = startHourInMinute % 60;
-      times[i] = ("0" + (hh % 24)).slice(-2) + ":" + ("0" + mm).slice(-2);
-
-      startHourInMinute = startHourInMinute + interval;
-    }
-    for (let i = 0; i < times.length; i++) {
-      if (i == times.length - 1) {
-        timesIntervals.push({
-          start: times[i],
-          end: "24:00",
-          appointments: [],
-        });
-        break;
-      }
-      timesIntervals.push({
-        start: times[i],
-        end: times[i + 1],
-        appointments: [],
-      });
-    }
-    return timesIntervals;
+    return tt;
   };
 
-  useEffect(() => {
-    let intervals = generateHoursInterval();
 
-    appointments.forEach((appoint) => {
-      let appointS = moment(compineDT(moment(), appoint.start_time));
+  const createIntervals = async () => {
+    let intervals = await generateHoursInterval();
+    appointments.forEach((appointment) => {
+
+      let appointS = moment(compineDT(moment(), appointment.start_time));
 
       let interval = intervals.find((intev) => {
         let intervalS = moment(intev.start, "HH:mm");
@@ -74,9 +47,14 @@ const AppointmentsSheet = (props) => {
           moment(appointS).isBetween(intervalS, intervalE, null, "[]")
         )
       })
-      interval?.appointments.push(appoint);
+      interval?.appointments.push(appointment);
     });
-    setAppointmentsInterval(intervals);
+    setAppointmentsInterval(intervals.filter(interval => interval.appointments.length > 0));
+  }
+
+
+  useEffect(() => {
+    createIntervals()
   }, [appointments]);
 
   return (
@@ -85,18 +63,17 @@ const AppointmentsSheet = (props) => {
       <BottomSheetFlatList
         style={{ flex: 1 }}
         contentContainerStyle={{ padding: 8 }}
-        data={appointments}
+        data={appointmentsIntervals}
         horizontal={false}
         ItemSeparatorComponent={<Spacer space={6} />}
         renderItem={({ item, index }) =>
-            <View style={{ alignItems:'flex-start' }}>
-              {/* <AppointmentsInterval
-                  interval={item}
-                  handleShowStatusSheet={handleShowStatusSheet}
-                  key={index}
-                /> */}
-              <AppointmentCard onPress={() => { handleShowStatusSheet(item, true) }} image={item.customer?.image} appointment={item} text={getAppointmentCardName(item)} />
-            </View>
+          <View style={{ alignItems: 'flex-start' }}>
+            <AppointmentsInterval
+              interval={item}
+              handleShowStatusSheet={handleShowStatusSheet}
+              key={index}
+            />
+          </View>
         }
         ListHeaderComponent={
           <View className="items-center">

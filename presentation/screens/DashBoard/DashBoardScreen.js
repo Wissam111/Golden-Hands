@@ -8,7 +8,7 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import HorizontalChip from "../../components/HorizontalChip";
 import CalendarView from "../../components/CalendarView";
 import DayView from "../../components/DayView";
@@ -19,10 +19,12 @@ import BarberServicesSheet from "../../components/BarberServicesSheet";
 import { EvilIcons } from "@expo/vector-icons";
 import AddAppointmentView from "../../components/AddAppointmentView";
 import getString from "../../../localization";
+import { useIsFocused } from "@react-navigation/native";
 
 /*------- represent's worker Dashboard Screen ---------- */
 
 const DashBoardScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const {
     appointments,
     worker,
@@ -34,6 +36,7 @@ const DashBoardScreen = ({ navigation }) => {
     showAddAppoint,
     workerServices,
     currentAppoint,
+    getAppointments,
     handleDateRight,
     handleDateLeft,
     handleSelectedDay,
@@ -50,6 +53,13 @@ const DashBoardScreen = ({ navigation }) => {
     handleDeleteAppointment,
     compineDT,
   } = DashBoardModel();
+
+  useEffect(() => {
+    if(isFocused && selectedDay){
+      getAppointments()
+    }
+  }, [isFocused , selectedDay])
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="bg-[#1D1B1B] flex-1 relative">

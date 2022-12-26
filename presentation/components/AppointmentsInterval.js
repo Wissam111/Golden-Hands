@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, FlatList } from "react-native";
 import React from "react";
 import AppointmentView from "./AppointmentView";
 import DashedLine from "react-native-dashed-line";
@@ -7,6 +7,7 @@ import Spacer from "./Spacer";
 import getString from "../../localization";
 import { fontSmall } from "../styles/global";
 import Rating from "./Rating";
+import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
 
 
@@ -25,7 +26,7 @@ const AppointmentsInterval = (props) => {
   }
 
   return (
-    <View style={{ flexDirection: 'row' }} className="p-2 mb-4 relative flex-1">
+    <View style={{ flexDirection: 'row', padding: 8 }}>
 
       <View style={{ alignItems: 'center' }}>
         <Text style={{ fontSize: fontSmall }} className="text-gray-500"> {interval.start}</Text>
@@ -55,27 +56,29 @@ const AppointmentsInterval = (props) => {
         <Text style={{ fontSize: fontSmall }} className="text-gray-500">{interval.end}</Text>
       </View>
 
+      <Spacer space={4} />
 
-      <View>
-        {interval.appointments.map((appoint) => (
-          <View key={appoint._id}>
+      <FlatList
+        data={interval.appointments}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={<Spacer space={6} />}
+        renderItem={({ item }) => (
+          <View style ={{alignItems:'flex-start'}}>
             <AppointmentCard
-              onPress={() => { handleShowStatusSheet(appoint, true) }}
-              appointment={appoint}
-              text={getAppointmentCardName(appoint)}
-              image={appoint.customer?.image} />
+              onPress={() => { handleShowStatusSheet(item, true) }}
+              appointment={item}
+              text={getAppointmentCardName(item)}
+              image={item.customer?.image} />
 
             <View style={{ alignSelf: 'flex-start' }}>
-              {appoint.status === 'done' && appoint.rating &&
-                <Rating rating={appoint.rating} showRatingMsg={appoint.rating == null} from={5} />
+              {item.status === 'done' && item.rating &&
+                <Rating rating={item.rating} showRatingMsg={item.rating == null} from={5} />
               }
             </View>
-
-            <Spacer space={6} />
           </View>
-        ))
-        }
-      </View>
+        )}
+        keyExtractor={(item) => item._id}
+      />
 
     </View>
   );
