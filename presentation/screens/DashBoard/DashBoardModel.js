@@ -8,6 +8,7 @@ import moment from "moment";
 import useDialogContext from "../../../hooks/useDialogContext";
 import io from 'socket.io-client'
 import { useIsFocused } from "@react-navigation/native";
+import { URL } from "../../../network/apiCall";
 
 const useDashBoardModel = () => {
   const isFocused = useIsFocused();
@@ -39,7 +40,7 @@ const useDashBoardModel = () => {
   const workerRepository = WorkerRepository();
 
   const onSocketChange = useCallback((data) => {
-    console.log(data);
+    // console.log(data);
     switch (data.operationType) {
       case 'update':
         setState((prev) => {
@@ -97,14 +98,12 @@ const useDashBoardModel = () => {
   }, [])
 
   useEffect(() => {
-    const socket = io('http://10.113.4.219:4000/socket/appointments')
+    const socket = io(URL + 'socket/appointments')
     socket.on('change', (data) => {
-      // console.log(data);
       onSocketChange(data)
     })
 
     return function cleanup() {
-      console.log('clean');
       socket.close()
     };
   }, [isFocused])
@@ -264,7 +263,7 @@ const useDashBoardModel = () => {
   };
 
   const handleDateRight = () => {
-    let startDate = state.dateInterval[4].add(1, 'days');
+    let startDate = state.dateInterval[4].clone().add(1, 'days');
     let dates = [];
     for (let i = 0; i < 5; i++) {
       dates.push(startDate.clone().add(i, "days"));

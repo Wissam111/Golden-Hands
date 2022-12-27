@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import getString from "../localization";
 import showAlert from "../presentation/components/ShowAlert";
 
+export const URL = 'http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com/'
 export const BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com/api/";
 export const BASE_URL_DEV = "http://10.113.4.219:4000/api/";
 export const IMAGE_BASE_URL = "http://ec2-13-231-177-94.ap-northeast-1.compute.amazonaws.com/imgs/";

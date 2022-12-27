@@ -65,12 +65,12 @@ const DashBoardScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused && selectedDay && !isLoading) {
-      getAppointments('' )
+      getAppointments('')
     }
-  }, [isFocused, selectedDay , allSelected])
+  }, [isFocused, selectedDay, allSelected])
 
-  useEffect(()=>{
-  },[appointments])
+  useEffect(() => {
+  }, [appointments])
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -108,15 +108,19 @@ const DashBoardScreen = ({ navigation }) => {
             dateInterval={dateInterval}
             handleDateRight={handleDateRight}
             handleDateLeft={handleDateLeft} />
+
+
           <View className="flex-row space-x-9 p-4 items-center justify-between">
-            {dateInterval.map((date, index) => (
-              <DayView
-                key={index}
-                date={date}
-                isSelected={date.isSame(selectedDay)}
-                handleSelectedDay={handleSelectedDay}
-              />
-            ))}
+            {dateInterval.map((date, index) => {
+              return (
+                <DayView
+                  key={index}
+                  date={date}
+                  isSelected={date.isSame(selectedDay)}
+                  handleSelectedDay={handleSelectedDay}
+                />
+              )
+            })}
           </View>
         </View>
 
