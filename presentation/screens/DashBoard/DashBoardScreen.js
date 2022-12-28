@@ -36,6 +36,7 @@ const DashBoardScreen = ({ navigation }) => {
     numberOfActiveCustomers,
     appointments,
     worker,
+    search,
     dateInterval,
     selectedDay,
     showStatusSheet,
@@ -64,10 +65,10 @@ const DashBoardScreen = ({ navigation }) => {
   } = DashBoardModel();
 
   useEffect(() => {
-    if (isFocused && selectedDay && !isLoading) {
-      getAppointments('')
+    if (isFocused) {
+      getAppointments()
     }
-  }, [isFocused, selectedDay, allSelected])
+  }, [isFocused, selectedDay, allSelected, search])
 
   useEffect(() => {
   }, [appointments])
@@ -137,6 +138,7 @@ const DashBoardScreen = ({ navigation }) => {
           handleShowAppoint={handleShowAppoint}
           compineDT={compineDT}
           handleSearch={handleSearch}
+          search={search}
         />
 
         {showServSheet && (

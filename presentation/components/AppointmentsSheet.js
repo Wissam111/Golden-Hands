@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, TextInput, Platform, RefreshControl } from "react-native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import moment from "moment";
 import AppointmentsInterval from "./AppointmentsInterval";
 import getString from "../../localization";
@@ -8,13 +8,14 @@ import Spacer from "./Spacer";
 import { EvilIcons } from "@expo/vector-icons";
 import { blue, fontLarge, fontMeduim, fontSmall, globalStyles, lightBlack, orange2, white } from "../styles/global";
 import { Octicons } from '@expo/vector-icons';
+import useLoadingContext from "../../hooks/useLoadingContext";
 
 const AppointmentsSheet = (props) => {
-  const { handleSearch, numberOfActiveCustomers, selectedDay, appointments, height, height2, handleShowStatusSheet, handleShowAppoint, compineDT, handleSelectAll, handleSelectBooked, allSelected } =
+  const { handleSearch, search, numberOfActiveCustomers, selectedDay, appointments, height, height2, handleShowStatusSheet, handleShowAppoint, compineDT, handleSelectAll, handleSelectBooked, allSelected } =
     props;
   const snapPoints = useMemo(() => [height, height2], [height, height2]);
   const bottomSheetRef = useRef(null);
-
+  const { isLoading } = useLoadingContext()
   const [appointmentsIntervals, setAppointmentsInterval] = useState([]);
   const [closestAppointment, setClosestAppointment] = useState(null)
 
@@ -98,11 +99,12 @@ const AppointmentsSheet = (props) => {
             <View className="flex-row items-center flex-1 bg-gray-200 rounded-full pb-1 mt-2">
               <Spacer space={2} />
               <EvilIcons name="search" size={27} color="gray" />
-              <TextInput
+              <BottomSheetTextInput
                 style={{ flex: 1, padding: Platform.OS === 'android' ? 8 : 12, ...globalStyles.txtDirection }}
                 placeholder={getString.t('search') + '...'}
                 keyboardType="text"
                 onChangeText={(text) => handleSearch(text)}
+                value={search}
               />
             </View>
 
@@ -128,20 +130,16 @@ const AppointmentsSheet = (props) => {
                 </TouchableOpacity>
               </View>
 
-              <Text style={{ ...globalStyles.font, fontSize: fontMeduim , marginEnd: 8 , color: lightBlack}}>{getString.t('customers')}  <Text style={{ fontFamily: 'poppins-bold', fontSize: fontLarge , color: '#000' }}>{numberOfActiveCustomers}</Text></Text>
+              <Text style={{ ...globalStyles.font, fontSize: fontMeduim, marginEnd: 8, color: lightBlack }}>{getString.t('customers')}  <Text style={{ fontFamily: 'poppins-bold', fontSize: fontLarge, color: '#000' }}>{numberOfActiveCustomers}</Text></Text>
             </View>
             {
-              appointments.length == 0 &&
+              appointments.length == 0 && !isLoading &&
               <>
                 <Spacer space={16} />
                 <Text className="text-xl text-center text-red-600 mt-10">{getString.t('no_appointment_at_this_day')}</Text>
               </>
             }
             <Spacer space={16} />
-
-
-
-
           </View>
         }
         ListFooterComponent={<View style={{ height: 20 }} />}

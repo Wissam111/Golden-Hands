@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
+  I18nManager,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import DefaultButton from "./DefaultButton";
@@ -15,6 +16,7 @@ import Spacer from "./Spacer";
 import { backgroundColor, fontMeduim, fontSmall, globalStyles, lightBlack, white } from "../styles/global";
 import TextInputIcon from "./TextInputIcon";
 import { MaterialIcons } from '@expo/vector-icons';
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 
 
 
@@ -77,15 +79,19 @@ const AddServiceView = (props) => {
 
             <Spacer space={6} />
 
-            <TextInputIcon
-              style={{ flex: 1, padding: 2, alignSelf: 'st' }}
-              iconStart={<MaterialIcons name="attach-money" size={18} color="black" />}
-              onChangeText={(str) => { setSelectedPrice(str) }}
-              value={selectedPrice}
-              placeholder={getString.t('price')}
-              keyboardType="numeric"
-              maxLength={4}
-            />
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', ...globalStyles.input, padding: 0 }} >
+              <Spacer space={4} />
+              <MaterialIcons name="attach-money" size={18} color="black" />
+              <Spacer space={6} />
+              <BottomSheetTextInput
+                style={{ flex: 1, ...globalStyles.font, textAlign: I18nManager.isRTL ? 'right' : 'left', padding: 16 }}
+                value={selectedPrice}
+                onChangeText={(str) => { setSelectedPrice(str) }}
+                placeholder={getString.t('price')}
+                keyboardType='numeric'
+                maxLength={4}
+              />
+            </View>
 
           </View>
 
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
     ...globalStyles.font,
     fontSize: fontMeduim,
   },
-  dropdown1DropdownStyle: { backgroundColor: backgroundColor , borderRadius: 8},
+  dropdown1DropdownStyle: { backgroundColor: backgroundColor, borderRadius: 8 },
   dropdown1RowStyle: {
     backgroundColor: backgroundColor,
     borderBottomColor: "#C5C5C5",

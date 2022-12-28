@@ -35,12 +35,13 @@ const useDashBoardModel = () => {
     showAddAppoint: false,
     numberOfActiveCustomers: null
   });
+  const [search, setSearch] = useState(null)
 
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
-  const onSocketChange = useCallback((data) => {
-    // console.log(data);
+  const onSocketChange = useCallback(async (data) => {
+    console.log(data);
     switch (data.operationType) {
       case 'update':
         setState((prev) => {
@@ -100,17 +101,16 @@ const useDashBoardModel = () => {
   useEffect(() => {
     const socket = io(URL + 'socket/appointments')
     socket.on('change', (data) => {
-      onSocketChange(data)
+       onSocketChange(data)
     })
 
     return function cleanup() {
       socket.close()
     };
-  }, [isFocused])
+  }, [])
 
   /*-------- geting all appointments by date ---------- */
-  const getAppointments = async (search = '') => {
-    if (isLoading) return
+  const getAppointments = async () => {
     setIsLoading({ isLoading: true });
     try {
       const start_time = new Date(state.selectedDay)
@@ -121,12 +121,11 @@ const useDashBoardModel = () => {
       const end_time = new Date(start_time)
       end_time.setDate(start_time.getDate() + 1)
 
-
       const { appointments, numberOfActiveCustomers } = await appointmentRepository.getAppointments({
         end_time,
         start_time,
         workerId: user._id,
-        search,
+        search: search,
         status: state.allSelected ? null : 'in-progress'
       });
 
@@ -284,7 +283,6 @@ const useDashBoardModel = () => {
   }
 
   const handleSelectedDay = async (day) => {
-    if (isLoading) return
     setState((prev) => {
       return { ...prev, selectedDay: day };
     });
@@ -315,7 +313,7 @@ const useDashBoardModel = () => {
   };
 
   const handleSearch = async (text) => {
-    getAppointments(text);
+    setSearch(text)
   };
 
   const handleShowServSheet = async () => {
@@ -348,6 +346,7 @@ const useDashBoardModel = () => {
   return {
     ...state,
     isLoading,
+    search,
     getAppointments,
     handleDateRight,
     handleDateLeft,

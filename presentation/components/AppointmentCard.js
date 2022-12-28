@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { View, Image, Text, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { View, Image, Text, ActivityIndicator, TouchableOpacity, Pressable } from 'react-native'
 import { IMAGE_BASE_URL } from '../../network/apiCall'
 import { fontMeduim, fontSmall, globalStyles, gray1, semiLarge, white } from '../styles/global'
 import Spacer from './Spacer'
@@ -34,7 +34,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
     }
 
     return (
-        <TouchableOpacity  onPress={onPress} disabled={onPress == null}>
+        <Pressable  onPress={onPress} disabled={onPress == null}>
             <View style={{
                 backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
             }}>
@@ -78,7 +78,7 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
                 }
 
             </View >
-        </TouchableOpacity>
+        </Pressable>
     )
 }
 
