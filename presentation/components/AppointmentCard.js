@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 
 
-const AppointmentCard = ({ appointment, image, text, onPress }) => {
+const AppointmentCard = ({ appointment, image, text, onPress, onLongPress, isSelected }) => {
     const [progressBar, setProgressBar] = useState(true)
 
     const getServiceImage = () => {
@@ -34,51 +34,64 @@ const AppointmentCard = ({ appointment, image, text, onPress }) => {
     }
 
     return (
-        <Pressable  onPress={onPress} disabled={onPress == null}>
-            <View style={{
-                backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
-            }}>
+        <TouchableOpacity onLongPress={onLongPress} onPress={onPress} disabled={!onPress && !onLongPress}>
+            <View>
+                <View style={{
+                    backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
+                }}>
 
-                <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1, }}>
-                    <Image
-                        key={image}
-                        defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
-                        style={{ width: 56, height: 56, borderRadius: 36 }}
-                        source={{ uri: image ? IMAGE_BASE_URL + image : null }}
-                        onLoadEnd={() => {
-                            setProgressBar(false)
-                        }} />
-
-                    <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator animating={progressBar && image != null} color='#000' size='small' />
-                    </View>
-                </View>
-
-                <Spacer space={8} />
-
-
-                <View style={{ flexGrow: 1 }}>
-                    <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontMeduim, fontFamily: 'poppins-bold' }}>{text}</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Ionicons name="time-outline" size={18} color={gray1} />
-                        <Spacer space={4} />
-                        <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontSmall, color: gray1 }}>{moment(appointment.start_time).format('HH:mm')} - {moment(appointment.end_time).format('HH:mm')}</Text>
-                    </View>
-                </View>
-
-                <Spacer space={26} style={{ flexShrink: 1}} />
-
-                {appointment.service &&
-                    <>
+                    <View style={{ backgroundColor: '#FCC878', borderRadius: 36, borderColor: white, borderWidth: 1, }}>
                         <Image
-                            key={getServiceImage()}
-                            style={{ width: 46, height: 46, flexShrink: 1 }} source={getServiceImage()} />
-                        <Spacer space={8} />
-                    </>
-                }
+                            key={image}
+                            defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
+                            style={{ width: 56, height: 56, borderRadius: 36 }}
+                            source={{ uri: image ? IMAGE_BASE_URL + image : null }}
+                            onLoadEnd={() => {
+                                setProgressBar(false)
+                            }} />
 
-            </View >
-        </Pressable>
+                        <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator animating={progressBar && image != null} color='#000' size='small' />
+                        </View>
+                    </View>
+
+                    <Spacer space={8} />
+
+
+                    <View style={{ flexGrow: 1 }}>
+                        <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontMeduim, fontFamily: 'poppins-bold' }}>{text}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Ionicons name="time-outline" size={18} color={gray1} />
+                            <Spacer space={4} />
+                            <Text style={{ ...globalStyles.font, ...globalStyles.txtDirection, fontSize: fontSmall, color: gray1 }}>{moment(appointment.start_time).format('HH:mm')} - {moment(appointment.end_time).format('HH:mm')}</Text>
+                        </View>
+                    </View>
+
+                    <Spacer space={26} style={{ flexShrink: 1 }} />
+
+                    {appointment.service &&
+                        <>
+                            <Image
+                                key={getServiceImage()}
+                                style={{ width: 46, height: 46, flexShrink: 1 }} source={getServiceImage()} />
+                            <Spacer space={8} />
+                        </>
+                    }
+
+                </View >
+
+                {isSelected && <View style={{
+                    borderRadius: 38,
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,.3)',
+                    top: 0,
+                    left: 0
+                }} />
+                }
+            </View>
+        </TouchableOpacity>
     )
 }
 

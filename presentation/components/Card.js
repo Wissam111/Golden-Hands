@@ -5,12 +5,11 @@ import { backgroundColor, blue, globalStyles, green, orange1, orange2 } from "..
 const Card = (props) => {
   const { cardContent, title, handlePress, isSelected, price } = props;
   return (
-    <View>
-      <TouchableOpacity
+    <TouchableOpacity onPress={() => handlePress(props.id)}>
+      <View
         style={{ ...styles.card, backgroundColor: isSelected ? orange1 : backgroundColor }}
-        className={`rounded-full px-4  relative ${isSelected ? "bg-[#FF9B02]" : "bg-white"
-          } mx-2 mb-2 justify-center items-center`}
-        onPress={() => handlePress(props.id)}>
+        className={`rounded-full relative ${isSelected ? "bg-[#FF9B02]" : "bg-white"
+          } justify-center items-center`}>
         <Text
           className={` font-semibold text-center  ${isSelected ? "text-white" : "text-black"
             }`}>
@@ -25,13 +24,13 @@ const Card = (props) => {
             {price} ₪
           </Text>
         )}
-      </TouchableOpacity>
-
+      </View>
       {price &&
-        <View style={{ position: 'relative', top: -16 }} >
+        <View style={{ position: 'relative', top: -12 }} >
           <Entypo name="price-tag" size={24} color={green} />
         </View>}
-    </View>
+      
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

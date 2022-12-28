@@ -11,7 +11,22 @@ import { Octicons } from '@expo/vector-icons';
 import useLoadingContext from "../../hooks/useLoadingContext";
 
 const AppointmentsSheet = (props) => {
-  const { handleSearch, search, numberOfActiveCustomers, selectedDay, appointments, height, height2, handleShowStatusSheet, handleShowAppoint, compineDT, handleSelectAll, handleSelectBooked, allSelected } =
+  const {
+    cancelSelection,
+    selectionMode,
+    isSelected,
+    handleSearch,
+    search,
+    numberOfActiveCustomers,
+    handleSelectedAppointment,
+    appointments,
+    height,
+    height2,
+    handleShowStatusSheet,
+    handleShowAppoint,
+    compineDT, handleSelectAll,
+    handleSelectBooked,
+    allSelected } =
     props;
   const snapPoints = useMemo(() => [height, height2], [height, height2]);
   const bottomSheetRef = useRef(null);
@@ -76,6 +91,10 @@ const AppointmentsSheet = (props) => {
         renderItem={({ item, index }) =>
           <View style={{ alignItems: 'flex-start' }}>
             <AppointmentsInterval
+              cancelSelection={cancelSelection}
+              selectionMode={selectionMode}
+              isSelected={isSelected}
+              handleSelectedAppointment={handleSelectedAppointment}
               closestAppointment={closestAppointment}
               interval={item}
               handleShowStatusSheet={handleShowStatusSheet}

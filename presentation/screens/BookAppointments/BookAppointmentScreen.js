@@ -71,7 +71,7 @@ const BookAppointmentScreen = () => {
             tintColor="#000"
           />
         }>
-        <View style={{ alignItems: 'flex-start' }}>
+        <View style={{ alignItems: 'flex-start', marginBottom: 12 }}>
           <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_worker')}</Text>
           <FlatList
             contentContainerStyle={{ padding: 8, flexGrow: 1 }}
@@ -83,7 +83,7 @@ const BookAppointmentScreen = () => {
                 text={item.firstName + " " + item.lastName}
                 imageUrl={item.image}
                 user={item}
-                onPress={()=> { if(!isLoading) handleSelectWorker(item)}}
+                onPress={() => { if (!isLoading) handleSelectWorker(item) }}
                 isSelected={selectedWorker?._id == item._id}
               />
             )}
@@ -92,10 +92,11 @@ const BookAppointmentScreen = () => {
         </View>
         {
           selectedWorker && (
-            <View style={{ alignItems: 'flex-start' }} >
+            <View style={{ alignItems: 'flex-start', marginBottom: 12 }} >
               <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_day')}</Text>
               <FlatList
                 contentContainerStyle={{ padding: 8, flexGrow: 1 }}
+                ItemSeparatorComponent={<Spacer space={6} />}
                 data={workingDates}
                 keyExtractor={(item) => item.date}
                 horizontal
@@ -122,7 +123,7 @@ const BookAppointmentScreen = () => {
         }
         {
           selectedDay && (
-            <View style={{ alignItems: 'flex-start' }}>
+            <View style={{ alignItems: 'flex-start', marginBottom: 12 }}>
               <Text className="text-xl  m-2 mb-5 font-medium">
                 {getString.t('select_service')}
               </Text>
@@ -130,13 +131,14 @@ const BookAppointmentScreen = () => {
                 contentContainerStyle={{ padding: 8, flexGrow: 1 }}
                 data={selectedWorker?.services}
                 keyExtractor={(item) => item._id}
+                ItemSeparatorComponent={<Spacer space={6} />}
                 horizontal
                 renderItem={({ item }) => (
                   <Card
                     cardContent={item}
                     id={item}
                     title={getString.t(item.title.toLowerCase())}
-                    handlePress={()=>{if(!isLoading) handleSelectService(item)}}
+                    handlePress={() => { if (!isLoading) handleSelectService(item) }}
                     isSelected={selectedService?._id === item._id}
                     price={item.price}
                   />
@@ -146,6 +148,7 @@ const BookAppointmentScreen = () => {
             </View>
           )
         }
+
         {
           selectedService && (
             <View style={{ alignItems: 'flex-start' }}>
@@ -156,6 +159,7 @@ const BookAppointmentScreen = () => {
                 contentContainerStyle={{ padding: 8, flexGrow: 1 }}
                 data={availableAppointments}
                 keyExtractor={(item) => item._id}
+                ItemSeparatorComponent={<Spacer space={6} />}
                 horizontal
                 renderItem={({ item }) => (
                   <Card

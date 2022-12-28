@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import WorkerRepository from "../../../repository/workerRepository";
 import AppointmentRepository from "../../../repository/AppointmentRepository";
@@ -6,6 +6,9 @@ import useAuthContext from "../../../hooks/useAuthContext";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import useLoadingContext from "../../../hooks/useLoadingContext";
+
+
+const WORKING_DATES_LIMIT = 7
 
 const useBookViewModel = () => {
   const [state, setState] = useState({
@@ -87,7 +90,7 @@ const useBookViewModel = () => {
 
     setIsLoading({ isLoading: true });
 
-    const data = await workerRepository.getWorkingDates(worker._id, new Date())
+    const data = await workerRepository.getWorkingDates(worker._id, new Date() , WORKING_DATES_LIMIT)
 
     setState((prev) => {
       return {

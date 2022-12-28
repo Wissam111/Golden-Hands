@@ -33,6 +33,13 @@ const AppointmentRepository = () => {
     return data;
   };
 
+
+  //delete many appointments
+  const deleteManyAppointments = async (listOfAppointmentsIds) => {
+    const data = await apiCall("appointments/", 'DELETE', { appointments: listOfAppointmentsIds });
+    return data;
+  }
+
   // get the current user appointments
   const getUserAppointments = async () => {
     const data = await apiCall("appointments/user-appointments");
@@ -82,6 +89,7 @@ const AppointmentRepository = () => {
   };
 
   return {
+    deleteManyAppointments,
     getAppointment,
     getAppointments,
     BookAppointment,

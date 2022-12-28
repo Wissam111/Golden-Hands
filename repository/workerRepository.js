@@ -35,8 +35,8 @@ const WorkerRepository = () => {
   };
 
 
-  const getWorkingDates = async (workerId, fromDate) => {
-    const data = await apiCall(`workers/working-dates`, 'GET', null, { workerId: workerId, fromDate: fromDate,  timezone: moment(new Date()).format('ZZ') });
+  const getWorkingDates = async (workerId, fromDate, limit) => {
+    const data = await apiCall(`workers/working-dates`, 'GET', null, { workerId: workerId, fromDate: fromDate, timezone: moment(new Date()).format('ZZ'), limit: limit });
     return data;
   }
 

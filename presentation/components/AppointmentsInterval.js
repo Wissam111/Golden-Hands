@@ -12,7 +12,7 @@ import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
 
 const AppointmentsInterval = (props) => {
-  const { interval, handleShowStatusSheet, closestAppointment } = props;
+  const { interval, cancelSelection, selectionMode, isSelected, handleShowStatusSheet, closestAppointment, handleSelectedAppointment } = props;
 
   const getAppointmentCardName = (appointment) => {
     if (appointment.customer) {
@@ -75,7 +75,11 @@ const AppointmentsInterval = (props) => {
             }
 
             <AppointmentCard
-              onPress={() => { handleShowStatusSheet(item, true) }}
+              isSelected={isSelected(item)}
+              onLongPress={!selectionMode ? () => { handleSelectedAppointment(item) } : () => { }}
+              onPress={!selectionMode ? () => { handleShowStatusSheet(item, true) } : () => {
+                isSelected(item) ? cancelSelection(item) : handleSelectedAppointment(item)
+              }}
               appointment={item}
               text={getAppointmentCardName(item)}
               image={item.customer?.image} />

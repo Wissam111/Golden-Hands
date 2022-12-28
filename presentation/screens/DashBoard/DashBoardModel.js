@@ -36,12 +36,12 @@ const useDashBoardModel = () => {
     numberOfActiveCustomers: null
   });
   const [search, setSearch] = useState(null)
-
+  const [selectedAppointments, setSelectedAppointments] = useState([])
   const appointmentRepository = AppointmentRepository();
   const workerRepository = WorkerRepository();
 
   const onSocketChange = useCallback(async (data) => {
-    console.log(data);
+    // console.log(data);
     switch (data.operationType) {
       case 'update':
         setState((prev) => {
@@ -67,41 +67,39 @@ const useDashBoardModel = () => {
         })
         break
 
+      // case 'delete':
+      //   setState((prev) => {
+      //     const up = prev.appointments.filter(item => {
+      //       return item._id !== data.documentKey._id
+      //     })
+      //     return {
+      //       ...prev,
+      //       appointments: up
+      //     }
+      //   })
+      //   break
 
 
-      case 'delete':
-        setState((prev) => {
-          const up = prev.appointments.filter(item => {
-            return item._id !== data.documentKey._id
-          })
-          return {
-            ...prev,
-            appointments: up
-          }
-        })
-        break
+      // case 'insert':
+      //   setState((prev) => {
+      //     prev.appointments.push(data.fullDocument)
+      //     prev.appointments.sort((a, b) => {
+      //       new Date(a) <= new Date(b)
+      //     })
 
-
-      case 'insert':
-        setState((prev) => {
-          prev.appointments.push(data.fullDocument)
-          prev.appointments.sort((a, b) => {
-            new Date(a) <= new Date(b)
-          })
-
-          return {
-            ...prev,
-            appointments: [...prev.appointments]
-          }
-        })
-        break
+      //     return {
+      //       ...prev,
+      //       appointments: [...prev.appointments]
+      //     }
+      //   })
+      //   break
     }
   }, [])
 
   useEffect(() => {
     const socket = io(URL + 'socket/appointments')
     socket.on('change', (data) => {
-       onSocketChange(data)
+      onSocketChange(data)
     })
 
     return function cleanup() {
@@ -228,6 +226,7 @@ const useDashBoardModel = () => {
     let messg;
     try {
       const data = duration ? await appointmentRepository.createRangeAppointment(appointObj) : await appointmentRepository.PostAppointment(appointObj);
+      getAppointments()
       messg = data.message;
       handleShowAppoint();
     } catch (e) {
@@ -254,6 +253,21 @@ const useDashBoardModel = () => {
     showAlert(messg);
     setIsLoading({ isLoading: false });
   };
+
+
+  /*--------  deleting selected appointments ---------- */
+  const deleteSelectedAppointments = async () => {
+    if (selectedAppointments.length == 0) return
+    setIsLoading({ isLoading: true })
+    try {
+      const data = await appointmentRepository.deleteManyAppointments(selectedAppointments.map(item => item._id))
+      getAppointments()
+      cancelSelection()
+    } catch (e) {
+      console.log(e)
+    }
+    setIsLoading({ isLoading: false })
+  }
 
   /*------------------handle/healper functions-------------------*/
 
@@ -340,6 +354,25 @@ const useDashBoardModel = () => {
     });
   };
 
+
+
+
+  const handleSelectedAppointment = async (appointment) => {
+    setSelectedAppointments([...selectedAppointments, appointment])
+  }
+
+  const cancelSelection = (appointment) => {
+    if (!appointment) {
+      setSelectedAppointments([])
+      return
+    }
+    if (!isSelected(appointment))
+      return
+    setSelectedAppointments(selectedAppointments.filter(item => item != appointment))
+  }
+
+  const isSelected = (appointment) => selectedAppointments.includes(appointment)
+
   useEffect(() => {
     getWorkerServices();
   }, []);
@@ -347,6 +380,11 @@ const useDashBoardModel = () => {
     ...state,
     isLoading,
     search,
+    selectedAppointments,
+    deleteSelectedAppointments,
+    isSelected,
+    cancelSelection,
+    handleSelectedAppointment,
     getAppointments,
     handleDateRight,
     handleDateLeft,

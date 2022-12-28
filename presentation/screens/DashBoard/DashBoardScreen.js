@@ -19,11 +19,14 @@ import AppointmentsSheet from "../../components/AppointmentsSheet";
 import DashBoardModel from "./DashBoardModel";
 import StatusSheet from "../../components/StatusSheet";
 import BarberServicesSheet from "../../components/BarberServicesSheet";
-import { EvilIcons } from "@expo/vector-icons";
 import AddAppointmentView from "../../components/AddAppointmentView";
 import getString from "../../../localization";
 import { useIsFocused } from "@react-navigation/native";
 import Constants from 'expo-constants';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { lightBlack, orange2, red, white } from "../../styles/global";
+
 /*------- represent's worker Dashboard Screen ---------- */
 
 const DashBoardScreen = ({ navigation }) => {
@@ -33,6 +36,8 @@ const DashBoardScreen = ({ navigation }) => {
   const STATUS_BAR_HIEGHT = Platform.OS === 'android' ? StatusBar.currentHeight : Constants.statusBarHeight
 
   const {
+    closestAppointment,
+    selectedAppointments,
     numberOfActiveCustomers,
     appointments,
     worker,
@@ -45,7 +50,10 @@ const DashBoardScreen = ({ navigation }) => {
     showAddAppoint,
     workerServices,
     currentAppoint,
-    isLoading,
+    isSelected,
+    cancelSelection,
+    deleteSelectedAppointments,
+    handleSelectedAppointment,
     getAppointments,
     handleDateRight,
     handleDateLeft,
@@ -126,6 +134,11 @@ const DashBoardScreen = ({ navigation }) => {
         </View>
 
         <AppointmentsSheet
+          closestAppointment={closestAppointment}
+          selectionMode={selectedAppointments.length > 0}
+          isSelected={isSelected}
+          cancelSelection={cancelSelection}
+          handleSelectedAppointment={handleSelectedAppointment}
           numberOfActiveCustomers={numberOfActiveCustomers}
           height={h}
           height2={h2}
@@ -168,6 +181,31 @@ const DashBoardScreen = ({ navigation }) => {
             onClose={handleShowAppoint}
           />
         )}
+
+
+        {selectedAppointments.length > 0 &&
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 0,
+            start: 0,
+            backgroundColor: lightBlack,
+            width: '100%',
+            padding: 20
+          }}>
+
+            <TouchableOpacity onPress={() => { cancelSelection(null) }}>
+              <MaterialIcons name="cancel" size={24} color={white} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={deleteSelectedAppointments}>
+              <AntDesign name="delete" size={24} color={red} />
+            </TouchableOpacity>
+          </View>
+
+        }
       </View>
     </TouchableWithoutFeedback>
   );
