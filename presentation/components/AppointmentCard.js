@@ -5,10 +5,11 @@ import { fontMeduim, fontSmall, globalStyles, gray1, semiLarge, white } from '..
 import Spacer from './Spacer'
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react'
+import Animated, { SlideInRight, SlideOutRight } from 'react-native-reanimated'
 
 
 
-const AppointmentCard = ({ appointment, image, text, onPress, onLongPress, isSelected }) => {
+const AppointmentCard = ({ appointment, image, text, onPress, onLongPress, isSelected, index }) => {
     const [progressBar, setProgressBar] = useState(true)
 
     const getServiceImage = () => {
@@ -34,8 +35,8 @@ const AppointmentCard = ({ appointment, image, text, onPress, onLongPress, isSel
     }
 
     return (
-        <TouchableOpacity onLongPress={onLongPress} onPress={onPress} disabled={!onPress && !onLongPress}>
-            <View>
+        <Pressable onLongPress={onLongPress} onPress={onPress} disabled={!onPress && !onLongPress}>
+            <Animated.View entering={SlideInRight.delay(index * 100)} exiting={SlideOutRight}>
                 <View style={{
                     backgroundColor: getStatusColor(), padding: 8, borderRadius: 38, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
                 }}>
@@ -90,8 +91,8 @@ const AppointmentCard = ({ appointment, image, text, onPress, onLongPress, isSel
                     left: 0
                 }} />
                 }
-            </View>
-        </TouchableOpacity>
+            </Animated.View>
+        </Pressable>
     )
 }
 

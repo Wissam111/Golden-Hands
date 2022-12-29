@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView } from "react-native";
 
 import React, { useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { AntDesign } from "@expo/vector-icons";
 
 import AddServiceView from "./AddServiceView";
@@ -40,40 +40,37 @@ const BarberServicesSheet = (props) => {
       <Text className="p-3 text-center text-xl font-semibold">
         {getString.t('manage_your_services')}
       </Text>
-      <BottomSheetScrollView
+
+
+      <BottomSheetFlatList
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
-        contentContainerStyle={{ padding: 7 }}>
-        <View>
-          {workerServices.map((serv) => (
-            <View
-              key={serv._id}
-              className="flex-row justify-between m-2 items-center p-3 rounded-md"
-              style={styles.shadow}>
-              <View className="mr-2">
-                <Text style={{ alignSelf: 'flex-start' }} className="font-bold mb-1">{getString.t(serv.title.toLowerCase())}</Text>
-                <Text className="font-bold">{getString.t('price') + " " + serv.price + "₪"}</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() =>
-                  showDialog({
-                    isVisible: true,
-                    title: getString.t('service'),
-                    message: "Are you sure you want to delete this item?",
-                    onDone: () => { handleDeleteServ(serv._id) }
-                  })
-                }
-              >
-                <AntDesign name="minuscircle" size={22} color="red" />
-              </TouchableOpacity>
+        data={workerServices}
+        contentContainerStyle={{ padding: 8, flexGrow: 1 , paddingBottom: 20 }}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <View
+            className="flex-row justify-between m-2 items-center p-3 rounded-md"
+            style={styles.shadow}>
+            <View className="mr-2">
+              <Text style={{ alignSelf: 'flex-start' }} className="font-bold mb-1">{getString.t(item.title.toLowerCase())}</Text>
+              <Text className="font-bold">{getString.t('price') + " " + item.price + "₪"}</Text>
             </View>
-          ))}
-        </View>
-        <AddServiceView handlePostServ={handlePostServ} worker={worker} />
-        <Spacer space={12} />
-      </BottomSheetScrollView>
-      <SafeAreaView />
-
+            <TouchableOpacity
+              onPress={() =>
+                showDialog({
+                  isVisible: true,
+                  title: getString.t('service'),
+                  message: "Are you sure you want to delete this item?",
+                  onDone: () => { handleDeleteServ(item._id) }
+                })
+              }>
+              <AntDesign name="minuscircle" size={22} color="red" />
+            </TouchableOpacity>
+          </View>
+        )}
+        ListFooterComponent={<AddServiceView handlePostServ={handlePostServ} worker={worker} />}
+      />
     </BottomSheet >
   );
 };

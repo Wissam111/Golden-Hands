@@ -17,7 +17,6 @@ const useDashBoardModel = () => {
   const { dispatch: showDialog } = useDialogContext()
   let startDate = moment().startOf('day')
   const [state, setState] = useState({
-    appointments: [],
     dateInterval: [
       startDate,
       startDate.clone().add(1, "days"),
@@ -25,16 +24,23 @@ const useDashBoardModel = () => {
       startDate.clone().add(3, "days"),
       startDate.clone().add(4, "days"),
     ],
-    worker: user,
-    workerServices: [],
-    selectedDay: startDate,
     showStatusSheet: false,
     currentAppoint: null,
     allSelected: true,
     showServSheet: false,
     showAddAppoint: false,
-    numberOfActiveCustomers: null
+    worker: user
   });
+
+  const [showServSheet, setShowServSheet] = useState(false)
+  const [numberOfActiveCustomers, setNumberOfActiveCustomers] = useState(null)
+  const [selectedDay, setSelectedDay] = useState(startDate)
+  const [workerServices, setWorkerServices] = useState([])
+  const [appointmentsState, setAppointmentsState] = useState({
+    appointments: null,
+    closestAppointment: null,
+    appointmentsCount: null
+  })
   const [search, setSearch] = useState(null)
   const [selectedAppointments, setSelectedAppointments] = useState([])
   const appointmentRepository = AppointmentRepository();
@@ -44,21 +50,32 @@ const useDashBoardModel = () => {
     // console.log(data);
     switch (data.operationType) {
       case 'update':
-        setState((prev) => {
+        setAppointmentsState((prev) => {
           let numberOfActiveCustomers = 0
+
           const up = prev.appointments.map(item => {
-            let obj = item
-            if (item._id === data.documentKey._id) {
-              obj = {
-                ...item,
-                ...data.updateDescription.updatedFields
+           
+            const appointments = item.appointments.map(appointment => {
+              let obj = appointment
+              if (appointment._id === data.documentKey._id) {
+                obj = {
+                  ...appointment,
+                  ...data.updateDescription.updatedFields
+                }
               }
+              if (obj.status === 'in-progress' || obj.status === 'done' || obj.status === 'hold') {
+                numberOfActiveCustomers++
+              }
+              return obj
+            })
+
+            return {
+              start: item.start,
+              end: item.end,
+              appointments: appointments
             }
-            if (obj.status === 'in-progress' || obj.status === 'done' || obj.status === 'hold') {
-              numberOfActiveCustomers++
-            }
-            return obj
           })
+
           return {
             ...prev,
             appointments: up,
@@ -107,11 +124,59 @@ const useDashBoardModel = () => {
     };
   }, [])
 
+
+
+
+  const generateHoursInterval = async () => {
+    let currentDate = moment().startOf('day')
+    const tt = []
+    const numberOfIntervals = 24 / 2
+    for (let i = 0; i < numberOfIntervals; i++) {
+      tt.push({
+        start: currentDate.format('HH:mm'),
+        end: currentDate.add(2, 'hours').format('HH:mm'),
+        appointments: []
+      })
+    }
+    return tt;
+  };
+
+
+  const createIntervals = useCallback(async (appointments) => {
+    let intervals = await generateHoursInterval();
+    let cApppintment = null
+    let endDay = moment().endOf('day')
+
+    appointments.forEach((appointment) => {
+      if (!cApppintment && new Date(appointment.end_time) >= new Date() && new Date(appointment.end_time) <= endDay) {
+        cApppintment = appointment
+      }
+      let appointS = moment(compineDT(moment(), appointment.start_time));
+
+      let interval = intervals.find((intev) => {
+        let intervalS = moment(intev.start, "HH:mm");
+        let intervalE = intervalS.clone().add(2, 'hours')
+        return (
+          appointS.isBetween(intervalS, intervalE, null, "[]")
+        )
+      })
+      interval?.appointments.push(appointment);
+    });
+
+    setAppointmentsState({
+      appointments: intervals.filter(interval => interval.appointments.length > 0),
+      closestAppointment: cApppintment,
+      appointmentsCount: appointments.length
+    })
+  }, [])
+
+
+
   /*-------- geting all appointments by date ---------- */
-  const getAppointments = async () => {
+  const getAppointments = useCallback(async () => {
     setIsLoading({ isLoading: true });
     try {
-      const start_time = new Date(state.selectedDay)
+      const start_time = new Date(selectedDay)
       start_time.setHours(0)
       start_time.setMinutes(0)
       start_time.setSeconds(0)
@@ -127,35 +192,29 @@ const useDashBoardModel = () => {
         status: state.allSelected ? null : 'in-progress'
       });
 
-      setState((prev) => {
-        return {
-          ...prev,
-          appointments: appointments,
-          numberOfActiveCustomers: numberOfActiveCustomers
-        };
-      });
+      // setAppointments(appointments)
+      await createIntervals(appointments)
+      setNumberOfActiveCustomers(numberOfActiveCustomers)
     } catch (e) {
       console.log(e);
     }
     setIsLoading({ isLoading: false });
-  };
+  }, [selectedDay, search, state.allSelected])
 
   /*-------- getting worker Services by workerId ---------- */
-  const getWorkerServices = async () => {
+  const getWorkerServices = useCallback(async () => {
     setIsLoading({ isLoading: true });
     try {
       const data = await workerRepository.getWorkerServices(user._id);
-      setState((prev) => {
-        return { ...prev, workerServices: data.services };
-      });
+      setWorkerServices(data.services)
     } catch (e) {
       console.log(e);
     }
     setIsLoading({ isLoading: false });
-  };
+  }, [user])
 
   /*-------- Update the status of an appointment ---------- */
-  const handleUpdateStatus = async (status, service = "") => {
+  const handleUpdateStatus = useCallback(async (status, service = "") => {
     setIsLoading({ isLoading: true });
     let message;
     const appointObj = {
@@ -174,7 +233,7 @@ const useDashBoardModel = () => {
     }
     showAlert(message, handleShowStatusSheet(null, false));
     setIsLoading({ isLoading: false });
-  };
+  }, [state.currentAppoint])
 
   /*-------- creating new Service for a worker ---------- */
   const handlePostServ = async (servObj) => {
@@ -297,9 +356,7 @@ const useDashBoardModel = () => {
   }
 
   const handleSelectedDay = async (day) => {
-    setState((prev) => {
-      return { ...prev, selectedDay: day };
-    });
+    setSelectedDay(day)
   };
 
   const handleShowStatusSheet = async (appointment, action) => {
@@ -314,13 +371,9 @@ const useDashBoardModel = () => {
     });
   };
   const handleSelectBooked = async () => {
-    let appoints = state.appointments.filter(
-      (appoint) => appoint.status == "in-progress" || appoint.status == "hold"
-    );
     setState((prev) => {
       return {
         ...prev,
-        appointments: appoints,
         allSelected: false,
       };
     });
@@ -331,12 +384,7 @@ const useDashBoardModel = () => {
   };
 
   const handleShowServSheet = async () => {
-    setState((prev) => {
-      return {
-        ...prev,
-        showServSheet: !prev.showServSheet,
-      };
-    });
+    setShowServSheet(!showServSheet)
   };
 
   const compineDT = (date, time) => {
@@ -353,8 +401,6 @@ const useDashBoardModel = () => {
       };
     });
   };
-
-
 
 
   const handleSelectedAppointment = async (appointment) => {
@@ -381,6 +427,11 @@ const useDashBoardModel = () => {
     isLoading,
     search,
     selectedAppointments,
+    ...appointmentsState,
+    workerServices,
+    selectedDay,
+    numberOfActiveCustomers,
+    showServSheet,
     deleteSelectedAppointments,
     isSelected,
     cancelSelection,

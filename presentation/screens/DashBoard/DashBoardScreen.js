@@ -25,9 +25,15 @@ import { useIsFocused } from "@react-navigation/native";
 import Constants from 'expo-constants';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { lightBlack, orange2, red, white } from "../../styles/global";
+import { lightBlack, orange2, primaryColor, red, white } from "../../styles/global";
+import Animated, { FadeOut, SlideInDown, SlideInRight, SlideOutDown, SlideOutRight } from "react-native-reanimated";
+import BottomDeleteView from "../../components/BottomDeleteView";
 
 /*------- represent's worker Dashboard Screen ---------- */
+
+
+
+
 
 const DashBoardScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -36,6 +42,7 @@ const DashBoardScreen = ({ navigation }) => {
   const STATUS_BAR_HIEGHT = Platform.OS === 'android' ? StatusBar.currentHeight : Constants.statusBarHeight
 
   const {
+    appointmentsCount,
     closestAppointment,
     selectedAppointments,
     numberOfActiveCustomers,
@@ -78,8 +85,7 @@ const DashBoardScreen = ({ navigation }) => {
     }
   }, [isFocused, selectedDay, allSelected, search])
 
-  useEffect(() => {
-  }, [appointments])
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -134,6 +140,7 @@ const DashBoardScreen = ({ navigation }) => {
         </View>
 
         <AppointmentsSheet
+          appointmentsCount={appointmentsCount}
           closestAppointment={closestAppointment}
           selectionMode={selectedAppointments.length > 0}
           isSelected={isSelected}
@@ -184,28 +191,11 @@ const DashBoardScreen = ({ navigation }) => {
 
 
         {selectedAppointments.length > 0 &&
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            position: 'absolute',
-            bottom: 0,
-            start: 0,
-            backgroundColor: lightBlack,
-            width: '100%',
-            padding: 20
-          }}>
-
-            <TouchableOpacity onPress={() => { cancelSelection(null) }}>
-              <MaterialIcons name="cancel" size={24} color={white} />
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={deleteSelectedAppointments}>
-              <AntDesign name="delete" size={24} color={red} />
-            </TouchableOpacity>
-          </View>
-
+          <BottomDeleteView
+            onCancel={() => { cancelSelection(null) }}
+            onExcute={deleteSelectedAppointments} />
         }
+
       </View>
     </TouchableWithoutFeedback>
   );
