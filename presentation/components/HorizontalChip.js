@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { fontMeduim, globalStyles } from "../styles/global";
 
@@ -21,40 +22,42 @@ const HorizontalChip = ({
 }) => {
   const [progressBar, setProgressBar] = useState(true);
   return (
-    <TouchableOpacity
-      disabled={onPress == null}
-      style={{ ...styles.container, justifyContent: "flex-start", ...style }}
-      onPress={onPress ? () => onPress(user) : () => { }}
-    >
-      <View
-        style={{ zIndex: 2, justifyContent: "center", alignItems: "center" }}
+    <Animated.View entering={FadeIn} exiting={FadeOut}>
+      <TouchableOpacity
+        disabled={onPress == null}
+        style={{ ...styles.container, justifyContent: "flex-start", ...style }}
+        onPress={onPress ? () => onPress(user) : () => { }}
       >
-        <Image
-          key={imageUrl}
-          style={styles.image}
-          source={{ uri: imageUrl ? IMAGE_BASE_URL + imageUrl : null }}
-          defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
-          onLoadEnd={() => {
-            setProgressBar(false);
-          }}
-        />
-        <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator animating={progressBar && imageUrl != null} color='#000' size='small' />
-        </View>
-      </View>
-
-      <View
-        style={styles.chip}
-        className={isSelected ? `bg-[#FF9B02]` : "bg-[#f5f5f5]"}
-      >
-        <Text
-          style={{ ...globalStyles.font, fontSize: fontMeduim }}
-          className={`${isSelected ? "text-white" : "text-black"}`}
+        <View
+          style={{ zIndex: 2, justifyContent: "center", alignItems: "center" }}
         >
-          {text}
-        </Text>
-      </View>
-    </TouchableOpacity>
+          <Image
+            key={imageUrl}
+            style={styles.image}
+            source={{ uri: imageUrl ? IMAGE_BASE_URL + imageUrl : null }}
+            defaultSource={require('../../assets/imgs/person_place_holder.jpg')}
+            onLoadEnd={() => {
+              setProgressBar(false);
+            }}
+          />
+          <View style={{ position: 'absolute', zIndex: 3, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator animating={progressBar && imageUrl != null} color='#000' size='small' />
+          </View>
+        </View>
+
+        <View
+          style={styles.chip}
+          className={isSelected ? `bg-[#FF9B02]` : "bg-[#f5f5f5]"}
+        >
+          <Text
+            style={{ ...globalStyles.font, fontSize: fontMeduim }}
+            className={`${isSelected ? "text-white" : "text-black"}`}
+          >
+            {text}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

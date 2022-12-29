@@ -38,14 +38,7 @@ const StatusSheet = (props) => {
     handleContentLayout,
   } = useBottomSheetDynamicSnapPoints(snapPoints)
 
-  const statusList = [
-    "done",
-    "in-progress",
-    "didnt-come",
-    "canceled",
-    "free",
-    "hold",
-  ]
+
 
   const confirmAlert = (message) => {
     Alert.alert("", message, [
@@ -73,81 +66,6 @@ const StatusSheet = (props) => {
       snapPoints={animatedSnapPoints}
       enablePanDownToClose
       onClose={() => handleShowStatusSheet(null, false)}>
-
-      {/* <View className="flex-row p-4 justify-between">
-        <Text className="text-xl font-semibold">
-          {getString.t('change_status')}
-        </Text>
-
-
-        <TouchableOpacity
-          onPress={() =>
-            confirmAlert("Are you sure you want to delete this item?")
-          }>
-          <FontAwesome5 name="trash-alt" size={24} color="black" />
-        </TouchableOpacity>
-
-      </View> */}
-
-      {/* <View className="mt-8 flex-row flex-1 justify-between p-1">
-        <View className="rounded-full" style={{ width: 50 }}>
-          {selectedStatus && (
-            <SelectDropdown
-              data={services}
-              onSelect={(selectedItem, index) => {
-                handleUpdateStatus(selectedStatus, selectedItem);
-              }}
-              defaultButtonText={"Select Service"}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-              buttonStyle={styles.dropdown1BtnStyle}
-              buttonTextStyle={styles.dropdown1BtnTxtStyle}
-              renderDropdownIcon={(isOpened) => {
-                return (
-                  <FontAwesome
-                    name={isOpened ? "chevron-up" : "chevron-down"}
-                    color={"#444"}
-                    size={18}
-                  />
-                );
-              }}
-              dropdownIconPosition={"right"}
-              dropdownStyle={styles.dropdown1DropdownStyle}
-              rowStyle={styles.dropdown1RowStyle}
-              rowTextStyle={styles.dropdown1RowTxtStyle}
-            />
-          )}
-        </View>
-        <View className="pr-3">
-          {
-            <BottomSheetFlatList
-              data={statusList}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity
-                  className="m-1 p-4 items-center rounded-md flex-row justify-between"
-                  onPress={
-                    item == "hold"
-                      ? () => setSelectStatus(item)
-                      : () => handleUpdateStatus(item)
-                  }
-                  style={styles.statusCard}>
-                  <View>
-                    {getIconByStatus(item, getIconByStatus(item).color).icon}
-                  </View>
-                  <Spacer space={6} />
-                  <Text className="text-base  font-semibold" key={index}>{item}</Text>
-                </TouchableOpacity>
-              )}
-              showsVerticalScrollIndicator={false}
-            />
-          }
-        </View>
-      </View> */}
-
 
 
       <BottomSheetView onLayout={handleContentLayout} style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: '#f9f9f9', borderBottomEndRadius: 26, borderBottomStartRadius: 26 }}>
@@ -224,15 +142,13 @@ const StatusSheet = (props) => {
               }
 
 
-              {(appointment.status === 'in-progress' || appointment.status === 'hold' || appointment.status === 'done' || appointment.status === 'didnt-come') &&
-                <TouchableOpacity style={{ flex: 1 }} onPress={() => { handleUpdateStatus('canceled') }}>
-                  <View style={{ ...styles.statusOp, backgroundColor: '#F4D6D6', borderWidth: 0 }}>
-                    <Image style={{ width: 20, height: 20 }} source={require('../../assets/imgs/close.png')} />
-                    <Spacer space={6} />
-                    <Text style={{ ...globalStyles.font, fontSize: fontSmall }}>{getString.t('cancel')}</Text>
-                  </View>
-                </TouchableOpacity>
-              }
+              <TouchableOpacity style={{ flex: 1 }} onPress={() => { handleUpdateStatus('canceled') }}>
+                <View style={{ ...styles.statusOp, backgroundColor: '#F4D6D6', borderWidth: 0 }}>
+                  <Image style={{ width: 20, height: 20 }} source={require('../../assets/imgs/close.png')} />
+                  <Spacer space={6} />
+                  <Text style={{ ...globalStyles.font, fontSize: fontSmall }}>{getString.t('cancel')}</Text>
+                </View>
+              </TouchableOpacity>
             </View>
 
 

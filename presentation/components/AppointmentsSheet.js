@@ -115,9 +115,8 @@ const AppointmentsSheet = (props) => {
         data={appointments}
         horizontal={false}
         ItemSeparatorComponent={<Spacer space={6} />}
-        renderItem={({ item, index }) => {
-          { console.log(index) }
-          return <AppointmentsInterval
+        renderItem={({ item, index }) =>
+          <AppointmentsInterval
             cancelSelection={cancelSelection}
             selectionMode={selectionMode}
             isSelected={isSelected}
@@ -127,7 +126,6 @@ const AppointmentsSheet = (props) => {
             handleShowStatusSheet={handleShowStatusSheet}
             key={index}
           />
-        }
         }
         ListHeaderComponent={
           <Header

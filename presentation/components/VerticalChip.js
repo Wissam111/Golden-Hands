@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import { backgroundColor, fontMeduim, fontSmall, globalStyles } from "../styles/global";
 import Spacer from "./Spacer";
@@ -8,7 +9,7 @@ import Spacer from "./Spacer";
 const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIcon }) => {
     const [progressBar, setProgressBar] = useState(true)
     return (
-        <View style={{ ...style, ...styles.container }}>
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={{ ...style, ...styles.container }}>
 
             <TouchableOpacity style={{ ...styles.image, ...imageStyle }} onPress={onClickImage} disabled={onClickImage == null}>
                 <Image
@@ -36,7 +37,7 @@ const VerticalChip = ({ style, text, imageUrl, imageStyle, onClickImage, chipIco
                 }
                 <Text style={{ ...globalStyles.font, fontSize: fontMeduim, textAlign: 'center' }}>{text}</Text>
             </View>
-        </View>
+        </Animated.View>
     );
 }
 

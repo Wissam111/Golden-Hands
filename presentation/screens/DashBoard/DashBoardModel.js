@@ -54,7 +54,7 @@ const useDashBoardModel = () => {
           let numberOfActiveCustomers = 0
 
           const up = prev.appointments.map(item => {
-           
+
             const appointments = item.appointments.map(appointment => {
               let obj = appointment
               if (appointment._id === data.documentKey._id) {
@@ -277,8 +277,8 @@ const useDashBoardModel = () => {
   const handlePostAppoint = async (startTime, endTime, duration) => {
     const appointObj = {
       worker: user._id,
-      start_time: compineDT(state.selectedDay, startTime).format('yyyy-MM-DDTHH:mm:ssZZ'),
-      end_time: compineDT(state.selectedDay, endTime).format('yyyy-MM-DDTHH:mm:ssZZ'),
+      start_time: compineDT(selectedDay, startTime).format('yyyy-MM-DDTHH:mm:ssZZ'),
+      end_time: compineDT(selectedDay, endTime).format('yyyy-MM-DDTHH:mm:ssZZ'),
       duration: duration
     };
     setIsLoading({ isLoading: true });
@@ -315,7 +315,7 @@ const useDashBoardModel = () => {
 
 
   /*--------  deleting selected appointments ---------- */
-  const deleteSelectedAppointments = async () => {
+  const deleteSelectedAppointments = useCallback(async () => {
     if (selectedAppointments.length == 0) return
     setIsLoading({ isLoading: true })
     try {
@@ -326,7 +326,7 @@ const useDashBoardModel = () => {
       console.log(e)
     }
     setIsLoading({ isLoading: false })
-  }
+  }, [selectedAppointments])
 
   /*------------------handle/healper functions-------------------*/
 

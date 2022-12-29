@@ -6,6 +6,7 @@ import DefaultButton from "./DefaultButton";
 import getString from "../../localization";
 import Spacer from "./Spacer";
 import { fontMeduim, globalStyles, gray1, green, lightBlack, orange2 } from "../styles/global";
+import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from "react-native-reanimated";
 const AppointmentConfirmationSheet = (props) => {
   const { appointment, selectedService, handleCloseConfirmation, handleBook } = props;
   const snapPoints = useMemo(() => ['CONTENT_HEIGHT'], []);
@@ -46,7 +47,8 @@ const AppointmentConfirmationSheet = (props) => {
       onClose={handleCloseConfirmation}
       enablePanDownToClose
     >
-      <BottomSheetView
+      <Animated.View
+        entering={FadeIn.duration(600).delay(200)} exiting={FadeOut}
         style={{ justifyContent: 'center', alignItems: 'center', padding: 16 }}
         onLayout={handleContentLayout}>
 
@@ -74,9 +76,10 @@ const AppointmentConfirmationSheet = (props) => {
         <Image style={{ width: 46, height: 46, }} source={getServiceImage()} />
 
         <Spacer space={16} />
+
         <DefaultButton style={{ alignSelf: 'stretch' }} buttonStyles={{ paddingVertical: Platform.OS === 'android' ? 10 : 12 }} text={getString.t('confirm_and_book')} onPress={handleBook} />
         <Spacer space={30} />
-      </BottomSheetView>
+      </Animated.View>
     </BottomSheet>
   );
 };

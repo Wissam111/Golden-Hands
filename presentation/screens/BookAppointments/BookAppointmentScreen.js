@@ -12,6 +12,7 @@ import Title from "../../components/Title";
 import BackButton from "../../components/BackButton";
 import Spacer from "../../components/Spacer";
 import getString from "../../../localization";
+import Animated, { SlideInRight, SlideOutRight } from "react-native-reanimated";
 
 
 /*------- represent's book appointments Screen ---------- */
@@ -71,7 +72,7 @@ const BookAppointmentScreen = () => {
             tintColor="#000"
           />
         }>
-        <View style={{ alignItems: 'flex-start', marginBottom: 12 }}>
+        <Animated.View entering={SlideInRight} exiting={SlideOutRight} style={{ alignItems: 'flex-start', marginBottom: 12 }}>
           <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_worker')}</Text>
           <FlatList
             contentContainerStyle={{ padding: 8, flexGrow: 1 }}
@@ -89,10 +90,10 @@ const BookAppointmentScreen = () => {
             )}
             showsHorizontalScrollIndicator={false}
           />
-        </View>
+        </Animated.View>
         {
           selectedWorker && (
-            <View style={{ alignItems: 'flex-start', marginBottom: 12 }} >
+            <Animated.View entering={SlideInRight} exiting={SlideOutRight} style={{ alignItems: 'flex-start', marginBottom: 12 }} >
               <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_day')}</Text>
               <FlatList
                 contentContainerStyle={{ padding: 8, flexGrow: 1 }}
@@ -100,7 +101,7 @@ const BookAppointmentScreen = () => {
                 data={workingDates}
                 keyExtractor={(item) => item.date}
                 horizontal
-                renderItem={({ item }) => (
+                renderItem={({ item }) =>
                   <Card
                     cardContent={item}
                     id={item}
@@ -115,15 +116,15 @@ const BookAppointmentScreen = () => {
                     handlePress={handleSelectDay}
                     isSelected={selectedDay === item.date}
                   />
-                )}
+                }
                 showsHorizontalScrollIndicator={false}
               />
-            </View>
+            </Animated.View>
           )
         }
         {
           selectedDay && (
-            <View style={{ alignItems: 'flex-start', marginBottom: 12 }}>
+            <Animated.View entering={SlideInRight} exiting={SlideOutRight} style={{ alignItems: 'flex-start', marginBottom: 12 }}>
               <Text className="text-xl  m-2 mb-5 font-medium">
                 {getString.t('select_service')}
               </Text>
@@ -145,13 +146,13 @@ const BookAppointmentScreen = () => {
                 )}
                 showsHorizontalScrollIndicator={false}
               />
-            </View>
+            </Animated.View>
           )
         }
 
         {
           selectedService && (
-            <View style={{ alignItems: 'flex-start' }}>
+            <Animated.View entering={SlideInRight} exiting={SlideOutRight} style={{ alignItems: 'flex-start' }}>
               <Text className="text-xl  m-2 mb-5 font-medium">
                 {getString.t('select_hour')}
               </Text>
@@ -172,7 +173,7 @@ const BookAppointmentScreen = () => {
                 )}
                 showsHorizontalScrollIndicator={false}
               />
-            </View>
+            </Animated.View>
           )
         }
       </ScrollView>

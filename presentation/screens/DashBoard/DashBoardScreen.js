@@ -20,14 +20,10 @@ import DashBoardModel from "./DashBoardModel";
 import StatusSheet from "../../components/StatusSheet";
 import BarberServicesSheet from "../../components/BarberServicesSheet";
 import AddAppointmentView from "../../components/AddAppointmentView";
-import getString from "../../../localization";
 import { useIsFocused } from "@react-navigation/native";
 import Constants from 'expo-constants';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { lightBlack, orange2, primaryColor, red, white } from "../../styles/global";
-import Animated, { FadeOut, SlideInDown, SlideInRight, SlideOutDown, SlideOutRight } from "react-native-reanimated";
 import BottomDeleteView from "../../components/BottomDeleteView";
+import { primaryColor } from "../../styles/global";
 
 /*------- represent's worker Dashboard Screen ---------- */
 
@@ -39,7 +35,6 @@ const DashBoardScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [h, setH] = useState(1)
   const [h2, setH2] = useState(1)
-  const STATUS_BAR_HIEGHT = Platform.OS === 'android' ? StatusBar.currentHeight : Constants.statusBarHeight
 
   const {
     appointmentsCount,
@@ -88,8 +83,8 @@ const DashBoardScreen = ({ navigation }) => {
 
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View className="bg-[#1D1B1B] flex-1 relative">
+    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{ flex: 1, backgroundColor: primaryColor }}>
         <View
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout
@@ -138,6 +133,13 @@ const DashBoardScreen = ({ navigation }) => {
             })}
           </View>
         </View>
+
+        {selectedAppointments.length > 0 &&
+          <BottomDeleteView
+            onCancel={() => { cancelSelection(null) }}
+            onExcute={deleteSelectedAppointments} />
+        }
+
 
         <AppointmentsSheet
           appointmentsCount={appointmentsCount}
@@ -190,12 +192,7 @@ const DashBoardScreen = ({ navigation }) => {
         )}
 
 
-        {selectedAppointments.length > 0 &&
-          <BottomDeleteView
-            onCancel={() => { cancelSelection(null) }}
-            onExcute={deleteSelectedAppointments} />
-        }
-
+    
       </View>
     </TouchableWithoutFeedback>
   );
