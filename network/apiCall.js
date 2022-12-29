@@ -57,6 +57,17 @@ export const getUserId = async () => {
 
 
 
+const refreshAccessToken = async () => {
+  const refreshToken = await AsyncStorage.getItem('refreshToken')
+  const data = await apiCall('refresh-token', 'POST', { refreshToken: refreshToken })
+  await AsyncStorage.setItem('token', data.token)
+  await AsyncStorage.setItem('refreshToken', data.refresh_token)
+  await AsyncStorage.setItem('expireDate', data.expireDate)
+  await AsyncStorage.setItem('expireDateRefreshToken', data.expireDateRefreshToken)
+}
+
+
+
 /**
  *  this is a global HTTP api call 
  * 
@@ -72,7 +83,8 @@ export const apiCall = async (
   method = "GET",
   body,
   queryParams,
-  contentType = "application/json"
+  contentType = "application/json",
+  tries = 1
 ) => {
   // console.log('apiCall' , url);
   const customURL = queryParams
@@ -99,16 +111,48 @@ export const apiCall = async (
   });
 
   const json = await result.json();
-
   if (!result.ok) {
-    if (result.status === 401) {
-      showAlert(getString.t("error"), getString.t("you_are_not_authorized"));
+    // try to refresh token
+    if (result.status === 401 && tries < 3) {
+      try {
+        await refreshAccessToken()
+        return await apiCall(url, method, body, queryParams, contentType, tries + 1)
+      } catch (e) {
+        console.log(e);
+        // go to login
+        throw { status: 401 }
+      }
     }
 
     throw {
       status: result.status,
       ...json,
-    };
+    }
   }
   return json;
-};
+}
+
+
+
+// export const useApiCall = () => {
+//   const { dispatch } = useAuthContext()
+
+//   // const call = useCallback(async (
+//   //   url,
+//   //   method = "GET",
+//   //   body,
+//   //   queryParams,
+//   //   contentType = "application/json"
+//   // ) => {
+
+//   //   try {
+//   //     await apiCall(url, method, body, queryParams, contentType)
+//   //   } catch (e) {
+//   //       console.log(e)
+//   //   }
+//   //   return json;
+//   // }, [])
+
+
+//   // return { call }
+// }

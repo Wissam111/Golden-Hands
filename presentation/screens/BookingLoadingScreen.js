@@ -17,7 +17,7 @@ const BookingLoadingScreen = () => {
   useEffect(() => {
     setTimeout(() => {
       showAlert();
-    }, 2500);
+    }, 1000);
   }, []);
 
   const showAlert = () => {

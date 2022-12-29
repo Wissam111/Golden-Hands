@@ -16,6 +16,7 @@ const Dialog = () => {
 
     return (
         <Modal
+            style={{ zIndex: 10 }}
             animationType="fade"
             transparent={true}
             visible={isVisible}
@@ -33,14 +34,14 @@ const Dialog = () => {
                         }}
                         style={styles.modalView}>
 
-                        <View style={{ padding: 8, backgroundColor: backgroundColor, borderRadius: 20}}>
+                        <View style={{ padding: 8, backgroundColor: backgroundColor, borderRadius: 20 }}>
                             <View>
                                 <Text style={{ ...globalStyles.font, fontSize: fontMeduim, color: lightBlack, alignSelf: 'flex-start' }}>{title ? title : getString.t('message')}</Text>
                                 <Spacer space={8} />
                             </View>
 
                             {onDone &&
-                                <Image style={{ width: 100, height: 100, alignSelf: 'center' }} source={require('../../assets/imgs/light-bulb.png') } />
+                                <Image style={{ width: 100, height: 100, alignSelf: 'center' }} source={require('../../assets/imgs/light-bulb.png')} />
                             }
                         </View>
 

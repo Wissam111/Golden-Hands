@@ -20,6 +20,7 @@ const AuthRepository = () => {
         await AsyncStorage.setItem('token', data.authData.token)
         await AsyncStorage.setItem('refreshToken', data.authData.refresh_token)
         await AsyncStorage.setItem('expireDate', data.authData.expireDate)
+        await AsyncStorage.setItem('expireDateRefreshToken', data.authData.expireDateRefreshToken)
         if (data.authData.user.image)
             await AsyncStorage.setItem('user_image', data.authData.user.image)
         return data
@@ -33,6 +34,7 @@ const AuthRepository = () => {
         await AsyncStorage.setItem('token', data.authData.token)
         await AsyncStorage.setItem('refreshToken', data.authData.refresh_token)
         await AsyncStorage.setItem('expireDate', data.authData.expireDate)
+        await AsyncStorage.setItem('expireDateRefreshToken', data.authData.expireDateRefreshToken)
         if (data.authData.user.image)
             await AsyncStorage.setItem('user_image', data.authData.user.image)
         return data
@@ -47,6 +49,7 @@ const AuthRepository = () => {
             await AsyncStorage.removeItem('refreshToken')
             await AsyncStorage.removeItem('expireDate')
             await AsyncStorage.removeItem('user_image')
+            await AsyncStorage.removeItem('expireDateRefreshToken')
         } catch (e) {
             console.log('e');
         }

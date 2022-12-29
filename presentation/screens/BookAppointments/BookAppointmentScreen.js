@@ -13,6 +13,7 @@ import BackButton from "../../components/BackButton";
 import Spacer from "../../components/Spacer";
 import getString from "../../../localization";
 import Animated, { SlideInRight, SlideOutRight } from "react-native-reanimated";
+import { Platform } from "react-native";
 
 
 /*------- represent's book appointments Screen ---------- */
@@ -47,7 +48,7 @@ const BookAppointmentScreen = () => {
         paddingTop: 10,
       }}
       className="pt-5 flex-1 relative">
-      <Loader />
+      {Platform.OS === 'ios' && <Loader />}
       <View
         className="mb-4  p-1 flex-row ml-2 items-center"
         style={{
@@ -73,12 +74,13 @@ const BookAppointmentScreen = () => {
           />
         }>
         <Animated.View entering={SlideInRight} exiting={SlideOutRight} style={{ alignItems: 'flex-start', marginBottom: 12 }}>
-          <Text className="text-xl  m-2 mb-5 font-medium">{getString.t('select_worker')}</Text>
+          <Text className="text-xl m-2 mb-5 font-medium">{getString.t('select_worker')}</Text>
           <FlatList
             contentContainerStyle={{ padding: 8, flexGrow: 1 }}
             data={workers}
             keyExtractor={(item) => item._id}
-            horizontal
+            horizontal={true}
+            pagingEnabled
             renderItem={({ item }) => (
               <HorizontalChip
                 text={item.firstName + " " + item.lastName}

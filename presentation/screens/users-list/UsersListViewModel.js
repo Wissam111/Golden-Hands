@@ -48,7 +48,6 @@ const useUsersListViewModel = () => {
 
     const nextPage = async () => {
         if (reachedEnd || isLoading) return
-        console.log('nextPage');
         setLoading({ isLoading: true })
         try {
             const data = await userRepository.getUsers({ search, pagesize: PAGE_SIZE, currentPage: currentPage + 1 })

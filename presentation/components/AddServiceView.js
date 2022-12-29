@@ -21,7 +21,7 @@ import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 
 
 const AddServiceView = (props) => {
-  const { worker, handlePostServ } = props;
+  const { worker, handlePostServ} = props;
   const priceInputRef = useRef(null);
   const services = ['Hair Cut', 'Face Cut', 'Wax', 'Massage'];
   const [selectedServ, setSelectedServ] = useState("");

@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert, SafeAreaView, FlatList } from "react-native";
 
 import React, { useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetFlatList, BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList, BottomSheetView } from "@gorhom/bottom-sheet";
 import { AntDesign } from "@expo/vector-icons";
 
 import AddServiceView from "./AddServiceView";
@@ -37,16 +37,16 @@ const BarberServicesSheet = (props) => {
       snapPoints={snapPoints}
       enablePanDownToClose
       onClose={handleShowServSheet}>
+
       <Text className="p-3 text-center text-xl font-semibold">
         {getString.t('manage_your_services')}
       </Text>
 
-
       <BottomSheetFlatList
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
         data={workerServices}
-        contentContainerStyle={{ padding: 8, flexGrow: 1 , paddingBottom: 20 }}
+        horizontal={false}
+        contentContainerStyle={{ padding: 8 }}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <View
@@ -71,6 +71,7 @@ const BarberServicesSheet = (props) => {
         )}
         ListFooterComponent={<AddServiceView handlePostServ={handlePostServ} worker={worker} />}
       />
+
     </BottomSheet >
   );
 };

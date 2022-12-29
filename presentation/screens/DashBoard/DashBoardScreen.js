@@ -10,6 +10,7 @@ import {
   Dimensions,
   StatusBar,
   Platform,
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import HorizontalChip from "../../components/HorizontalChip";
@@ -24,6 +25,7 @@ import { useIsFocused } from "@react-navigation/native";
 import Constants from 'expo-constants';
 import BottomDeleteView from "../../components/BottomDeleteView";
 import { primaryColor } from "../../styles/global";
+import useDialogContext from "../../../hooks/useDialogContext";
 
 /*------- represent's worker Dashboard Screen ---------- */
 
@@ -73,6 +75,7 @@ const DashBoardScreen = ({ navigation }) => {
     handleDeleteAppointment,
     compineDT,
   } = DashBoardModel();
+  const { isVisible: dialogVisible } = useDialogContext()
 
   useEffect(() => {
     if (isFocused) {
@@ -183,16 +186,20 @@ const DashBoardScreen = ({ navigation }) => {
             services={workerServices}
           />
         )}
-        {showAddAppoint && (
+
+
+        <Modal
+          style={{ zIndex: 9 }}
+          animationType="fade"
+          transparent={true}
+          visible={showAddAppoint && !dialogVisible}>
           <AddAppointmentView
             date={dateInterval[selectedDay]}
             handlePostAppoint={handlePostAppoint}
             onClose={handleShowAppoint}
           />
-        )}
+        </Modal>
 
-
-    
       </View>
     </TouchableWithoutFeedback>
   );
