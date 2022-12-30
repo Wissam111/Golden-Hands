@@ -13,7 +13,7 @@ const IntervalAppointmentCard = ({ item, selectionMode, isSelected, index, handl
       return `${appointment.customer.firstName} ${appointment.customer.lastName}`
     }
 
-    if (appointment.status === 'hold') {
+    if (appointment.status !== 'free' && !appointment.customer) {
       return getString.t('hold_by_worker')
     }
     return getString.t('free_appointment')
