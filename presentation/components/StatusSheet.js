@@ -51,12 +51,16 @@ const StatusSheet = (props) => {
   };
   return (
     <BottomSheet
-      containerStyle={{
-        elevation: 8,
-        shadowColor: 'black',
-        shadowRadius: 1,
-        shadowOpacity: 1,
-        shadowOffset: { width: .7, height: .7 },
+      style={{
+        borderRadius: 16,
+        shadowColor: '#000000',
+        shadowOffset: {
+          width: .5,
+          height: .5,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 1.5,
+        elevation: 4,
       }}
       handleStyle={{ backgroundColor: appointment.customer ? '#f9f9f9' : 'white', borderTopEndRadius: 26, borderTopStartRadius: 26 }}
       handleHeight={animatedHandleHeight}
