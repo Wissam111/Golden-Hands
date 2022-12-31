@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./screens/home/Home";
 import BookAppointmentScreen from "./screens/BookAppointments/BookAppointmentScreen";
-import DashBoardScreen from "./screens/DashBoard/DashBoardScreen";
 import CustomDrawer from "./components/CustomDrawer";
 import Login from "./screens/login/Login";
 import Signup from "./screens/signup/Signup";
@@ -26,6 +25,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Splash from "./screens/Splash";
 import ImageUpload from "./components/ImageUpload";
+import WorkerPage from "./screens/worker-page/WorkerPage";
 
 const SignupNavigation = () => {
   return (
@@ -112,10 +112,10 @@ const UsersListNavigation = () => {
 
 const DashboardStack = createNativeStackNavigator();
 
-const DashboardNavigation = () => {
+const WorkerPageNavigation = () => {
   return (
     <DashboardStack.Navigator screenOptions={{ headerShown: false }}>
-      <DashboardStack.Screen name="DashBoardScreen" component={DashBoardScreen} />
+      <DashboardStack.Screen name="WorkerPage" component={WorkerPage} />
       <ProfileStack.Screen name="ProfileScreen" component={Profile} />
     </DashboardStack.Navigator>
   );
@@ -205,7 +205,7 @@ const DrawerNavigation = () => {
         <Drawer.Group>
           <Drawer.Screen
             name="DashBoardScreenNavition"
-            component={DashboardNavigation}
+            component={WorkerPageNavigation}
             options={{
               drawerIcon: ({ focused, size }) => (
                 <MaterialIcons

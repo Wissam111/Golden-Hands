@@ -1,15 +1,11 @@
 import {
   View,
-  Text,
   SafeAreaView,
   Image,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
   Dimensions,
-  StatusBar,
-  Platform,
   Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -17,7 +13,7 @@ import HorizontalChip from "../../components/HorizontalChip";
 import CalendarView from "../../components/CalendarView";
 import DayView from "../../components/DayView";
 import AppointmentsSheet from "../../components/AppointmentsSheet";
-import DashBoardModel from "./DashBoardModel";
+import WorkerPageViewModel from "./WorkerPageViewModel";
 import StatusSheet from "../../components/StatusSheet";
 import BarberServicesSheet from "../../components/BarberServicesSheet";
 import AddAppointmentView from "../../components/AddAppointmentView";
@@ -33,10 +29,10 @@ import useDialogContext from "../../../hooks/useDialogContext";
 
 
 
-const DashBoardScreen = ({ navigation }) => {
+const WorkerPage = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const [h, setH] = useState(1)
-  const [h2, setH2] = useState(1)
+  const [appointmentsSheetHeight1, setAppointmentsSheetHeight1] = useState(1)
+  const [appointmentsSheetHeight2, setAppointmentsSheetHeight2] = useState(1)
 
   const {
     appointmentsCount,
@@ -74,7 +70,7 @@ const DashBoardScreen = ({ navigation }) => {
     handleShowAppoint,
     handleDeleteAppointment,
     compineDT,
-  } = DashBoardModel();
+  } = WorkerPageViewModel();
   const { isVisible: dialogVisible } = useDialogContext()
 
   useEffect(() => {
@@ -91,13 +87,13 @@ const DashBoardScreen = ({ navigation }) => {
         <View
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout
-            setH(Dimensions.get('window').height - height - Constants.statusBarHeight)
+            setAppointmentsSheetHeight1(Dimensions.get('window').height - height - Constants.statusBarHeight)
           }}>
 
           <View
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout
-              setH2(Dimensions.get('window').height - height - Constants.statusBarHeight - 20)
+              setAppointmentsSheetHeight2(Dimensions.get('window').height - height - Constants.statusBarHeight - 20)
             }}
             className="flex-row items-center mt-4">
             <View className="ml-4">
@@ -152,8 +148,8 @@ const DashBoardScreen = ({ navigation }) => {
           cancelSelection={cancelSelection}
           handleSelectedAppointment={handleSelectedAppointment}
           numberOfActiveCustomers={numberOfActiveCustomers}
-          height={h}
-          height2={h2}
+          height={appointmentsSheetHeight1}
+          height2={appointmentsSheetHeight2}
           handleSelectAll={handleSelectAll}
           handleSelectBooked={handleSelectBooked}
           allSelected={allSelected}
@@ -205,4 +201,4 @@ const DashBoardScreen = ({ navigation }) => {
   );
 };
 
-export default DashBoardScreen;
+export default WorkerPage;

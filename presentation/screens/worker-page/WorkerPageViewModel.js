@@ -10,7 +10,7 @@ import io from 'socket.io-client'
 import { useIsFocused } from "@react-navigation/native";
 import { URL } from "../../../network/apiCall";
 
-const useDashBoardModel = () => {
+const useWorkerPageViewModel = () => {
   const isFocused = useIsFocused();
   const { user } = useAuthContext();
   const { isLoading, dispatch: setIsLoading } = useLoadingContext();
@@ -455,4 +455,4 @@ const useDashBoardModel = () => {
   };
 };
 
-export default useDashBoardModel;
+export default useWorkerPageViewModel;

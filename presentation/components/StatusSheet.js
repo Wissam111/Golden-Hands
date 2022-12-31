@@ -5,21 +5,17 @@ import {
   StyleSheet,
   Alert,
   Image,
-  ActivityIndicator,
-  Modal,
   Platform,
 } from "react-native";
 import React, { useState, useMemo, useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import BottomSheet, { BottomSheetFlatList, BottomSheetView, useBottomSheetDynamicSnapPoints } from "@gorhom/bottom-sheet";
-import { getIconByStatus } from "./AppointmentView";
+import BottomSheet, {  BottomSheetView, useBottomSheetDynamicSnapPoints } from "@gorhom/bottom-sheet";
 import getString from "../../localization";
 import Spacer from "./Spacer";
 import { backgroundColor, fontLarge, fontMeduim, fontSmall, globalStyles, gray1, green, lightBlack, white } from "../styles/global";
 import DefaultButton from "./DefaultButton";
 import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { dialPhoneNumber, openWhatsapp } from "../../core/linking";
 import { IMAGE_BASE_URL } from "../../network/apiCall";
 import moment from "moment";

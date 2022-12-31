@@ -3,7 +3,7 @@ import React from "react";
 import HorizontalChip from "../../components/HorizontalChip";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import Card from "../../components/Card";
+import Chip from "../../components/Chip";
 import moment from "moment";
 import BookViewModel from "./BookViewModel";
 import AppointmentConfirmationSheet from "../../components/AppointmentConfirmationSheet";
@@ -104,7 +104,7 @@ const BookAppointmentScreen = () => {
                 keyExtractor={(item) => item.date}
                 horizontal
                 renderItem={({ item }) =>
-                  <Card
+                  <Chip
                     cardContent={item}
                     id={item}
                     title={moment(item.date).calendar(null, {
@@ -137,7 +137,7 @@ const BookAppointmentScreen = () => {
                 ItemSeparatorComponent={<Spacer space={6} />}
                 horizontal
                 renderItem={({ item }) => (
-                  <Card
+                  <Chip
                     cardContent={item}
                     id={item}
                     title={getString.t(item.title.toLowerCase())}
@@ -165,7 +165,7 @@ const BookAppointmentScreen = () => {
                 ItemSeparatorComponent={<Spacer space={6} />}
                 horizontal
                 renderItem={({ item }) => (
-                  <Card
+                  <Chip
                     cardContent={item}
                     id={item}
                     title={moment(item.start_time).format("LT")}
