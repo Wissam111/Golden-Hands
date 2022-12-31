@@ -124,7 +124,8 @@ const getString = new I18n({
         duration_min: 'Duration In Minutes',
         duration: 'Duration',
         filling_this_duration: 'Filling this input will create multipule appointments between start and end dates with the specified duration',
-        current:'Current'
+        current:'Current',
+        you_dont_have_any_appointment: 'you dont have any appointment'
 
 
 
@@ -253,7 +254,9 @@ const getString = new I18n({
         duration_min: 'משך זמן בדקות',
         duration: 'משך זמן',
         filling_this_duration: 'מליאת שדה זה יגרור הוספת מספר תורים מזמן ההתחלה עד הסיום עם משך זמן שצוין',
-        current:'הנוכחי'
+        current:'הנוכחי',
+        you_dont_have_any_appointment: 'אין לך תורים'
+
 
 
 

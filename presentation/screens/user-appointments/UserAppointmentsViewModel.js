@@ -12,7 +12,7 @@ const useUserAppointmentsViewModel = () => {
     const [refresh, setRefresh] = useState(false)
     const [cancelSheet, setCancelSheet] = useState(false)
     const [cancelAppointment, setCancelAppointment] = useState(null)
-    const { dispatch: setLoading } = useLoadingContext()
+    const { dispatch: setLoading, isLoading } = useLoadingContext()
     const appointmentRepository = AppointmentRepository()
 
 
@@ -84,7 +84,7 @@ const useUserAppointmentsViewModel = () => {
     }
 
 
-    return { ...state, refresh, onRefresh, cancelAppointment, cancelSheet, getUserAppointments, unbook, rateAppointment, setCancelSheetState }
+    return { ...state, refresh, isLoading, onRefresh, cancelAppointment, cancelSheet, getUserAppointments, unbook, rateAppointment, setCancelSheetState }
 }
 
 export default useUserAppointmentsViewModel;

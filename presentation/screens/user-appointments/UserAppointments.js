@@ -1,21 +1,28 @@
 import { useEffect } from "react";
-import { Text, View, FlatList, SafeAreaView, TouchableOpacity, RefreshControl } from "react-native";
+import { Text, View, FlatList, RefreshControl } from "react-native";
 import getString from "../../../localization";
 import Spacer from "../../components/Spacer";
 import Title from "../../components/Title";
-import { backgroundColor, fontSmall, globalStyles, gray1, green, orange1, primaryColor, red, semiLarge, white } from "../../styles/global";
+import { fontSmall, globalStyles, gray1, primaryColor, red, white } from "../../styles/global";
 import useUserAppointmentsViewModel from "./UserAppointmentsViewModel";
 import moment from 'moment'
-import DefaultButton from "../../components/DefaultButton";
 import { useIsFocused } from "@react-navigation/native";
 import Rating from "../../components/Rating";
 import AppointmentCard from "../../components/AppointmentCard";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CancelAppointmentBottomSheet from "../../components/CancelAppointmentBottomSheet";
 
 
 const UserAppointments = () => {
-    const { appointments, refresh, cancelAppointment, cancelSheet, onRefresh, setCancelSheetState, getUserAppointments, unbook, rateAppointment } = useUserAppointmentsViewModel()
+    const { appointments,
+        refresh,
+        cancelAppointment,
+        cancelSheet,
+        isLoading,
+        onRefresh,
+        setCancelSheetState,
+        getUserAppointments,
+        unbook,
+        rateAppointment } = useUserAppointmentsViewModel()
     const isFocused = useIsFocused();
 
     useEffect(() => {
@@ -48,8 +55,16 @@ const UserAppointments = () => {
                             tintColor="#000"
                         />
                     }
+                    ListHeaderComponent={(
+                        (!appointments || appointments.length === 0) && !isLoading && <Text style={{
+                            textAlign: 'center',
+                            padding: 8,
+                            ...globalStyles.font,
+                            color: red,
+                            fontSize: fontSmall
+                        }}>{getString.t('you_dont_have_any_appointment')}</Text>)}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ flexGrow: 1, padding: 8, paddingTop: 16, paddingBottom: 20 , backgroundColor: white}}
+                    contentContainerStyle={{ flexGrow: 1, padding: 8, paddingTop: 16, paddingBottom: 20, backgroundColor: white }}
                     ItemSeparatorComponent={<Spacer space={4} />}
                     style={{ flex: 1, backgroundColor: white, borderTopEndRadius: 26, borderTopStartRadius: 26 }}
                     data={appointments}
@@ -76,7 +91,11 @@ const UserAppointments = () => {
                     )} />
             </View>
 
-            <CancelAppointmentBottomSheet isVisible={cancelSheet} onCancel={() => { unbook() }} onClose={() => { setCancelSheetState(false) }} />
+            <CancelAppointmentBottomSheet
+                isVisible={cancelSheet}
+                onCancel={() => { unbook() }}
+                appointment={cancelAppointment}
+                onClose={() => { setCancelSheetState(false) }} />
         </View>
     );
 }
