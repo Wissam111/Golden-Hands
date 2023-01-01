@@ -9,7 +9,7 @@ const BackButton = ({ onPress, color }) => {
                 {
                     I18nManager.isRTL ?
                         <MaterialIcons name="arrow-forward-ios" size={24} color={color ? color : "black"} /> :
-                        <MaterialIcons name="arrow-back-ios" size={24} color="black" />
+                        <MaterialIcons name="arrow-back-ios" size={24} color={color ? color : "black"} />
                 }
             </View>
         </TouchableOpacity>

@@ -24,6 +24,7 @@ import { DialogContextProvider } from "./context/DialogContext";
 import Dialog from "./presentation/components/Dialog";
 
 I18nManager.allowRTL(true);
+I18nManager.forceRTL(true)
 
 export default function App() {
   const [fontsLoaded] = useFonts({

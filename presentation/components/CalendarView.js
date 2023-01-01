@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, I18nManager } from "react-native";
 import React from "react";
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from "@expo/vector-icons";
@@ -14,7 +14,7 @@ const CalendarView = (props) => {
         className="bg-[#47566A] rounded-full w-8 h-8 justify-center items-center"
         onPress={handleDateLeft}
       >
-        <AntDesign name="right" size={16} color="white" />
+        <AntDesign name={I18nManager.isRTL? 'right' : 'left'} size={16} color="white" />
       </TouchableOpacity>
 
 
@@ -40,7 +40,7 @@ const CalendarView = (props) => {
         className="bg-[#47566A] rounded-full w-8 h-8 justify-center items-center"
         onPress={handleDateRight}
       >
-        <AntDesign name="left" size={16} color="white" />
+        <AntDesign name={I18nManager.isRTL? 'left' : 'right'}  size={16} color="white" />
       </TouchableOpacity>
     </View>
   );
