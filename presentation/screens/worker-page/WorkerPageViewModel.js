@@ -305,6 +305,7 @@ const useWorkerPageViewModel = () => {
       const data = await appointmentRepository.deleteAppointment(
         state.currentAppoint._id
       );
+      getAppointments()
       messg = data.message;
     } catch (e) {
       messg = e.message;

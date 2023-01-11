@@ -76,8 +76,8 @@ const UserAppointments = () => {
 
                                 <AppointmentCard
                                     onPress={item.status === 'in-progress' ? () => { setCancelSheetState(true, item) } : null}
-                                    appointment={item} image={item.worker.image}
-                                    text={`${item.worker.firstName} ${item.worker.lastName}`} />
+                                    appointment={item} image={item.worker?.image}
+                                    text={`${item.worker?.firstName} ${item.worker?.lastName}`} />
 
 
                                 <View style={{ alignSelf: 'flex-start' }}>
