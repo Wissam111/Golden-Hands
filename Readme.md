@@ -40,7 +40,7 @@ This is a client appointments app mainly for a barber shop management.
 
 ![](imgs/booking_system2.gif)
 
-## What I Used
+## What We Used
 
 - React Native
 - Socket io client
