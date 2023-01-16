@@ -14,8 +14,8 @@ This is a client appointments app mainly for a barber shop management.
 
 
 <p float="left">
-  <img src="./git-imgs/main-page-loggedin.png" width="100" />
-  <img src="./git-imgs/main-page-guest.png" width="100" /> 
+  <img src="./git-imgs/main-page-loggedin.PNG" width="100" />
+  <img src="./git-imgs/main-page-guest.PNG" width="100" /> 
   <img src="./git-imgs/login.PNG" width="100" />
   <img src="./git-imgs/1.jpg" width="100" />
 </p>
