@@ -152,7 +152,7 @@ const getString = new I18n({
         signup: 'הרשמה',
         at: 'ב',
         hello_there_login_first: 'שלום אורח , כנס למערכת תחילה',
-        login_or_signup: 'כנס או הרשם',
+        login_or_signup: 'כנסה או הרשמה',
         birth_date: 'תאריך לידה',
         next: 'הבא',
         first_name: 'שם פרטי',
